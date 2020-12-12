@@ -130,8 +130,6 @@ class _ChooseTimeState extends State<ChooseTime> {
                 ),
               ],
             ),
-
-
           ),
         ),
       ),
