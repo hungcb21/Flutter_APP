@@ -26,7 +26,6 @@ class _WaitingState extends State<Waiting> {
     databaseReference = FirebaseDatabase.instance.reference().child("Users")
         .child(userUID)
         .child("Waiting");
-
     reference2.orderByKey().equalTo(uid).once().then((DataSnapshot snapshot){
       Map<dynamic,dynamic> values = snapshot.value;
       values.forEach((key,values) {
@@ -140,8 +139,6 @@ class _WaitingState extends State<Waiting> {
                                                 onPressed: () {  setState(() {
                                                   storeUid=snapshot.key;
                                                 });
-
-
                                                 AlertDialog alert = AlertDialog(
                                                   title: Text("Hủy đặt chỗ"),
                                                   content: Text("Bạn có muốn hủy đặt chỗ ?"),
