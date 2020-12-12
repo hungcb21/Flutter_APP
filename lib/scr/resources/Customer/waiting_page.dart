@@ -9,7 +9,6 @@ class Waiting extends StatefulWidget {
 }
 
 class _WaitingState extends State<Waiting> {
-
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
   DatabaseReference reference2 = FirebaseDatabase.instance.reference();
