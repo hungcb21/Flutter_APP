@@ -22,7 +22,6 @@ class _ChooseTimeState extends State<ChooseTime> {
   DateTime pickedDate;
   @override
   void initState() {
-
     // TODO: implement initState
     super.initState();
     pickedDate= DateTime.now();
@@ -41,7 +40,6 @@ class _ChooseTimeState extends State<ChooseTime> {
         datalist.add(data);
       }
       setState(() {
-
       });
     });
   }

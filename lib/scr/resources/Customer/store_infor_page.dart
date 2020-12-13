@@ -61,7 +61,7 @@ class DetailStore extends StatelessWidget {
                                 Container(
                                   height: 200,
                                   width: 250,
-                                  child: Text(description??"chua co",style: TextStyle(fontSize: 25),),
+                                  child: Text(description??"",style: TextStyle(fontSize: 25),),
                                 ),
                                 SizedBox(
                                   width: 157,
