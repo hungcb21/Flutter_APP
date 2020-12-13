@@ -1,13 +1,11 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/blocs/login_bloc.dart';
+import 'package:flutter_app/scr/resources/Customer/sign_up_page.dart';
 import 'package:flutter_app/scr/resources/dialog/loading_dialog.dart';
 import 'package:flutter_app/scr/resources/dialog/msg_dialog.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/forgot_pass_page.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/main_menu_page.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/sign_up_page.dart';
+
+import 'forgot_pass_page.dart';
+import 'main_menu_page.dart';
 class Login extends StatefulWidget {
   @override
   _ExampleState createState() => _ExampleState();

@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/choose_time_page.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/demo2.dart';
 import 'package:flutter_app/scr/resources/dialog/confirm_dialog.dart';
 class Comfirm extends StatefulWidget {
   final String time,ten,address,district,city,day,storeUid;

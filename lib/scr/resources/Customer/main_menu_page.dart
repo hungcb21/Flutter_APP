@@ -19,7 +19,7 @@ class _State extends State<HomePage> {
   int _currentIndex = 0;
   final List<Widget> _childrenf=
   [ ListStore(),
-    Status(),
+    Account(),
     Demo(),
     History(),
     History(),

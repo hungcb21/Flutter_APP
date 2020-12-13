@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/scr/resources/Customer/account_page.dart';
 import 'package:flutter_app/scr/resources/Customer/choose_time_page.dart';
 
 import 'package:flutter_app/scr/resources/Customer/choose_user_page.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ChooseUser(),
+      home: HomePage(),
     );
   }
 }
