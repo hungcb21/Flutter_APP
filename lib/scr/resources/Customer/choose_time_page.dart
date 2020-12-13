@@ -12,6 +12,7 @@ class ChooseTime extends StatefulWidget {
 
 class _ChooseTimeState extends State<ChooseTime> {
   Query query;
+  bool isEnabled = false ;
   List<Time> datalist=[];
   int _selectedIndex = 0;
   _onSelected(int index) {
@@ -21,6 +22,7 @@ class _ChooseTimeState extends State<ChooseTime> {
   DateTime pickedDate;
   @override
   void initState() {
+
     // TODO: implement initState
     super.initState();
     pickedDate= DateTime.now();
@@ -39,6 +41,7 @@ class _ChooseTimeState extends State<ChooseTime> {
         datalist.add(data);
       }
       setState(() {
+
       });
     });
   }
@@ -68,12 +71,8 @@ class _ChooseTimeState extends State<ChooseTime> {
                           crossAxisCount: 5),
                       itemCount: datalist.length,itemBuilder:
                         (_,index){
-
-                      // return CardUI(datalist[index].time,datalist[index].status);
                      return InkWell(
-
                        child: Container(
-
                          color: _selectedIndex != null && _selectedIndex == index
                              ? Colors.blue
                              : Colors.white,
@@ -90,6 +89,7 @@ class _ChooseTimeState extends State<ChooseTime> {
                        onTap: ()=>setState(() {
                          _onSelected(index);
                          time=datalist[index].time;
+                         isEnabled=true;
                        }),);
                     },
                     )
@@ -118,9 +118,7 @@ class _ChooseTimeState extends State<ChooseTime> {
                         child: RaisedButton(
                           color: Colors.blueAccent,
                           shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
-                          onPressed:(){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Comfirm(time,widget.name,widget.address,widget.district,widget.city,"${pickedDate.day}/${pickedDate.month}/${pickedDate.year}",widget.uid)));
-                          },
+                          onPressed:isEnabled?()=>_onNextClicked():null,
                           child: Text("Next",style: TextStyle(color: Colors.white),),
                         ),
                       ),
@@ -133,6 +131,9 @@ class _ChooseTimeState extends State<ChooseTime> {
         ),
       ),
     );
+  }
+  _onNextClicked(){
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>Comfirm(time,widget.name,widget.address,widget.district,widget.city,"${pickedDate.day}/${pickedDate.month}/${pickedDate.year}",widget.uid)));
   }
   _pickDate()
   async{

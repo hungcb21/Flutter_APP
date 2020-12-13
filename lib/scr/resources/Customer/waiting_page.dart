@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/scr/resources/Customer/choose_time_page.dart';
 class Waiting extends StatefulWidget {
   @override
   _WaitingState createState() => _WaitingState();
@@ -117,7 +118,7 @@ class _WaitingState extends State<Waiting> {
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.all(
                                                         Radius.circular(8))),
-                                                onPressed: (){},
+                                                onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>ChooseTime(snapshot.key,snapshot.value["NameStore"],snapshot.value["Address"],snapshot.value["District"],snapshot.value["City"])));},
                                                 child: Text("Change schedule",
                                                   style: TextStyle(
                                                       color: Colors.white),),

@@ -66,7 +66,7 @@ class _ListStoreState extends State<ListStore> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Image.network(snapshot.value["Image"],height: 92,width: 124,),
+                              Image.network(snapshot.value["Image"],height: 92,width: 200,),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
