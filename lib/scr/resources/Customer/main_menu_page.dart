@@ -51,39 +51,50 @@ class _State extends State<HomePage> {
          ],
        ),
          body: _childrenf[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          selectedItemColor: Colors.white,
-          onTap: (int index){setState(() {
-            _currentIndex= index;
-          });},
-          items: [
-          BottomNavigationBarItem(
-          icon: Icon(Icons.article_outlined,color: Colors.black,),
-          label: "News",
-          backgroundColor: Colors.blue
-        ),
-          BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle,color: Colors.black),
-          label: "Account",
-              backgroundColor: Colors.blue
-        ),
-          BottomNavigationBarItem(
-          icon: Icon(Icons.assistant_outlined,color: Colors.black),
-          label: "Options",
-              backgroundColor: Colors.blue
-        ),
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(
+              canvasColor: Colors.white,
+              primaryColor: Colors.black,
+              textTheme: Theme.of(context).textTheme.copyWith(
+                  caption: TextStyle(color: Colors.black)
+              )
+          ),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _currentIndex,
+            // selectedItemColor: Colors.white,
+            onTap: (int index){setState(() {
+              _currentIndex= index;
+            });},
+            items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.autorenew_outlined,color: Colors.black,),
-                label: "History",
-                backgroundColor: Colors.blue
-            ),
+            icon: Icon(Icons.home,color: Colors.black,),
+            label:"Home",
+            backgroundColor: Colors.white
+          ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.waves_outlined,color: Colors.black,),
-                label: "Menu",backgroundColor: Colors.blue
+            icon: Icon(Icons.account_circle,color: Colors.black),
+            label: "Account",
+                backgroundColor: Colors.white
+          ),
+            BottomNavigationBarItem(
+            icon: Icon(Icons.assistant_outlined,color: Colors.black),
+            label: "Options",
+                backgroundColor: Colors.white,
 
-            ),
-          ],
+          ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.autorenew_outlined,color: Colors.black,),
+                  label: "History",
+                  backgroundColor: Colors.white
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.waves_outlined,color: Colors.black,),
+                  label: "Menu",backgroundColor: Colors.white
+
+              ),
+            ],
+          ),
         ),
         ),
     );

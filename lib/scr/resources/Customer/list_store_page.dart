@@ -28,7 +28,6 @@ class _ListStoreState extends State<ListStore> {
           Store data = new Store(
               values[key]["Image"],
               values[key]["NameStore"]
-
           );
           print(values[keys]);
          datalist.add(data);
@@ -50,44 +49,50 @@ class _ListStoreState extends State<ListStore> {
               child: Column(
                 children: <Widget>[
                   Text("Barbershop available",style: TextStyle(fontSize: 25,color: Colors.white),),
-                  FirebaseAnimatedList(shrinkWrap: true,
-                      query: query,itemBuilder:(BuildContext context,
-                      DataSnapshot snapshot,Animation<double> animation,int index){
-                    return InkWell(
-                      onTap: (){Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context)=>DetailStore(index,snapshot.value["NameStore"],snapshot.value["Image"],snapshot.value["City"],
-                              snapshot.value["District"],snapshot.value["Address"],snapshot.value["Description"]
-                          ,snapshot.key)));},
-                      child: Card(
-                        color: Color(0xFF383443) ,
-                        elevation: 30,
-                        child: Row(
-                          children: [
-                            Image.network(snapshot.value["Image"],height: 92,width: 124,),
-                            Column(
-                              children: [
-                                Text(snapshot.value["NameStore"],style: TextStyle(fontSize: 20,color: Colors.white),),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                  child: SizedBox(
-                                    width: 140,
-                                    height: 30,
-                                    child: RaisedButton(
-                                      color: Colors.deepOrangeAccent,
-                                      shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
-                                      onPressed: (){},
-                                      child: Text("Booking",style: TextStyle(color: Colors.white),),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: FirebaseAnimatedList(shrinkWrap: true,
+                        query: query,itemBuilder:(BuildContext context,
+                        DataSnapshot snapshot,Animation<double> animation,int index){
+                      return InkWell(
+                        onTap: (){Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context)=>DetailStore(index,snapshot.value["NameStore"],snapshot.value["Image"],snapshot.value["City"],
+                                snapshot.value["District"],snapshot.value["Address"],snapshot.value["Description"]
+                            ,snapshot.key)));},
+                        child: Card(
+                          color: Color(0xFF383443) ,
+                          elevation: 30,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Image.network(snapshot.value["Image"],height: 92,width: 124,),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(snapshot.value["NameStore"],style: TextStyle(fontSize: 20,color: Colors.white),),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                    child: SizedBox(
+                                      width: 140,
+                                      height: 30,
+                                      child: RaisedButton(
+                                        color: Colors.deepOrangeAccent,
+                                        shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
+                                        onPressed: (){},
+                                        child: Text("Booking",style: TextStyle(color: Colors.white),),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                      }
+                      );
+                        }
+                    ),
                   ),
                   // Container(
                   //   color:Color(0xFF383443) ,

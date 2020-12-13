@@ -50,7 +50,7 @@ class DetailStore extends StatelessWidget {
                                           fit: BoxFit.fill,image: NetworkImage(image)
                                       )),
                                 ),
-                                Text(name,style: TextStyle(fontSize: 25),),
+                                Text(name,style: TextStyle(fontSize: 20),),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -61,7 +61,7 @@ class DetailStore extends StatelessWidget {
                                 Container(
                                   height: 200,
                                   width: 250,
-                                  child: Text(description??"chua co"),
+                                  child: Text(description??"chua co",style: TextStyle(fontSize: 25),),
                                 ),
                                 SizedBox(
                                   width: 157,

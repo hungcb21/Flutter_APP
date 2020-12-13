@@ -53,7 +53,6 @@ class _ChooseTimeState extends State<ChooseTime> {
             constraints: BoxConstraints.expand(),
             child: Column(
               children: [
-                Text(widget.uid),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 90, 0, 1),
                   child: ListTile(
