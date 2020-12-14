@@ -6,6 +6,7 @@ import 'package:flutter_app/scr/fire_base/fire_base-auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Class/UserClass.dart';
 import 'package:flutter_app/scr/resources/Customer/login_page.dart';
+import 'package:flutter_app/scr/resources/Customer/update_infor_page.dart';
 import 'package:provider/provider.dart';
 
 class Account extends StatefulWidget {
@@ -139,7 +140,9 @@ class _AccountState extends State<Account> {
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           160, 0, 0, 0),
-                                      child: Icon(Icons.arrow_forward_ios),
+                                      child: InkWell(
+                                        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateInfor()));},
+                                          child: Icon(Icons.arrow_forward_ios)),
                                     )
                                   ],
                                 ),
