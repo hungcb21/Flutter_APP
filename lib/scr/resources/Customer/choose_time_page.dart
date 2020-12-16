@@ -79,7 +79,6 @@ class _ChooseTimeState extends State<ChooseTime> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children:<Widget>[
                                 Text(datalist[index].time),
-                                Text(datalist[index].status),
                               ],
                             ),
                           )

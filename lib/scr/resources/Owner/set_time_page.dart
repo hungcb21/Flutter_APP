@@ -60,7 +60,7 @@ class _SetTimeState extends State<SetTime> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
-                          child: Text("Go gi do di"),
+                          child: Text("Thêm thời gian"),
                         ),
                         TextField(
                           style: TextStyle(fontSize: 18,color: Colors.black),
@@ -120,7 +120,6 @@ class _SetTimeState extends State<SetTime> {
     String time = _passController.text;
     Map<String,String> demo ={
       'time':ten,
-      'status':time,
     };
     ref.push().set(demo).then((value) {
       _userController.text="";

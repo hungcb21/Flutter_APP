@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/scr/resources/Customer/options_page.dart';
 import 'package:flutter_app/scr/resources/Owner/history_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/status_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/account_page.dart';
@@ -20,7 +21,7 @@ class _State extends State<HomePage> {
   final List<Widget> _childrenf=
   [ ListStore(),
     Account(),
-    Demo(),
+    Options(),
     History(),
     History(),
 
@@ -84,12 +85,12 @@ class _State extends State<HomePage> {
 
           ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.autorenew_outlined,color: Colors.black,),
+                  icon: Icon(Icons.history,color: Colors.black,),
                   label: "History",
                   backgroundColor: Colors.white
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.waves_outlined,color: Colors.black,),
+                  icon: Icon(Icons.menu,color: Colors.black,),
                   label: "Menu",backgroundColor: Colors.white
 
               ),

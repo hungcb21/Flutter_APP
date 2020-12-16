@@ -8,6 +8,8 @@ import 'package:flutter_app/scr/resources/Class/UserClass.dart';
 import 'package:flutter_app/scr/resources/Customer/login_page.dart';
 import 'package:flutter_app/scr/resources/Customer/update_infor_page.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class Account extends StatefulWidget {
   @override
@@ -34,6 +36,16 @@ class _AccountState extends State<Account> {
         });
       });
     });
+
+    DateFormat dateFormat = new DateFormat.Hm();
+    DateTime open = dateFormat.parse("10:30");
+    DateTime close = dateFormat.parse("15:30");
+    DateTime now = DateTime.now();
+
+    print("open ${open}");
+    print("close ${close}");
+    print("now ${now}");
+    print(DateTime.parse('2018-09-07T17:29:12+02:00').isUtc);
   }
   @override
   FirebaseAuth firebaseAuth;
