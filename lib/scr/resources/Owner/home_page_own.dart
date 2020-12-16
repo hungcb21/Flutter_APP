@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Owner/dashboard_page.dart';
 import 'package:flutter_app/scr/resources/Owner/history_own_page.dart';
+import 'package:flutter_app/scr/resources/Owner/option_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/status_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/account_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/choose_time_page.dart';
@@ -21,7 +22,7 @@ class _State extends State<HomePageOwn> {
   final List<Widget> _childrenf=
   [
     Dashboard(),
-    Dashboard(),
+    OptionsOwn(),
     Dashboard(),
     Dashboard(),
     Dashboard(),
