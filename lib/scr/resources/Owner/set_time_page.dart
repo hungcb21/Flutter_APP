@@ -50,66 +50,66 @@ class _SetTimeState extends State<SetTime> {
           ),
         ),
         body: Container(
-          child: Column(
-              children:<Widget> [
-                Center(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
-                          child: Text("Thêm thời gian"),
-                        ),
-                        TextField(
-                          style: TextStyle(fontSize: 18,color: Colors.black),
-                          controller: _userController,
-                          decoration: InputDecoration(labelText: "1",
-                              labelStyle:TextStyle( color: Colors.black,fontSize:18)),
-                        ),
-                        TextField(
-                          style: TextStyle(fontSize: 18,color: Colors.black),
-                          controller: _passController,
-                          decoration: InputDecoration(labelText: "12",
-                              labelStyle:TextStyle( color: Colors.black,fontSize:18)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                          child: SizedBox(
-                            width: 140,
-                            height: 40,
-                            child: RaisedButton(
-                              color: Colors.blueAccent,
-                              shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
-                              onPressed:onLoginCliked,
-                              child: Text("Login",style: TextStyle(color: Colors.white),),
+          child: SingleChildScrollView(
+            child: Column(
+                children:<Widget> [
+                  Center(
+                    child: Container(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+                              child: Text("Thêm thời gian",style: TextStyle(fontSize: 20),),
                             ),
-                          ),
+                            TextField(
+                              style: TextStyle(fontSize: 18,color: Colors.black),
+                              controller: _userController,
+                              decoration: InputDecoration(labelText: "Thời gian",
+                                  hintText: "Thời gian phải có AM hoặc PM VD:7.00AM",
+                                  labelStyle:TextStyle( color: Colors.black,fontSize:18)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                              child: SizedBox(
+                                width: 140,
+                                height: 40,
+                                child: RaisedButton(
+                                  color: Colors.blueAccent,
+                                  shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
+                                  onPressed:onLoginCliked,
+                                  child: Text("Thêm",style: TextStyle(color: Colors.white),),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 400,
+                              height: 400,
+                              child: FirebaseAnimatedList(shrinkWrap: true,
+                                      reverse: true,
+                                      query: query,itemBuilder:(BuildContext context,
+                                          DataSnapshot snapshot,Animation<double> animation,int index){
+                                        Map demo= snapshot.value;
+                                        return new ListTile(
+                                          trailing: IconButton(icon: Icon(Icons.delete),onPressed: ()=>
+                                              ref.child(snapshot.key).remove(),),
+                                          title: new Text(snapshot.value["time"]+"\n"),
+                                          onTap: (){
+                                            String ten = _userController.text;
+                                            ref.child(snapshot.key).update({
+                                              'ten':ten
+                                            }).then((value) { _userController.text="";});},
+                                        );
+                                      },
+                                    ),
+                            ),
+                          ],
                         ),
-                        Flexible(
-                            child: FirebaseAnimatedList(shrinkWrap: true,
-                              query: query,itemBuilder:(BuildContext context,
-                                  DataSnapshot snapshot,Animation<double> animation,int index){
-                                Map demo= snapshot.value;
-                                return new ListTile(
-                                  trailing: IconButton(icon: Icon(Icons.accessible_rounded),onPressed: ()=>
-                                      ref.child(snapshot.key).remove(),),
-                                  title: new Text(snapshot.value["time"]+"\n"),
-                                  onTap: (){
-                                    String ten = _userController.text;
-                                    ref.child(snapshot.key).update({
-                                      'ten':ten
-                                    }).then((value) { _userController.text="";});},
-                                );
-                              },
-                            )
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ]
+                ]
+            ),
           ),
         ),
       ),

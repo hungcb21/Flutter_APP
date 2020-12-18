@@ -8,15 +8,12 @@ class _OptionsOwnState extends State<OptionsOwn> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text(""),
-          backgroundColor: Color(0xFF383443),
-          bottom: AppBar(
-            title: Text(
-              "Options", style: TextStyle(fontSize: 25, color: Colors.white),),
-            backgroundColor: Color(0xFF383443),
-          ),
+          title: Text(
+            "Options", style: TextStyle(fontSize: 25, color: Colors.black),),
+          backgroundColor: Colors.yellow,
         ),
         body: Container(
           constraints: BoxConstraints.expand(),
