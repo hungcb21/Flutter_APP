@@ -91,9 +91,9 @@ class _AccountState extends State<Account> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(ten,style: TextStyle(fontSize: 20,color: Colors.black),),
+                                  Text(ten??"",style: TextStyle(fontSize: 20,color: Colors.black),),
                                   Text("(+84)"+sdt,style: TextStyle(fontSize: 16,color: Colors.black),),
-                                  Text(email,style: TextStyle(fontSize: 16,color: Colors.black),),
+                                  Text(email??"",style: TextStyle(fontSize: 16,color: Colors.black),),
                                 ],
                               ),
                             )
@@ -179,17 +179,20 @@ class _AccountState extends State<Account> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 140,
-                        height: 40,
-                        child: RaisedButton(
-                          color: Colors.red,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(15))),
-                          onPressed: _signOut,
-                          child: Text("Log out",
-                            style: TextStyle(color: Colors.white,fontSize: 20),),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
+                        child: SizedBox(
+                          width: 140,
+                          height: 40,
+                          child: RaisedButton(
+                            color: Colors.red,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(15))),
+                            onPressed: _signOut,
+                            child: Text("Log out",
+                              style: TextStyle(color: Colors.white,fontSize: 20),),
+                          ),
                         ),
                       ),
                     ],

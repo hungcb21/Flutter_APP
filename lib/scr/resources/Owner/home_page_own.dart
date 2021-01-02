@@ -39,7 +39,9 @@ class _State extends State<HomePageOwn> {
           backgroundColor: Colors.yellow,
           elevation: 0,
           leading:   InkWell(
-            onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePageOwn()));},
+            onTap: () {Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (c) => HomePageOwn()),
+                    (route) => false);},
             child: Container(
               child: Image.asset("images/left-arrow2.png"),
             ),

@@ -37,6 +37,7 @@ class _AccompishedState extends State<Accompished> {
               padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
               child:FirebaseAnimatedList(
                   shrinkWrap: true,
+                  reverse: true,
                   query: query,itemBuilder:(BuildContext context,
               DataSnapshot snapshot,Animation<double> animation,int index)
                   {
@@ -51,11 +52,11 @@ class _AccompishedState extends State<Accompished> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
-                                    child: Text(snapshot.value["Time"]),
+                                    child: Text("Time: "+snapshot.value["Time"],style: TextStyle(fontSize: 15),),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
-                                    child: Text(snapshot.value["Date"]),
+                                    child: Text("Date: "+snapshot.value["Date"],style: TextStyle(fontSize: 15),),
                                   ),
                                 ],
                               ),
@@ -72,11 +73,11 @@ class _AccompishedState extends State<Accompished> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                                child: Text(snapshot.value["NameStore"]),
+                                child: Text("Barbershop :"+snapshot.value["NameStore"],style: TextStyle(fontSize: 15),),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                                child: Text(snapshot.value["Address"]),
+                                padding: const EdgeInsets.fromLTRB(30, 0, 0, 30),
+                                child: Text("Brach :"+snapshot.value["Address"],style: TextStyle(fontSize: 15),),
                               ),
                             ],
                           )

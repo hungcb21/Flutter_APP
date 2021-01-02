@@ -17,6 +17,8 @@ import 'package:flutter_app/scr/resources/Owner/home_page_own.dart';
 
 import 'package:flutter_app/scr/resources/Owner/login_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/set_time_page.dart';
+import 'package:flutter_app/scr/resources/Owner/status_page.dart';
+import 'package:flutter_app/scr/resources/Owner/status_page2.dart';
 import 'package:flutter_app/scr/resources/Owner/waiting_own_page.dart';
 
 class MyApp extends StatelessWidget{
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePageOwn(),
+      home: HomePage(),
     );
   }
 }

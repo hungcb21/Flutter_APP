@@ -11,6 +11,7 @@ class Comfirm extends StatefulWidget {
 }
 
 class _ComfirmState extends State<Comfirm> {
+
   FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
   DatabaseReference ref = FirebaseDatabase.instance.reference();
   String name,email,sdt;
@@ -152,7 +153,6 @@ class _ComfirmState extends State<Comfirm> {
                           shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
                           onPressed:(){
                             _onConfirmClick();
-                            ConfirmDialog.showConfirmDialog(context, "", "");
                           },
                           child: Text("Booking",style: TextStyle(color: Colors.white),),
                         ),
@@ -187,5 +187,6 @@ class _ComfirmState extends State<Comfirm> {
     };
     ref.child("Stores").child(widget.storeUid).child("Waiting").child(userUID).set(waiting);
     ref.child("Users").child(userUID).child("Waiting").child(widget.storeUid).set(waitingCustomer);
+    ConfirmDialog.showConfirmDialog(context, "", "");
   }
 }

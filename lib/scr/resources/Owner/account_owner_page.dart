@@ -7,7 +7,6 @@ class Account_Own extends StatefulWidget {
   @override
   _Account_OwnState createState() => _Account_OwnState();
 }
-
 class _Account_OwnState extends State<Account_Own> {
   String ten,sdt,email;
   @override
@@ -70,9 +69,9 @@ class _Account_OwnState extends State<Account_Own> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(ten,style: TextStyle(fontSize: 20,color: Colors.black),),
-                                  Text("(+84)"+sdt,style: TextStyle(fontSize: 16,color: Colors.black),),
-                                  Text(email,style: TextStyle(fontSize: 16,color: Colors.black),),
+                                  Text(ten??"",style: TextStyle(fontSize: 20,color: Colors.black),),
+                                  Text("(+84)"+sdt??"",style: TextStyle(fontSize: 16,color: Colors.black),),
+                                  Text(email??"",style: TextStyle(fontSize: 16,color: Colors.black),),
                                 ],
                               ),
                             )

@@ -62,43 +62,42 @@ class _Demo2State extends State<Demo2> {
                 ),
                 Expanded(
                     child: StreamBuilder(
-                      stream: FirebaseDatabase.instance.reference().child("Stores").child("W7tgDzOmELYOkuFddzDpZDi8DpE3").child("Time").onValue,
-                      builder:  (BuildContext context,AsyncSnapshot<Event> snapshot){
-                        if(snapshot.hasData)
+                        stream: FirebaseDatabase.instance.reference().child("Stores").child("W7tgDzOmELYOkuFddzDpZDi8DpE3").child("Time").onValue,
+                        builder:  (BuildContext context,AsyncSnapshot snapshot){
+                          if(snapshot.hasData)
                           {
-
-                            Map<dynamic,dynamic> map = snapshot.data.snapshot.value;
-                            datalist.clear();
-                            map.forEach((dynamic, value) =>
-                            datalist.add(new Time(value["time"], value["status"])));
+                            Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
+                            List<dynamic> list = map.values.toList()..sort((a, b) => a['time'].compareTo(b['time']));
                             return GridView.builder(
+                              shrinkWrap: true,
                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 5),
-                              itemCount: datalist.length,itemBuilder:
-                                (_,index){
-                              return InkWell(
-                                child: Container(
-                                    color: _selectedIndex != null && _selectedIndex == index
-                                        ? Colors.blue
-                                        : Colors.white,
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children:<Widget>[
-                                          Text(datalist[index].time),
-                                        ],
-                                      ),
-                                    )
-                                ),
-                                onTap: ()=>setState(() {
-                                  _onSelected(index);
-                                  time=datalist[index].time;
-                                  isEnabled=true;
-                                }),);
-                            },
+                              itemCount: list.length,
+                              itemBuilder:
+                                  (context,index){
+                                return InkWell(
+                                  child: Container(
+                                      color: _selectedIndex != null && _selectedIndex == index
+                                          ? Colors.blue
+                                          : Colors.white,
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children:<Widget>[
+                                            Text(list[index]['time'].toString()),
+                                          ],
+                                        ),
+                                      )
+                                  ),
+                                  onTap: ()=>setState(() {
+                                    _onSelected(index);
+                                    time=list[index]['time'].toString();
+                                    isEnabled=true;
+                                  }),);
+                              },
                             );
                           }
-                      }
+                        }
                     )
                 ),
                 Padding(

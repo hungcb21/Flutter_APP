@@ -3,21 +3,18 @@ import 'package:flutter_app/scr/blocs/login_bloc.dart';
 import 'package:flutter_app/scr/resources/Customer/sign_up_page.dart';
 import 'package:flutter_app/scr/resources/dialog/loading_dialog.dart';
 import 'package:flutter_app/scr/resources/dialog/msg_dialog.dart';
-
 import 'forgot_pass_page.dart';
 import 'main_menu_page.dart';
 class Login extends StatefulWidget {
   @override
   _ExampleState createState() => _ExampleState();
 }
-
 class _ExampleState extends State<Login> {
   LoginBloc bloc = new LoginBloc();
   TextEditingController _userController = new TextEditingController();
   TextEditingController _passController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home:Scaffold(
@@ -32,43 +29,24 @@ class _ExampleState extends State<Login> {
             ),
           ),
         ),
-        body: Center(
-          child: Container(
-            // decoration: BoxDecoration(
-            //     gradient:LinearGradient(
-            //         begin: Alignment.topCenter,
-            //         end: Alignment.bottomCenter,
-            //         colors: [
-            //           Color(0xFF73AEF5),
-            //           Color(0xFF61A4F1),
-            //           Color(0xFF478DE0),
-            //           Color(0xFF398AE5),
-            //         ],
-            //         stops: [0.1,0.4,0.7,0.9]
-            //     )
-            // ),
+        body: Container(
             color:Color(0xFF383443) ,
             padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
             constraints: BoxConstraints.expand(),
             child: SingleChildScrollView(
               child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 100, 0, 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-
                           Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Container(
-                                  width: 170,
-                                  height: 157,
-                                  child: new Image.asset("images/undraw_mobile_login_ikmv1.png"),),
+                                new Image.asset("images/undraw_mobile_login_ikmv1.png"),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -78,11 +56,11 @@ class _ExampleState extends State<Login> {
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                             builder: (context)=>SignUp()
-                                        ));
+                                        )
+                                        );
                                       },
                                       child: new Text("Sign Up",style: TextStyle(fontSize: 18,color: Colors.yellow),),
                                     ),
-
                                   ],
                                 ),
                                 Padding(
@@ -105,9 +83,8 @@ class _ExampleState extends State<Login> {
                                           decoration: InputDecoration(labelText: "User name or Email",
                                               errorText: snapshots.hasError ? snapshots.error:null,
                                               labelStyle:TextStyle( color: Colors.white,fontSize:18)),
-                                        ),)
-
-
+                                        ),
+                                        )
                                       ),
                                     ],
                                   ),
@@ -127,8 +104,8 @@ class _ExampleState extends State<Login> {
                                             decoration: InputDecoration(labelText: "Password",
                                                 errorText: snapshot.hasError ? snapshot.error : null,
                                                 labelStyle:TextStyle( color: Colors.white,fontSize:18)),
-                                          ),)
-
+                                          ),
+                                      )
                                     ),
                                   ],
                                 ),
@@ -170,7 +147,6 @@ class _ExampleState extends State<Login> {
               ),
             ),
           ),
-        ),
       ),
     );
   }
@@ -190,7 +166,6 @@ class _ExampleState extends State<Login> {
         });
       }
   }
-
 }
 
 

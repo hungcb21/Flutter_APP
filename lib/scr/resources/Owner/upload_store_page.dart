@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -248,6 +249,11 @@ class _UploadStoreState extends State<UploadStore> {
     if(isValid)
       {
         // LoadingDialog.showLoadingDialog(context, "Loading...");
+        String UID = _fireBaseAuth.currentUser.uid;
+        var store ={"Image":imageUrl,"NameStore":_nameStoreController.text,"Address":_addressController.text, "City":_cityController.text,"District":_districtController.text,"TimeStart":_timeStartController.text,"TimeEnd":_timeEndController.text,"Description":_descriptionController.text};
+        var ref = FirebaseDatabase.instance.reference().child("Search");
+        ref.child(_nameStoreController.text).child(UID).set(store).then((store){
+        });
         bloc.UploadStore(imageUrl,_nameStoreController.text, _addressController.text, _cityController.text, _districtController.text,_timeStartController.text,_timeEndController.text,_descriptionController.text,(){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePageOwn()));
           // LoadingDialog.hideLoadingDialog(context);

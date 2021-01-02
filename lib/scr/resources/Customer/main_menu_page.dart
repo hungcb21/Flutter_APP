@@ -1,4 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/scr/resources/Class/StoreClass.dart';
 import 'package:flutter_app/scr/resources/Customer/options_page.dart';
 import 'package:flutter_app/scr/resources/Owner/history_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/status_page.dart';
@@ -26,32 +28,14 @@ class _State extends State<HomePage> {
     History(),
 
   ];
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         extendBodyBehindAppBar: true,
-       appBar: AppBar(
-         backgroundColor: Colors.transparent,
-         elevation: 0,
-         leading:   InkWell(
-           onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));},
-           child: Container(
-             child: Image.asset("images/left-arrow2.png"),
-           ),
-         ),
-         actions: [
-           InkWell(
-             onTap: () {},
-             child: Container(
-               child: Image.asset("images/magnifying-glass 1.png"),
-             ),
-           ),
-         ],
-       ),
-         body: _childrenf[_currentIndex],
+         body: Container(
+             child: _childrenf[_currentIndex]),
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
               canvasColor: Colors.white,
@@ -100,6 +84,8 @@ class _State extends State<HomePage> {
         ),
     );
   }
+
+
 
 
 }

@@ -64,7 +64,7 @@ class _Status2State extends State<Status2> {
           backgroundColor: Colors.yellow,
           elevation: 0,
           leading:   InkWell(
-            onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePageOwn()));},
+            onTap: () {Navigator.pop(context);},
             child: Container(
               child: Image.asset("images/left-arrow2.png"),
             ),
@@ -140,10 +140,11 @@ class _Status2State extends State<Status2> {
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                                     child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(name,style: TextStyle(fontSize: 15),),
-                                        Text("(+84)"+phone,style: TextStyle(fontSize: 15),),
-                                        Text(email,style: TextStyle(fontSize: 15),),
+                                        Text(name??"",style: TextStyle(fontSize: 15),),
+                                        Text("(+84)"+phone??"",style: TextStyle(fontSize: 15),),
+                                        Text(email??"",style: TextStyle(fontSize: 15),),
                                       ],
                                     )
                                   ),
@@ -163,10 +164,10 @@ class _Status2State extends State<Status2> {
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Text(address,style: TextStyle(fontSize: 15),),
-
+                                        Text(address??"",style: TextStyle(fontSize: 15),),
                                       ],
                                     ),
                                   ),

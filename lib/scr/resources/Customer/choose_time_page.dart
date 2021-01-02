@@ -39,6 +39,7 @@ class _ChooseTimeState extends State<ChooseTime> {
             values[key]["status"]
         );
         datalist.add(data);
+        datalist.sort((a,b)=>a.time.compareTo(b.time));
       }
       setState(() {
       });
@@ -65,6 +66,7 @@ class _ChooseTimeState extends State<ChooseTime> {
                 ),
                 Expanded(
                     child: new GridView.builder(
+                      shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 5),
                       itemCount: datalist.length,itemBuilder:

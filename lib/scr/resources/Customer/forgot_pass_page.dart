@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/blocs/sign_up_bloc.dart';
+import 'package:flutter_app/scr/resources/Customer/choose_user_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/login_page.dart';
 
 import '../dialog/loading_dialog.dart';
@@ -81,7 +82,7 @@ class _ForgotPassState extends State<ForgotPass> {
       LoadingDialog.showLoadingDialog(context, "Loading...");
       FirebaseAuth.instance.sendPasswordResetEmail(email: _emailController.text).then((value){
         LoadingDialog.hideLoadingDialog(context);
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>ChooseUser()));
       } );
 
   }

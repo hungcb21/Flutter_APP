@@ -89,8 +89,8 @@ class Status extends StatelessWidget {
                                         Icon(Icons.account_circle_sharp),
                                         Column(
                                           children: [
-                                            Text(snapshot.value["NameCustomer"],style: TextStyle(fontSize: 15),),
-                                            Text("(+84)"+snapshot.value["PhoneCustomer"],style: TextStyle(fontSize: 15),),
+                                            Text(snapshot.value["NameCustomer"]??"",style: TextStyle(fontSize: 15),),
+                                            Text("(+84)"+snapshot.value["PhoneCustomer"]??"",style: TextStyle(fontSize: 15),),
                                           ],
                                         ),
 
@@ -99,7 +99,7 @@ class Status extends StatelessWidget {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(80, 0, 0, 0),
-                                      child: Text(snapshot.value["Day"]+" "+snapshot.value["Time"],style: TextStyle(fontSize: 15)),
+                                      child: Text(snapshot.value["Day"]+" "+snapshot.value["Time"]??"",style: TextStyle(fontSize: 15)),
                                     ),
                                   ],
                                 ),
@@ -109,7 +109,7 @@ class Status extends StatelessWidget {
                                     Row(
                                       children: [
                                         Icon(Icons.add_location),
-                                        Text(snapshot.value["Address"], style: TextStyle(fontSize: 15)),
+                                        Text(snapshot.value["Address"]??"", style: TextStyle(fontSize: 15)),
                                       ],
                                     ),
                                     Padding(
@@ -130,57 +130,4 @@ class Status extends StatelessWidget {
         ),
       );
     }
-  }
-  Widget CardUI(String name, String phone) {
-    return InkWell(
-      onTap: () {},
-      child: Card(
-          elevation: 10,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.account_circle_sharp),
-                        Column(
-                          children: [
-                            Text(name, style: TextStyle(fontSize: 15),),
-                            Text(phone, style: TextStyle(fontSize: 15),),
-                          ],
-                        ),
-
-                      ],
-
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(180, 0, 0, 0),
-                      child: Text("Today 9.00", style: TextStyle(fontSize: 15)),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.add_location),
-                        Text(name, style: TextStyle(fontSize: 15)),
-
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(100, 0, 0, 0),
-                      child: Icon(Icons.arrow_forward_ios_outlined),
-                    )
-                  ],
-                )
-              ],
-            ),
-          )
-      ),
-    );
   }

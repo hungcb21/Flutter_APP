@@ -85,8 +85,9 @@ class _SetTimeState extends State<SetTime> {
                             Container(
                               width: 400,
                               height: 400,
-                              child: FirebaseAnimatedList(shrinkWrap: true,
-                                      reverse: true,
+                              child: FirebaseAnimatedList(
+                                shrinkWrap: true,
+
                                       query: query,itemBuilder:(BuildContext context,
                                           DataSnapshot snapshot,Animation<double> animation,int index){
                                         Map demo= snapshot.value;

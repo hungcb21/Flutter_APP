@@ -23,16 +23,17 @@ class _Demo12State extends State<Demo12> {
 
   FirebaseMessaging firebaseMessaging = FirebaseMessaging();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    firebaseMessaging.getToken().then((token)
-    {
+    firebaseMessaging.getToken().then((token) {
       print(token);
     });
     // registerNotification();
     // configLocalNotification();
   }
+
   void configLocalNotification() {
     var initializationSettingsAndroid =
     new AndroidInitializationSettings('app_icon');
@@ -41,6 +42,7 @@ class _Demo12State extends State<Demo12> {
         initializationSettingsAndroid, initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
+
   void registerNotification() {
     firebaseMessaging.requestNotificationPermissions();
     firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
@@ -65,6 +67,7 @@ class _Demo12State extends State<Demo12> {
       //     .update({'pushToken': token});
     });
   }
+
   void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
       Platform.isAndroid
@@ -95,25 +98,28 @@ class _Demo12State extends State<Demo12> {
   }
 
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Demo"
-            ),
-            Text(
-              "Demo",
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headline4,
-            ),
-          ],
+    return MaterialApp(
+      home:
+      Scaffold(
+        appBar: AppBar(
+          // title: Text(widget.title),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                  "Demo"
+              ),
+              Text(
+                "Demo",
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline4,
+              ),
+            ],
+          ),
         ),
       ),
     );
