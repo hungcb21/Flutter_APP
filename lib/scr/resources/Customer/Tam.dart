@@ -1,127 +1,128 @@
-import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_app/scr/resources/Class/TimeClass.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/comfirm_page.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:provider/provider.dart';
+import 'dart:io' show Platform;
+import 'package:http/http.dart' as http;
 
-import 'choose_time_page.dart';
-import '../dialog/confirm_dialog.dart';
-class Demo12 extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+class MyHomePage extends StatefulWidget {
   @override
-  _Demo12State createState() => _Demo12State();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _Demo12State extends State<Demo12> {
+class _MyHomePageState extends State<MyHomePage> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  final TextEditingController _textController = TextEditingController();
 
-
-  FirebaseMessaging firebaseMessaging = FirebaseMessaging();
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  String iOSDevice = 'e0rt5GJxQXCIyJWzZL4qnq:APA91bG3SvJVbD3trWq-qNWzhlJnTh0tKkAXpa2ugReNzCvnfpr-cFr7hbJ-rl1yGh9yUKyuX1iqu26H-bp2VCq-eUlZnp1A-oGdMpbGAT89ymFIXMzVainLi0ELIPjX9EGEpkIqY48U';
+  String androidSimul = 'fNb83UmUTK-uRlQhw2O_tC:APA91bEma451mR4zbYQM4sIx_K-MXVfw1VsLffLBLCOETEuuBZPgoaxqP63z3c-LvUQW4xCw4JvgVTUQjGKLZOWpMTXaKnZqOX2RZffIMH7j6pHdFiEsDDlGjJzTKumFzuztCwni7dYh';
 
   @override
   void initState() {
     super.initState();
-    firebaseMessaging.getToken().then((token) {
-      print(token);
-    });
-    // registerNotification();
-    // configLocalNotification();
-  }
-
-  void configLocalNotification() {
-    var initializationSettingsAndroid =
-    new AndroidInitializationSettings('app_icon');
-    var initializationSettingsIOS = new IOSInitializationSettings();
-    var initializationSettings = new InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  }
-
-  void registerNotification() {
-    firebaseMessaging.requestNotificationPermissions();
-    firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
-      print('onMessage: $message');
-      Platform.isAndroid
-          ? showNotification(message['notification'])
-          : showNotification(message['aps']['alert']);
-      return;
-    }, onResume: (Map<String, dynamic> message) {
-      print('onResume: $message');
-      return;
-    }, onLaunch: (Map<String, dynamic> message) {
-      print('onLaunch: $message');
-      return;
-    });
-
-    firebaseMessaging.getToken().then((token) {
-      print('token: $token');
-      // FirebaseFirestore.instance
-      //     .collection('users')
-      //     .doc(currentUserId)
-      //     .update({'pushToken': token});
-    });
-  }
-
-  void showNotification(message) async {
-    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-      Platform.isAndroid
-          ? 'com.example.flutter_app'
-          : 'com.example.flutter_app',
-      'Flutter chat demo',
-      'your channel description',
-      playSound: true,
-      enableVibration: true,
-      importance: Importance.Max,
-      priority: Priority.High,
+    if (Platform.isIOS) {
+      _firebaseMessaging.requestNotificationPermissions(IosNotificationSettings());
+    }
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+      },
     );
-    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
-    var platformChannelSpecifics = new NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-
-    print(message);
-//    print(message['body'].toString());
-//    print(json.encode(message));
-
-    await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
-        message['body'].toString(), platformChannelSpecifics,
-        payload: json.encode(message));
-
-//    await flutterLocalNotificationsPlugin.show(
-//        0, 'plain title', 'plain body', platformChannelSpecifics,
-//        payload: 'item x');
   }
 
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home:
-      Scaffold(
-        appBar: AppBar(
-          // title: Text(widget.title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                  "Demo"
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("sdasd"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            RaisedButton(
+              child: Text('Get Token',
+                  style: TextStyle(fontSize: 20)),
+              onPressed: () {
+                _firebaseMessaging.getToken().then((val) {
+                  print('Token: '+val);
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            SizedBox(
+              width: 260,
+              child: TextFormField(
+                validator: (input) {
+                  if(input.isEmpty) {
+                    return 'Please type an message';
+                  }
+                },
+                decoration: InputDecoration(
+                    labelText: 'Message'
+                ),
+                controller: _textController,
               ),
-              Text(
-                "Demo",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline4,
-              ),
-            ],
-          ),
+            ),
+            SizedBox(height: 20),
+            RaisedButton(
+              child: Text('Send a message to Androidsadsda',
+                  style: TextStyle(fontSize: 20)),
+              onPressed: () {
+                sendAndRetrieveMessage(androidSimul);
+              },
+            ),
+            SizedBox(height: 20),
+            RaisedButton(
+              child: Text('Send a message to iOS',
+                  style: TextStyle(fontSize: 20)),
+              onPressed: () {
+                sendAndRetrieveMessage(iOSDevice);
+              },
+            )
+          ],
         ),
       ),
     );
+  }
+
+  final String serverToken = 'AAAAE20gnpk: APA91bFXei1SgxBwx7roKJBTlQ8VI2WoDv3nng1SOT3CdRmAmhJwkzExUYL7aHSkJkuK1nTKOa1tyUe7QRZ4NDyx-WW52woDv3nng1SOT3CdRmAmhJwkzExUYL7aHSkJkuK1nTKOa1tyUe7QRZ4NDyx-WW52w324ChnoThLoT843EUZTM4NDyx-WW52w324ChnoThLoZ5tm';
+
+  Future<Map<String, dynamic>> sendAndRetrieveMessage(String token) async {
+    await http.post(
+      'https://fcm.googleapis.com/fcm/send',
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'key=$serverToken',
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          'notification': <String, dynamic>{
+            'body': "sad",
+            'title': 'FlutterCloudMessage'
+          },
+          'priority': 'high',
+          'data': <String, dynamic>{
+            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+            'id': '10',
+            'status': 'done'
+          },
+          'to': token,
+        },
+      ),
+    );
+
+    _textController.text = '';
+    final Completer<Map<String, dynamic>> completer =
+    Completer<Map<String, dynamic>>();
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        completer.complete(message);
+      },
+    );
+
+    return completer.future;
   }
 }

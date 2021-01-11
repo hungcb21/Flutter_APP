@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/scr/resources/Customer/choose_user_page.dart';
 import 'package:flutter_app/scr/resources/Owner/login_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/updateinfo_own_page.dart';
 class Account_Own extends StatefulWidget {
@@ -184,7 +185,7 @@ void _signOut() {
   FirebaseAuth.instance.signOut();
   runApp(
       new MaterialApp(
-        home: new LoginOwn(),
+        home: new ChooseUser(),
       )
   );
 }

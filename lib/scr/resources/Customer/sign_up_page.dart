@@ -26,10 +26,7 @@ class _SignUpState extends State<SignUp> {
         elevation: 0,
         leading:    InkWell(
           onTap: ()  {
-            Navigator.push(context,
-                MaterialPageRoute(
-                    builder: (context)=>Login()
-                ));
+            Navigator.pop(context);
           },
           child: Container(
             child: Image.asset("images/left-arrow2.png"),

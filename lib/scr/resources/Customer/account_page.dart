@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/scr/fire_base/fire_base-auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Class/UserClass.dart';
+import 'package:flutter_app/scr/resources/Customer/choose_user_page.dart';
 import 'package:flutter_app/scr/resources/Customer/login_page.dart';
 import 'package:flutter_app/scr/resources/Customer/update_infor_page.dart';
 import 'package:provider/provider.dart';
@@ -209,7 +210,7 @@ void _signOut() {
   FirebaseAuth.instance.signOut();
   runApp(
       new MaterialApp(
-        home: new Login(),
+        home: new ChooseUser(),
       )
   );
 }

@@ -252,12 +252,19 @@ class _UploadStoreState extends State<UploadStore> {
         String UID = _fireBaseAuth.currentUser.uid;
         var store ={"Image":imageUrl,"NameStore":_nameStoreController.text,"Address":_addressController.text, "City":_cityController.text,"District":_districtController.text,"TimeStart":_timeStartController.text,"TimeEnd":_timeEndController.text,"Description":_descriptionController.text};
         var ref = FirebaseDatabase.instance.reference().child("Search");
+        var ref3 = FirebaseDatabase.instance.reference().child("Stores");
+        var ref4 = FirebaseDatabase.instance.reference().child("Stores");
+        var like ={"Count":0};
+        var comment={"Count":0};
+
         ref.child(_nameStoreController.text).child(UID).set(store).then((store){
         });
         bloc.UploadStore(imageUrl,_nameStoreController.text, _addressController.text, _cityController.text, _districtController.text,_timeStartController.text,_timeEndController.text,_descriptionController.text,(){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePageOwn()));
           // LoadingDialog.hideLoadingDialog(context);
         });
+        ref4.child(UID).child("Comment").set(comment);
+        ref3.child(UID).child("Like").set(like);
       }
   }
   //ham upload hinh anh

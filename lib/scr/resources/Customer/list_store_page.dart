@@ -43,6 +43,7 @@ class _ListStoreState extends State<ListStore> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Color(0xFF383443),
         appBar: AppBar(
           backgroundColor: Color(0xFF383443) ,
               elevation:0,
@@ -79,79 +80,70 @@ class _ListStoreState extends State<ListStore> {
               ]
         ),
         body: Container(
-          color:Color(0xFF383443) ,
+          constraints: BoxConstraints.expand(),
           child: SingleChildScrollView(
             child: Center(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                child: Column(
-                  children: <Widget>[
-                    Text("Barbershop available",style: TextStyle(fontSize: 25,color: Colors.white),),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      child: Expanded(
-                        child: FirebaseAnimatedList(shrinkWrap: true,
-                            query: query,itemBuilder:(BuildContext context,
-                            DataSnapshot snapshot,Animation<double> animation,int index){
-                          return InkWell(
-                            onTap: (){Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context)=>DetailStore(index,snapshot.value["NameStore"],snapshot.value["Image"],snapshot.value["City"],
-                                    snapshot.value["District"],snapshot.value["Address"],snapshot.value["Description"]
-                                ,snapshot.key)));},
-                            child: Card(
-                              color: Color(0xFF383443) ,
-                              elevation: 30,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.network(snapshot.value["Image"],height: 92,width: 200,),
-                                  Column(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                    child: Column(
+                      children: <Widget>[
+                        Text("Barbershop available",style: TextStyle(fontSize: 25,color: Colors.white),),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Container(
+                            height: 600,
+                            child: new FirebaseAnimatedList(
+                                query: query,itemBuilder:(BuildContext context,
+                                DataSnapshot snapshot,Animation<double> animation,int index){
+                              return InkWell(
+                                onTap: (){Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context)=>DetailStore(index,snapshot.value["NameStore"],snapshot.value["Image"],snapshot.value["City"],
+                                        snapshot.value["District"],snapshot.value["Address"],snapshot.value["Description"],snapshot.value["TimeStart"],snapshot.value["TimeEnd"]
+                                    ,snapshot.key)));},
+                                child: Container(
+                                  height: 100,
+                                  color: Color(0xFF383443) ,
+                                  child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(snapshot.value["NameStore"],style: TextStyle(fontSize: 20,color: Colors.white),),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                        child: SizedBox(
-                                          width: 140,
-                                          height: 30,
-                                          child: RaisedButton(
-                                            color: Colors.deepOrangeAccent,
-                                            shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
-                                            onPressed: (){},
-                                            child: Text("Booking",style: TextStyle(color: Colors.white),),
+                                      Image.network(snapshot.value["Image"],height: 92,width: 200,),
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(snapshot.value["NameStore"],style: TextStyle(fontSize: 20,color: Colors.white),),
+                                          Text(snapshot.value["TimeStart"]+"-"+ snapshot.value["TimeEnd"],style: TextStyle(fontSize: 15,color: Colors.white),),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                            child: SizedBox(
+                                              width: 140,
+                                              height: 30,
+                                              child: RaisedButton(
+                                                color: Colors.deepOrangeAccent,
+                                                shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
+                                                onPressed: (){},
+                                                child: Text("Booking",style: TextStyle(color: Colors.white),),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
+                                        ],
+                                      )
                                     ],
-                                  )
-                                ],
-                              ),
+                                  ),
+                                ),
+                              );
+                                }
                             ),
-                          );
-                            }
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                    // Container(
-                    //   color:Color(0xFF383443) ,
-                    //   width: 350,
-                    //   height: 500,
-                    //   child: ListView.builder(itemCount: datalist.length,itemBuilder:
-                    //       (_,index){
-                    //     return InkWell(
-                    //       onTap: (){},
-                    //         child: ListUI(datalist[index].image,datalist[index].nameStore));
-                    //   },
-                    //   ),
-                    // )
-                  ],
+                  ),
                 ),
-              ),
-            ),
           ),
         ),
+
       ),
     );
   }
