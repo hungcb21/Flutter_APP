@@ -43,11 +43,11 @@ class _WaitingState extends State<Waiting> {
     @override
     Widget build(BuildContext context) {
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: Container(
             constraints: BoxConstraints.expand(),
             color: Colors.grey,
-            child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
                 child: Column(
@@ -195,7 +195,6 @@ class _WaitingState extends State<Waiting> {
                   ],
                 ),
               ),
-            ),
           ),
         ),
       );

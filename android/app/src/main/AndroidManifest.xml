@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_app">
    <application
-        android:label="flutter_app"
+        android:label="Ứng dụng đặt chỗ"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -46,7 +46,7 @@
            android:value="@string/facebook_app_id" />
        <provider
            android:name="com.facebook.FacebookContentProvider"
-           android:authorities="com.facebook.app.FacebookContentProvider[2808142909506652]"
+           android:authorities="com.facebook.app.FacebookContentProvider[317992756017759]"
            android:exported="false" />
     </application>
 </manifest>

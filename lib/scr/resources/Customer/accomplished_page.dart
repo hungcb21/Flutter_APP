@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 class Accompished extends StatefulWidget {
   @override
@@ -10,11 +11,12 @@ class Accompished extends StatefulWidget {
 class _AccompishedState extends State<Accompished> {
   FirebaseAuth firebaseUser = FirebaseAuth.instance;
   Query query;
+  String uid;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    var uid = firebaseUser.currentUser.uid;
+    uid = firebaseUser.currentUser.uid;
     DatabaseReference reference= FirebaseDatabase.instance.reference().child("Users").child(uid).child("Success");
     query=  FirebaseDatabase.instance.reference().child("Users").child(uid).child("Success");
     // reference.orderByKey().equalTo(uid).once().then((DataSnapshot snapshot){
@@ -28,11 +30,11 @@ class _AccompishedState extends State<Accompished> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
           constraints: BoxConstraints.expand(),
           color: Colors.grey,
-          child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
               child:FirebaseAnimatedList(
@@ -41,8 +43,46 @@ class _AccompishedState extends State<Accompished> {
                   query: query,itemBuilder:(BuildContext context,
               DataSnapshot snapshot,Animation<double> animation,int index)
                   {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    return InkWell(
+                      onLongPress: (){
+                        final action = CupertinoActionSheet(
+                          // title: Text(
+                          //   "Proto Coders Point", style: TextStyle(fontSize: 30),
+                          // ),
+                          // message: Text(
+                          //   "Select any action ",
+                          //   style: TextStyle(fontSize: 15.0),
+                          // ),
+                          actions: <Widget>[
+                            CupertinoActionSheetAction(
+                              child: Text("Xóa khỏi lịch sử"),
+                              isDefaultAction: true,
+                              onPressed: () {
+                                DatabaseReference refx=FirebaseDatabase.instance.reference();
+                                refx.child("Users").child(uid).child("Success").child(snapshot.key).remove();
+                                Navigator.of(context, rootNavigator: true).pop();
+                              },
+                            ),
+                            CupertinoActionSheetAction(
+                              child: Text("Xóa tất cả khỏi lịch sử"),
+                              isDestructiveAction: true,
+                              onPressed: () {
+                                DatabaseReference refx=FirebaseDatabase.instance.reference();
+                                refx.child("Users").child(uid).child("Success").remove();
+                                Navigator.of(context, rootNavigator: true).pop();
+                              },
+                            )
+                          ],
+                          cancelButton: CupertinoActionSheetAction(
+                            child: Text("Cancel"),
+                            onPressed: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
+                          ),
+                        );
+                        showCupertinoModalPopup(
+                            context: context, builder: (context) => action);
+                      },
                       child: Card(
                           color: Colors.white,
                           child: Column(
@@ -86,7 +126,7 @@ class _AccompishedState extends State<Accompished> {
                   }
               ),
             ),
-          ),
+
         ),
       ),
     );

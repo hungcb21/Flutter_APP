@@ -18,7 +18,7 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  String ten,sdt,email;
+  String ten,sdt,email,image;
   @override
   void initState() {
     // TODO: implement initState
@@ -34,6 +34,7 @@ class _AccountState extends State<Account> {
           ten = values["name"];
           sdt = values["phone"];
           email = values["email"];
+          image = values["Image"];
         });
       });
     });
@@ -84,7 +85,7 @@ class _AccountState extends State<Account> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CircleAvatar(
-                              backgroundColor: Colors.grey,
+                              backgroundImage:  NetworkImage(image??"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNK9yHOd59mG5Mq8YGD5l9xV-2MTXi2da9LA&usqp=CAU") ,
                               radius: 40,
                             ),
                             Padding(

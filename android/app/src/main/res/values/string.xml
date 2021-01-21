@@ -3,6 +3,6 @@
     <string name="app_name">Your App Name here.</string>
 
     <!-- Replace "000000000000" with your Facebook App ID here. -->
-    <string name="facebook_app_id">2808142909506652</string>
-    <string name="fb_login_protocol_scheme">fb2808142909506652</string>
+    <string name="facebook_app_id">317992756017759</string>
+    <string name="fb_login_protocol_scheme">fb317992756017759</string>
 </resources>

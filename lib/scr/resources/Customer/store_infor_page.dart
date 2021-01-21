@@ -57,7 +57,7 @@ class _DetailStoreState extends State<DetailStore> {
       });
     });
     DatabaseReference comment= FirebaseDatabase.instance.reference().child("Users");
-    comment.orderByKey().equalTo(widget.uid).once().then((DataSnapshot snapshot){
+    comment.orderByKey().equalTo(uid).once().then((DataSnapshot snapshot){
       Map<dynamic,dynamic> values= snapshot.value;
       values.forEach((key, values) {
         setState(() {
@@ -321,31 +321,40 @@ class _DetailStoreState extends State<DetailStore> {
                                           ),
                                         ],
                                       ),
-                                      child: Row(
-                                        children: <Widget>[
-                                          CircleAvatar(
-                                              backgroundImage: NetworkImage(snapshot.value["Image"]??"https://scontent.fhan4-1.fna.fbcdn.net/v/t1.0-9/135634832_221471026121571_925480074581197249_o.jpg?_nc_cat=105&ccb=2&_nc_sid=b9115d&_nc_ohc=iZhweHX5XFwAX_qB48d&_nc_ht=scontent.fhan4-1.fna&oh=f4de4a1922e6e0570e7e136cfc62d2db&oe=601B77B2") ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                            child: Container(
-                                              width: 200,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  new Text(snapshot.value["Comment"]??"",
-                                                    overflow: TextOverflow.fade,
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight: FontWeight.bold
-                                                    ),
+                                      child:
+
+                                          Row(
+                                            children: <Widget>[
+                                              CircleAvatar(
+                                                  backgroundImage: NetworkImage(avatar??"https://scontent.fhan4-1.fna.fbcdn.net/v/t1.0-9/135634832_221471026121571_925480074581197249_o.jpg?_nc_cat=105&ccb=2&_nc_sid=b9115d&_nc_ohc=iZhweHX5XFwAX_qB48d&_nc_ht=scontent.fhan4-1.fna&oh=f4de4a1922e6e0570e7e136cfc62d2db&oe=601B77B2") ),
+                                              Padding(
+                                                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                                child: Container(
+                                                  width: 200,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(name??"", overflow: TextOverflow.fade,
+                                                        textAlign: TextAlign.left,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+
+                                                        ),),
+                                                      new Text(snapshot.value["Comment"]??"",
+                                                        overflow: TextOverflow.fade,
+                                                        textAlign: TextAlign.left,
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight: FontWeight.bold
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+
                                     )
                                   ],
                                 ),
@@ -357,9 +366,11 @@ class _DetailStoreState extends State<DetailStore> {
                           children: [
                             Flexible(
                               child: TextField(
+                                style: TextStyle(fontSize: 18,color: Colors.white),
                                 controller: commentController,
                                 decoration: InputDecoration(
-                                    hintText: "Comment"
+                                    labelText: "Comment",
+                                    labelStyle: TextStyle(fontSize: 18,color: Colors.white),
                                 ),
                               ),
                             ),

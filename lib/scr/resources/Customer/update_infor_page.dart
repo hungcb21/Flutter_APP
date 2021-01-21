@@ -1,12 +1,15 @@
 import 'dart:core';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/scr/blocs/login_bloc.dart';
 import 'package:flutter_app/scr/blocs/update_info_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 class UpdateInfor extends StatefulWidget {
   @override
   _UpdateInforState createState() => _UpdateInforState();
@@ -19,7 +22,8 @@ class _UpdateInforState extends State<UpdateInfor> {
   UpdateInfoBloc bloc = new UpdateInfoBloc();
   bool isObscure = true;
   bool _validate = true;
-  String name,email,pass,address,phone;
+  String name,email,pass,address,phone,image;
+  String imageUrl;
   @override
   void initState() {
     // TODO: implement initState
@@ -36,6 +40,7 @@ class _UpdateInforState extends State<UpdateInfor> {
           name = values["name"];
           phone = values["phone"];
           pass = values["pass"];
+          image = values["Image"];
         });
       });}
     );}
@@ -60,141 +65,168 @@ class _UpdateInforState extends State<UpdateInfor> {
           constraints: BoxConstraints.expand(),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-              child: Container(
-                height: 400,
-                width: 400,
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.white
-                ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 40, 0, 0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.mail_outline,size: 30,),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                              child: Text(email??"Chua co"),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Divider(thickness: 3,
-                          endIndent: 30,
-                          indent: 30,
-                          color: Colors.black
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.person,size: 30,),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                  child: Text(name??""),
-                                ),
-                              ],
-                            ),
-                            InkWell(
-                              onTap: (){
-                                _updateName();
-                              },
-                                child: Icon(Icons.update_outlined,size: 30,)),
-                          ],
-                        ),
-                      ),
-                      Divider(thickness: 3,
-                          endIndent: 30,
-                          indent: 30,
-                          color: Colors.black
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.lock,size: 30,),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                  child: Text(
-                                      '${pass.replaceAll(RegExp(r"."), "*")}'??""),
-                                ),
-                              ],
-                            ),
-                             InkWell(
-                               onTap: (){
-                                 _showDialog();
-                               },
-                                 child: Icon(Icons.update_outlined,size: 30,)),
-                          ],
-                        ),
-                      ),
-                      Divider(thickness: 3,
-                          endIndent: 30,
-                          indent: 30,
-                          color: Colors.black
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.phone,size: 30,),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                  child: Text(phone??""),
-                                ),
-                              ],
-                            ),
-                            InkWell(
-                              onTap: (){
-                                _updatePhone();
-                              },
-                                child: Icon(Icons.update_outlined,size: 30,)),
-                          ],
-                        ),
-                      ),
-                      Divider(thickness: 3,
-                          endIndent: 30,
-                          indent: 30,
-                          color: Colors.black
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.location_on_rounded,size: 30,),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                  child: Text(address??"Address"),
-                                ),
-                              ],
-                            ),
-                            Icon(Icons.update_outlined,size: 30,),
-                          ],
-                        ),
-                      ),
-                      Divider(thickness: 3,
-                          endIndent: 30,
-                          indent: 30,
-                          color: Colors.black
-                      ),
-                    ],
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 40, 0, 10),
+                    child: CircleAvatar(
+                        radius: 70,
+                        backgroundImage: NetworkImage(image??"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNK9yHOd59mG5Mq8YGD5l9xV-2MTXi2da9LA&usqp=CAU") ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    child: Center(
+                      child: SizedBox(
+                        width: 140,
+                        height: 40,
+                        child: RaisedButton(
+                          color: Colors.blueAccent,
+                          shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
+                          onPressed: ()=>uploadImage(),
+                          child: Text("Upload image",style: TextStyle(color: Colors.white),),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 400,
+                    width: 400,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.white
+                    ),
+                      child: Column(
+                        children: [
+
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 40, 0, 0),
+                            child: Row(
+                              children: [
+                                Icon(Icons.mail_outline,size: 30,),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                  child: Text(email??"Chua co"),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Divider(thickness: 3,
+                              endIndent: 30,
+                              indent: 30,
+                              color: Colors.black
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.person,size: 30,),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                      child: Text(name??""),
+                                    ),
+                                  ],
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    _updateName();
+                                  },
+                                    child: Icon(Icons.update_outlined,size: 30,)),
+                              ],
+                            ),
+                          ),
+                          Divider(thickness: 3,
+                              endIndent: 30,
+                              indent: 30,
+                              color: Colors.black
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.lock,size: 30,),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                      child: Text(
+                                          "***********"
+                                    ),
+                                    ),
+                                  ],
+                                ),
+                                 InkWell(
+                                   onTap: (){
+                                     _showDialog();
+                                   },
+                                     child: Icon(Icons.update_outlined,size: 30,)),
+                              ],
+                            ),
+                          ),
+                          Divider(thickness: 3,
+                              endIndent: 30,
+                              indent: 30,
+                              color: Colors.black
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.phone,size: 30,),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                      child: Text(phone??""),
+                                    ),
+                                  ],
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    _updatePhone();
+                                  },
+                                    child: Icon(Icons.update_outlined,size: 30,)),
+                              ],
+                            ),
+                          ),
+                          Divider(thickness: 3,
+                              endIndent: 30,
+                              indent: 30,
+                              color: Colors.black
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.location_on_rounded,size: 30,),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                      child: Text(address??"Address"),
+                                    ),
+                                  ],
+                                ),
+                                Icon(Icons.update_outlined,size: 30,),
+                              ],
+                            ),
+                          ),
+                          Divider(thickness: 3,
+                              endIndent: 30,
+                              indent: 30,
+                              color: Colors.black
+                          ),
+                        ],
+                      ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -358,5 +390,29 @@ class _UpdateInforState extends State<UpdateInfor> {
         ],
       ),
     );
+  }
+  uploadImage() async{
+    final _storage = FirebaseStorage.instance;
+    PickedFile image;
+    final _picker =ImagePicker();
+    image= await _picker.getImage(source: ImageSource.gallery);
+    var file = File(image.path);
+    if(image != null)
+    {
+      FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+      var uid = firebaseAuth.currentUser.uid;
+      var snapshot =await _storage.ref().child(uid).putFile(file);
+      var ref = FirebaseDatabase.instance.reference().child("Users");
+      var dowloadUrl = await snapshot.ref.getDownloadURL();
+      var category ={"Image":dowloadUrl};
+      ref.child(uid).update(category);
+      setState(() {
+        imageUrl= dowloadUrl;
+      });
+    }
+    else
+    {
+      print("Chua co anh");
+    }
   }
 }
