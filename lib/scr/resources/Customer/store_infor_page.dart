@@ -190,7 +190,7 @@ class _DetailStoreState extends State<DetailStore> {
                             Widget result;
                             if (count == 0) {
                               result = Text(
-                                "love",
+                                "0",
                                 style: TextStyle(color: color),
                               );
                             } else

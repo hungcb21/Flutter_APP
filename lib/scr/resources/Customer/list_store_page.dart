@@ -40,6 +40,7 @@ class _ListStoreState extends State<ListStore> {
   }
   @override
   Widget build(BuildContext context) {
+    double c_width = MediaQuery.of(context).size.width*0.8;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -103,7 +104,7 @@ class _ListStoreState extends State<ListStore> {
                                         snapshot.value["District"],snapshot.value["Address"],snapshot.value["Description"],snapshot.value["TimeStart"],snapshot.value["TimeEnd"]
                                     ,snapshot.key)));},
                                 child: Container(
-                                  height: 100,
+                                  height: 120,
                                   color: Color(0xFF383443) ,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -113,7 +114,11 @@ class _ListStoreState extends State<ListStore> {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(snapshot.value["NameStore"],style: TextStyle(fontSize: 20,color: Colors.white),),
+                                          Container(
+                                            width: 200,
+                                              alignment: Alignment.bottomLeft,
+                                              child: Text(snapshot.value["NameStore"]??"",textAlign: TextAlign.left
+                                                ,style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 20,color: Colors.blue),)),
                                           Text(snapshot.value["TimeStart"]+"-"+ snapshot.value["TimeEnd"],style: TextStyle(fontSize: 15,color: Colors.white),),
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
