@@ -49,9 +49,11 @@ class _ListStoreState extends State<ListStore> {
               elevation:0,
               title: !searchState?Text(""):TextField(
                 controller: _searchController,
+                style: TextStyle(fontSize: 18,color: Colors.white),
                 decoration: InputDecoration(
                 icon: Icon(Icons.search),
                 hintText: "Search...",
+                  labelStyle:TextStyle( color: Colors.white,fontSize:18),
                 hintStyle: TextStyle(color: Colors.white),
               ),
               ),
@@ -66,7 +68,6 @@ class _ListStoreState extends State<ListStore> {
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchResult(_searchController.text)));
                       setState(() {
                         searchState = ! searchState;
-
                       });
                     },),
                     IconButton(icon: Icon(Icons.cancel),onPressed: (){

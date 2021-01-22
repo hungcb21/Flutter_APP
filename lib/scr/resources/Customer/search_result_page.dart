@@ -41,29 +41,21 @@ class _SearchResultState extends State<SearchResult> {
                         onTap: (){Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context)=>DetailStore(index,snapshot.value["NameStore"],snapshot.value["Image"],snapshot.value["City"],
-                                snapshot.value["District"],snapshot.value["Address"],snapshot.value["TimeStart"],snapshot.value["TimeEnd"],snapshot.value["Description"]
+                                snapshot.value["District"],snapshot.value["Address"],snapshot.value["Description"],snapshot.value["TimeStart"],snapshot.value["TimeEnd"]
                                 ,snapshot.key)));},
-                        child: Card(
+                        child: Container(
+                          height: 100,
                           color: Color(0xFF383443) ,
-                          elevation: 30,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(snapshot.value["Image"])
-                                  )
-                                ),
-                                height: 92,
-                                width: 200,
-                              ),
-                              // Image.network(snapshot.value["Image"],height: 92,width: 200,),
+                              Image.network(snapshot.value["Image"]??"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNK9yHOd59mG5Mq8YGD5l9xV-2MTXi2da9LA&usqp=CAU",height: 92,width: 200,),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(snapshot.value["NameStore"],style: TextStyle(fontSize: 20,color: Colors.white),),
+                                  Text(snapshot.value["TimeStart"]+"-"+ snapshot.value["TimeEnd"],style: TextStyle(fontSize: 15,color: Colors.white),),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                     child: SizedBox(
