@@ -48,12 +48,6 @@ class _WaitingState extends State<Waiting> {
           body: Container(
             constraints: BoxConstraints.expand(),
             color: Colors.grey,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-                child: Column(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                         child: FirebaseAnimatedList(
                             shrinkWrap: true,
                             query: query, itemBuilder: (BuildContext context,
@@ -184,7 +178,6 @@ class _WaitingState extends State<Waiting> {
                                         ],
                                       ),
                                     ),
-
                                   ],
                                 )
                             ),
@@ -192,11 +185,9 @@ class _WaitingState extends State<Waiting> {
                         }
                         )
                     ),
-                  ],
+
                 ),
-              ),
-          ),
-        ),
+
       );
     }
   onCancelCliked(){

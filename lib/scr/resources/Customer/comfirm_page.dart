@@ -50,7 +50,7 @@ class _ComfirmState extends State<Comfirm> {
                 ),
                 Container(
                   color: Colors.white,
-                  height: 297,
+                  height: 300,
                   width: 295,
                   child: Column(
                     children: [
@@ -80,7 +80,9 @@ class _ComfirmState extends State<Comfirm> {
                             padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                             child: Icon(Icons.assistant_photo_rounded,size: 30,),
                           ),
-                          Text(widget.address,style: TextStyle(fontSize: 16)),
+                          Container(
+                            width: 150,
+                              child: Text(widget.address??"",style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 16))),
                         ],
                       ),
                       Row(

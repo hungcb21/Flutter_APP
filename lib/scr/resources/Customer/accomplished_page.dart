@@ -46,13 +46,6 @@ class _AccompishedState extends State<Accompished> {
                     return InkWell(
                       onLongPress: (){
                         final action = CupertinoActionSheet(
-                          // title: Text(
-                          //   "Proto Coders Point", style: TextStyle(fontSize: 30),
-                          // ),
-                          // message: Text(
-                          //   "Select any action ",
-                          //   style: TextStyle(fontSize: 15.0),
-                          // ),
                           actions: <Widget>[
                             CupertinoActionSheetAction(
                               child: Text("Xóa khỏi lịch sử"),
