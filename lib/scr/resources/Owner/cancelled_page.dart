@@ -55,6 +55,7 @@ class _CancelledState extends State<Cancelled> {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
           body:
           FirebaseAnimatedList(shrinkWrap: true,
@@ -87,7 +88,11 @@ class _CancelledState extends State<Cancelled> {
                             Row(
                               children: [
                                 Icon(Icons.add_location),
-                                Text(snapshot.value["Address"]+","+snapshot.value["District"]+","+snapshot.value["City"],style: TextStyle(fontSize: 15)),
+                                Container(
+                                    width: 300,
+                                    child: Text(snapshot.value["Address"]+","+snapshot.value["District"]+","+snapshot.value["City"],
+                                        textAlign: TextAlign.left
+                                        ,style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 15))),
                               ],
                             )
                           ],

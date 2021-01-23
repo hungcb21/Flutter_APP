@@ -20,6 +20,7 @@ class _SearchResultState extends State<SearchResult> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           leading: InkWell(
@@ -59,7 +60,6 @@ class _SearchResultState extends State<SearchResult> {
                                       alignment: Alignment.bottomLeft,
                                       child: Text(snapshot.value["NameStore"]??"",textAlign: TextAlign.left
                                         ,style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 20,color: Colors.blue),)),
-                                  Text(snapshot.value["TimeStart"]+"-"+ snapshot.value["TimeEnd"],style: TextStyle(fontSize: 15,color: Colors.white),),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                     child: SizedBox(

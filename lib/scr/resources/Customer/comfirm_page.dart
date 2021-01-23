@@ -36,6 +36,7 @@ class _ComfirmState extends State<Comfirm> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
           color:Color(0xFF383443) ,

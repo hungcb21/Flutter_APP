@@ -56,6 +56,7 @@ class _WaitingOwnState extends State<WaitingOwn> {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body:
           FirebaseAnimatedList(shrinkWrap: true,
@@ -86,7 +87,11 @@ class _WaitingOwnState extends State<WaitingOwn> {
                         Row(
                           children: [
                             Icon(Icons.add_location),
-                            Text(snapshot.value["Address"],style: TextStyle(fontSize: 15)),
+                            Container(
+                                width: 300,
+                                child: Text(snapshot.value["Address"],
+                                    textAlign: TextAlign.left
+                                    ,style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 15))),
                           ],
                         )
                       ],

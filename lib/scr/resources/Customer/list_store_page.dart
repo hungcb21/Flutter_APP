@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Customer/search_result_page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/store_infor_page.dart';
 
 import '../Class/StoreClass.dart';
@@ -53,7 +54,7 @@ class _ListStoreState extends State<ListStore> {
                 style: TextStyle(fontSize: 18,color: Colors.white),
                 decoration: InputDecoration(
                 icon: Icon(Icons.search),
-                hintText: "Search...",
+                hintText: "Search",
                   labelStyle:TextStyle( color: Colors.white,fontSize:18),
                 hintStyle: TextStyle(color: Colors.white),
               ),
@@ -66,7 +67,13 @@ class _ListStoreState extends State<ListStore> {
                 },):Row(
                   children: [
                     IconButton(icon: Icon(Icons.search),onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchResult(_searchController.text)));
+                      if(_searchController.text=="")
+                        {
+                          Fluttertoast.showToast(msg: "Vui lòng nhập thông tin cần tìm kiếm");
+                        }
+                      else{
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchResult(_searchController.text)));
+                      }
                       setState(() {
                         searchState = ! searchState;
                       });

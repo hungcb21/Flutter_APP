@@ -31,64 +31,67 @@ class _State extends State<HomePageOwn> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        extendBodyBehindAppBar: false,
-        appBar: AppBar(
-          backgroundColor: Colors.yellow,
-          elevation: 0,
-          leading:   InkWell(
-            onTap: () {Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (c) => HomePageOwn()),
-                    (route) => false);},
-            child: Container(
-              child: Image.asset("images/left-arrow2.png"),
-            ),
-          ),
-          actions: [
-            InkWell(
-              onTap: () {},
+    return WillPopScope(
+      onWillPop: () async=>false,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          extendBodyBehindAppBar: false,
+          appBar: AppBar(
+            backgroundColor: Colors.yellow,
+            elevation: 0,
+            leading:   InkWell(
+              onTap: () {Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (c) => HomePageOwn()),
+                      (route) => false);},
               child: Container(
-                child: Image.asset("images/magnifying-glass 1.png"),
+                child: Image.asset("images/left-arrow2.png"),
               ),
             ),
-          ],
-        ),
-        body: _childrenf[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          selectedItemColor: Colors.white,
-          onTap: (int index){setState(() {
-            _currentIndex= index;
-          });},
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home,color: Colors.black,),
-                label: "Home",
-                backgroundColor: Colors.blue
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.assistant_outlined,color: Colors.black),
-                label: "Options",
-                backgroundColor: Colors.blue
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.notification_important,color: Colors.black),
-                label: "Notification",
-                backgroundColor: Colors.blue
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.mail,color: Colors.black,),
-                label: "Mail",
-                backgroundColor: Colors.blue
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_sharp,color: Colors.black,),
-                label: "Account",backgroundColor: Colors.blue
+            actions: [
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  child: Image.asset("images/magnifying-glass 1.png"),
+                ),
+              ),
+            ],
+          ),
+          body: _childrenf[_currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            selectedItemColor: Colors.white,
+            onTap: (int index){setState(() {
+              _currentIndex= index;
+            });},
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home,color: Colors.black,),
+                  label: "Home",
+                  backgroundColor: Colors.blue
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.assistant_outlined,color: Colors.black),
+                  label: "Options",
+                  backgroundColor: Colors.blue
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.notification_important,color: Colors.black),
+                  label: "Notification",
+                  backgroundColor: Colors.blue
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.mail,color: Colors.black,),
+                  label: "Mail",
+                  backgroundColor: Colors.blue
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.account_circle_sharp,color: Colors.black,),
+                  label: "Account",backgroundColor: Colors.blue
 
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

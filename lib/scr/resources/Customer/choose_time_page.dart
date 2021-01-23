@@ -47,6 +47,7 @@ class _ChooseTimeState extends State<ChooseTime> {
   }
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body:
         Center(

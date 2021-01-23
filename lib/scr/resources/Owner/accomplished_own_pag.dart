@@ -89,7 +89,11 @@ class _SuccessState extends State<Success> {
                             Row(
                               children: [
                                 Icon(Icons.add_location),
-                                Text(snapshot.value["Address"],style: TextStyle(fontSize: 15)),
+                                Container(
+                                  width: 300,
+                                    child: Text(snapshot.value["Address"],
+                                    textAlign: TextAlign.left
+                                    ,style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 15))),
                               ],
                             )
                           ],

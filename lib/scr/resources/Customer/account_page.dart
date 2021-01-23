@@ -54,6 +54,7 @@ class _AccountState extends State<Account> {
 
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
             title: Text(""),
