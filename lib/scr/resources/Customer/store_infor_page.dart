@@ -3,26 +3,16 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/scr/resources/Class/StoreClass.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:like_button/like_button.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/choose_time_page.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/main_menu_page.dart';
 
 class DetailStore extends StatefulWidget {
-  final int index;
-  final String name,
-      image,
-      city,
-      district,
-      address,
-      description,
-      start,
-      end,
-      uid;
 
-  DetailStore(this.index, this.name, this.image, this.city, this.district,
+  final String name, image, city, district, address, description, start, end,uid;
+
+  DetailStore(this.name, this.image, this.city, this.district,
       this.address, this.description, this.start, this.end, this.uid);
 
   @override
@@ -155,7 +145,13 @@ class _DetailStoreState extends State<DetailStore> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(widget.address+","+widget.district+","+widget.city??"",
+                  Text(
+                      widget.address +
+                              "," +
+                              widget.district +
+                              "," +
+                              widget.city ??
+                          "",
                       style: TextStyle(
                         color: Colors.white,
                       )),

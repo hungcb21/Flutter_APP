@@ -201,8 +201,7 @@ class _Update_Info_OwnState extends State<Update_Info_Own> {
   }
   _showDialog() async {
     await showDialog<String>(
-      context: context,
-      child: new AlertDialog(
+      builder: (context) => new AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
         content: new Row(
           children: <Widget>[
@@ -244,13 +243,12 @@ class _Update_Info_OwnState extends State<Update_Info_Own> {
                 }
               })
         ],
-      ),
+      ), context: context,
     );
   }
   _updateName() async {
     await showDialog<String>(
-      context: context,
-      child: new AlertDialog(
+      builder: (context) => new AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
         content: new Row(
           children: <Widget>[
@@ -296,13 +294,12 @@ class _Update_Info_OwnState extends State<Update_Info_Own> {
                 }
               })
         ],
-      ),
+      ), context: context,
     );
   }
   _updatePhone() async {
     await showDialog<String>(
-      context: context,
-      child: new AlertDialog(
+      builder: (context) => new AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
         content: new Row(
           children: <Widget>[
@@ -353,7 +350,7 @@ class _Update_Info_OwnState extends State<Update_Info_Own> {
                 }
               })
         ],
-      ),
+      ), context: context,
     );
   }
 }
