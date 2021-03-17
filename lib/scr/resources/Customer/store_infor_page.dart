@@ -3,17 +3,25 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/scr/resources/Owner/chat_screen.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:like_button/like_button.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/choose_time_page.dart';
 
 class DetailStore extends StatefulWidget {
+  final String name,
+      image,
+      city,
+      district,
+      address,
+      description,
+      start,
+      end,
+      uid;
 
-  final String name, image, city, district, address, description, start, end,uid;
-
-  DetailStore(this.name, this.image, this.city, this.district,
-      this.address, this.description, this.start, this.end, this.uid);
+  DetailStore(this.name, this.image, this.city, this.district, this.address,
+      this.description, this.start, this.end, this.uid);
 
   @override
   _DetailStoreState createState() => _DetailStoreState();
@@ -35,24 +43,20 @@ class _DetailStoreState extends State<DetailStore> {
     super.initState();
     FirebaseAuth auth = FirebaseAuth.instance;
     uid = auth.currentUser.uid;
+    //truy xuat du lieu danh gia cua khach hang
     query = FirebaseDatabase.instance
         .reference()
         .child("Stores")
         .child(widget.uid)
         .child("Comment")
         .child("comment");
-    DatabaseReference reference =
-        FirebaseDatabase.instance.reference().child("Stores").child(widget.uid);
+    //lay so luong like
     DatabaseReference reference2 = FirebaseDatabase.instance
         .reference()
         .child("Stores")
         .child(widget.uid)
         .child("Like");
-    DatabaseReference referenceComment = FirebaseDatabase.instance
-        .reference()
-        .child("Stores")
-        .child(widget.uid)
-        .child("Comment");
+
     reference2.once().then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, value) {
@@ -62,6 +66,13 @@ class _DetailStoreState extends State<DetailStore> {
         print(widget.uid);
       });
     });
+    //lay so luong commnent
+    DatabaseReference referenceComment = FirebaseDatabase.instance
+        .reference()
+        .child("Stores")
+        .child(widget.uid)
+        .child("Comment");
+
     referenceComment.once().then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, value) {
@@ -461,6 +472,12 @@ class _DetailStoreState extends State<DetailStore> {
               ),
             ),
           ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.message),
+            onPressed: () {
+              onChatClicked();
+            },
+          ),
         ));
   }
 
@@ -538,5 +555,43 @@ class _DetailStoreState extends State<DetailStore> {
       });
       commentController.text = "";
     }
+  }
+
+  void onChatClicked() {
+    DatabaseReference refCreateRoom = FirebaseDatabase.instance.reference();
+    DatabaseReference refCreateRoomOwn = FirebaseDatabase.instance.reference();
+    DatabaseReference refCreateRoomCus = FirebaseDatabase.instance.reference();
+    var uids = widget.uid + uid;
+    refCreateRoom.child("Chat").child(uids).set({
+      'cusUID': uid,
+      'ownUID': widget.uid,
+    });
+    refCreateRoom.child("Chat").child(uids).child("Content").child("-MVttQrOfhZ09g_jfZS-").set({
+      'text':
+          "Chào mừng bạn đến với ${widget.name}, chúng tôi sẽ trả lời bạn sớm nhất",
+      'uid': widget.uid,
+      'senderName': widget.name,
+      'senderPhotoUrl': widget.image
+    }).then((value) {
+      refCreateRoomCus.child("Users").child(uid).child("Chat").child(uids).set({
+        'idRoomChat': uids,
+        'lastMessenger': "",
+        'storeImage': widget.image,
+        'storeName': widget.name
+      });
+      refCreateRoomOwn
+          .child("Stores")
+          .child(widget.uid)
+          .child("Chat")
+          .child(uids)
+          .set({
+        'idRoomChat': uids,
+        'lastMessenger': "",
+        'cusImage': avatar,
+        'cusName': name
+      });
+    });
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ChatScreen(uids,avatar,name)));
   }
 }

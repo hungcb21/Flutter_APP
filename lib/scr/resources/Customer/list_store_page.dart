@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart' ;
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-
 import '../Class/StoreClass.dart';
 import 'store_infor_page.dart';
 
@@ -103,6 +102,7 @@ class _ListStoreState extends State<ListStore> {
                 icon: Icon(Icons.search),
                 onPressed: () {
                   setState(() {
+                    datalist.clear();
                     searchState = !searchState;
                   });
                 },
@@ -141,7 +141,7 @@ class _ListStoreState extends State<ListStore> {
                             itemBuilder: (BuildContext context,
                                 DataSnapshot snapshot,
                                 Animation<double> animation,
-                                int index) {
+                                index) {
                               Store data = new Store(
                                   snapshot.key,
                                   snapshot.value["Image"],
@@ -249,48 +249,6 @@ class _ListStoreState extends State<ListStore> {
       ),
     );
   }
-
-  Widget ListUI(String image, String nameStore) {
-    return Card(
-      color: Color(0xFF383443),
-      elevation: 30,
-      child: Row(
-        children: [
-          Image.network(
-            image,
-            height: 92,
-            width: 124,
-          ),
-          Column(
-            children: [
-              Text(
-                nameStore,
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: SizedBox(
-                  width: 140,
-                  height: 30,
-                  child: RaisedButton(
-                    color: Colors.deepOrangeAccent,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                    onPressed: () {},
-                    child: Text(
-                      "Booking",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
   Future<List<Store>> searchComic(String searchString) async {
     return listStoreFromDatabase
         .where((comic) =>

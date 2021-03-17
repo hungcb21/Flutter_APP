@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   firebase_auth:
   flutter_typeahead: ^2.0.0
+  rating_dialog: ^2.0.0
+  bubble: ^1.2.1
   firebase_database:
   firebase_core: "0.5.2+1"
   provider: ^4.3.2+2

@@ -8,7 +8,6 @@ import 'account_owner_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/account_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/choose_time_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/demo2.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/demo_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/hitory_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/login_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/sign_up_page.dart';

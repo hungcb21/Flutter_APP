@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/login_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/main_menu_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/choose_time_page.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/demo_page.dart';
 
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/sign_up_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/waiting_page.dart';

@@ -113,41 +113,5 @@ class _SuccessState extends State<Success> {
     );
   }
 }
-Widget CardUI(String name,String phone)
-{
-  return  InkWell(
-    onTap: (){},
-    child: Card(
-        elevation: 10,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children:<Widget>[
-              Row(
-                children: [
-                  Icon(Icons.account_circle_sharp),
-                  Column(
-                    children: [
-                      Text(name,style: TextStyle(fontSize: 15),),
-                      Text(phone,style: TextStyle(fontSize: 15),),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(160, 0, 0, 0),
-                    child: Text("Today 9.00",style: TextStyle(fontSize: 15)),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(Icons.add_location),
-                  Text(name,style: TextStyle(fontSize: 15)),
-                ],
-              )
-            ],
-          ),
-        )
-    ),
-  );
-}
+
 
