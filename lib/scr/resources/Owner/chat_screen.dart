@@ -35,67 +35,78 @@ class ChatScreenState extends State<ChatScreen> {
   var uid;
   FirebaseAuth auth = FirebaseAuth.instance;
   Query query;
-
+  String uidCus,uidOwn;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     email = auth.currentUser.email;
     uid = auth.currentUser.uid;
-    query =
-        FirebaseDatabase.instance.reference().child("Chat").child(widget.uids).child("Content");
+    query = FirebaseDatabase.instance.reference().child("Chat").child(widget.uids).child("Content");
+    DatabaseReference comment = FirebaseDatabase.instance.reference().child("Chat");
+    comment.orderByKey().equalTo(widget.uids).once().then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      var key = snapshot.key;
+      values.forEach((key, values) {
+        setState(() {
+          uidCus = values["cusUID"];
+          uidOwn = values["ownUID"];
+        });
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Flutter Chat App"),
-          elevation:
-              Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
-          actions: <Widget>[
-            new IconButton(
-              icon: new Icon(Icons.exit_to_app),
-            )
-          ],
-        ),
-        body: new Container(
-          child: new Column(
-            children: <Widget>[
-              new Flexible(
-                child: new FirebaseAnimatedList(
-                  query: query,
-                  padding: const EdgeInsets.all(8.0),
-                  reverse: true,
-                  sort: (a, b) => b.key.compareTo(a.key),
-                  //comparing timestamp of messages to check which one would appear first
-                  itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                      Animation<double> animation, int index) {
-                    return ChatMessageListItem(
-                        messageSnapshot: snapshot, animation: animation);
-                  },
-                ),
-              ),
-              new Divider(height: 1.0),
-              new Container(
-                decoration:
-                    new BoxDecoration(color: Theme.of(context).cardColor),
-                child: _buildTextComposer(),
-              ),
-              new Builder(builder: (BuildContext context) {
-                _scaffoldContext = context;
-                return new Container(width: 0.0, height: 0.0);
-              })
-            ],
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home:  Scaffold(
+          appBar: new AppBar(
+            leading: IconButton(icon: Icon(Icons.arrow_back),
+            onPressed: (){
+              Navigator.pop(context);
+            },),
+            elevation:
+                Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
           ),
-          decoration: Theme.of(context).platform == TargetPlatform.iOS
-              ? new BoxDecoration(
-                  border: new Border(
-                      top: new BorderSide(
-                  color: Colors.grey[200],
-                )))
-              : null,
-        ));
+          body: new Container(
+            child: new Column(
+              children: <Widget>[
+                new Flexible(
+                  child: new FirebaseAnimatedList(
+                    query: query,
+                    padding: const EdgeInsets.all(8.0),
+                    reverse: true,
+                    sort: (a, b) => b.key.compareTo(a.key),
+                    //comparing timestamp of messages to check which one would appear first
+                    itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                        Animation<double> animation, int index) {
+                      return ChatMessageListItem(
+                          messageSnapshot: snapshot, animation: animation);
+                    },
+                  ),
+                ),
+                new Divider(height: 1.0),
+                new Container(
+                  decoration:
+                      new BoxDecoration(color: Theme.of(context).cardColor),
+                  child: _buildTextComposer(),
+                ),
+                new Builder(builder: (BuildContext context) {
+                  _scaffoldContext = context;
+                  return new Container(width: 0.0, height: 0.0);
+                })
+              ],
+            ),
+            decoration: Theme.of(context).platform == TargetPlatform.iOS
+                ? new BoxDecoration(
+                    border: new Border(
+                        top: new BorderSide(
+                    color: Colors.grey[200],
+                  )))
+                : null,
+          )),
+    );
   }
 
   CupertinoButton getIOSSendButton() {
@@ -194,6 +205,17 @@ class ChatScreenState extends State<ChatScreen> {
       'senderName': widget.name,
       'senderPhotoUrl':widget.avatar,
     });
+    DatabaseReference ref = FirebaseDatabase.instance.reference();
+    ref.child("Users").child(uidCus).child("Chat").child(widget.uids).update(
+        {
+          'lastMessenger': messageText
+        }
+    );
+    ref.child("Stores").child(uidOwn).child("Chat").child(widget.uids).update(
+        {
+          'lastMessenger': messageText
+        }
+    );
 
     // analytics.logEvent(name: 'send_message');
   }

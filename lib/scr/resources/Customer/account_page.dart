@@ -1,16 +1,9 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/scr/fire_base/fire_base-auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/scr/resources/Class/UserClass.dart';
 import 'package:flutter_app/scr/resources/Customer/choose_user_page.dart';
-import 'package:flutter_app/scr/resources/Customer/login_page.dart';
 import 'package:flutter_app/scr/resources/Customer/update_infor_page.dart';
-import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 class Account extends StatefulWidget {
   @override
@@ -18,7 +11,8 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  String ten,sdt,email,image;
+  String ten, sdt, email, image;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -38,31 +32,23 @@ class _AccountState extends State<Account> {
         });
       });
     });
-
-    DateFormat dateFormat = new DateFormat.Hm();
-    DateTime open = dateFormat.parse("10:30");
-    DateTime close = dateFormat.parse("15:30");
-    DateTime now = DateTime.now();
-
-    print("open ${open}");
-    print("close ${close}");
-    print("now ${now}");
-    print(DateTime.parse('2018-09-07T17:29:12+02:00').isUtc);
   }
-  @override
-  FirebaseAuth firebaseAuth;
 
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
             title: Text(""),
             backgroundColor: Color(0xFF383443),
-              bottom: AppBar(
-                title: Text("Account",style: TextStyle(fontSize: 25,color: Colors.white),),
-                backgroundColor: Color(0xFF383443),
+            bottom: AppBar(
+              title: Text(
+                "Account",
+                style: TextStyle(fontSize: 25, color: Colors.white),
               ),
+              backgroundColor: Color(0xFF383443),
+            ),
           ),
           body: Container(
             constraints: BoxConstraints.expand(),
@@ -78,31 +64,44 @@ class _AccountState extends State<Account> {
                         decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(30),
-                            color: Colors.white
-                        ), child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 20, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CircleAvatar(
-                              backgroundImage:  NetworkImage(image??"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNK9yHOd59mG5Mq8YGD5l9xV-2MTXi2da9LA&usqp=CAU") ,
-                              radius: 40,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(ten??"",style: TextStyle(fontSize: 20,color: Colors.black),),
-                                  Text("(+84)"+sdt,style: TextStyle(fontSize: 16,color: Colors.black),),
-                                  Text(email??"",style: TextStyle(fontSize: 16,color: Colors.black),),
-                                ],
+                            color: Colors.white),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(image ??
+                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNK9yHOd59mG5Mq8YGD5l9xV-2MTXi2da9LA&usqp=CAU"),
+                                radius: 40,
                               ),
-                            )
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      ten ?? "",
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.black),
+                                    ),
+                                    Text(
+                                      "(+84${sdt}" ?? "",
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
+                                    ),
+                                    Text(
+                                      email ?? "",
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
@@ -112,13 +111,15 @@ class _AccountState extends State<Account> {
                           decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(30),
-                              color: Colors.white
-                          ),
+                              color: Colors.white),
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
                             child: Row(
                               children: [
-                                Icon(Icons.qr_code, size: 70,),
+                                Icon(
+                                  Icons.qr_code,
+                                  size: 70,
+                                ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +133,6 @@ class _AccountState extends State<Account> {
                           ),
                         ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 20, 0, 40),
                         child: Container(
@@ -141,22 +141,33 @@ class _AccountState extends State<Account> {
                           decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(30),
-                              color: Colors.white
-                          ),
+                              color: Colors.white),
                           child: Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 20, 0, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 20, 0, 10),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.account_circle_rounded, size: 70,),
-                                    Text("Update info",
-                                      style: TextStyle(fontSize: 20),),
+                                    Icon(
+                                      Icons.account_circle_rounded,
+                                      size: 70,
+                                    ),
+                                    Text(
+                                      "Update info",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           160, 0, 0, 0),
                                       child: InkWell(
-                                        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateInfor()));},
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UpdateInfor()));
+                                          },
                                           child: Icon(Icons.arrow_forward_ios)),
                                     )
                                   ],
@@ -164,12 +175,18 @@ class _AccountState extends State<Account> {
                               ),
                               Image.asset("images/Line 53.png"),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 20, 0, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 20, 0, 10),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.card_giftcard, size: 70,),
-                                    Text("Your Coupon",
-                                      style: TextStyle(fontSize: 20),),
+                                    Icon(
+                                      Icons.card_giftcard,
+                                      size: 70,
+                                    ),
+                                    Text(
+                                      "Your Coupon",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           150, 0, 0, 0),
@@ -190,31 +207,28 @@ class _AccountState extends State<Account> {
                           child: RaisedButton(
                             color: Colors.red,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(15))),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
                             onPressed: _signOut,
-                            child: Text("Log out",
-                              style: TextStyle(color: Colors.white,fontSize: 20),),
+                            child: Text(
+                              "Log out",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
                           ),
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
             ),
           ),
-        )
-    );
+        ));
   }
-
 }
+
 void _signOut() {
   FirebaseAuth.instance.signOut();
-  runApp(
-      new MaterialApp(
-        home: new ChooseUser(),
-      )
-  );
+  runApp( MaterialApp(
+    home: new ChooseUser(),
+  ));
 }
-
-

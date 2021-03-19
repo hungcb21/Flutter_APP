@@ -3,12 +3,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Owner/chat_screen.dart';
-class ChatListCus extends StatefulWidget {
+class ChatListOwn extends StatefulWidget {
   @override
-  _ChatListCusState createState() => _ChatListCusState();
+  _ChatListOwnState createState() => _ChatListOwnState();
 }
 
-class _ChatListCusState extends State<ChatListCus> {
+class _ChatListOwnState extends State<ChatListOwn> {
   Query query;
   String uid,name,avatar;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -17,14 +17,14 @@ class _ChatListCusState extends State<ChatListCus> {
     // TODO: implement initState
     super.initState();
     uid=auth.currentUser.uid;
-    query = FirebaseDatabase.instance.reference().child("Users").child(uid).child("Chat");
+    query = FirebaseDatabase.instance.reference().child("Stores").child(uid).child("Chat");
     DatabaseReference comment =
-    FirebaseDatabase.instance.reference().child("Users");
+    FirebaseDatabase.instance.reference().child("Stores");
     comment.orderByKey().equalTo(uid).once().then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
         setState(() {
-          name = values["name"];
+          name = values["NameStore"];
           avatar = values["Image"];
         });
       });
@@ -36,8 +36,8 @@ class _ChatListCusState extends State<ChatListCus> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFF383443),
-          title: Text("Chat"),
+          backgroundColor: Colors.yellow,
+          title: Text("Message",style: TextStyle(fontSize: 25,color: Colors.black),),
         ),
         body: Container(
           constraints: BoxConstraints.expand(),
@@ -57,10 +57,10 @@ class _ChatListCusState extends State<ChatListCus> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                   CircleAvatar(
-                     radius: 60,
-                          backgroundImage: new NetworkImage(snapshot.value["storeImage"]),
-                        ),
+                      CircleAvatar(
+                        radius: 60,
+                        backgroundImage: new NetworkImage(snapshot.value["cusImage"]),
+                      ),
 
                       SizedBox(
                         width: 30,
@@ -73,7 +73,7 @@ class _ChatListCusState extends State<ChatListCus> {
                               height: 10,
                             ),
                             Text(
-                              snapshot.value["storeName"]??"",
+                              snapshot.value["cusName"]??"",
                               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(

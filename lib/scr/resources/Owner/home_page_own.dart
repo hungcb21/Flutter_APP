@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Owner/dashboard_page.dart';
 import 'package:flutter_app/scr/resources/Owner/history_own_page.dart';
+import 'package:flutter_app/scr/resources/Owner/list_chat_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/option_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/status_page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'account_owner_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/account_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/choose_time_page.dart';
@@ -24,38 +26,47 @@ class _State extends State<HomePageOwn> {
     Dashboard(),
     OptionsOwn(),
     Dashboard(),
-    Dashboard(),
+    ChatListOwn(),
     Account_Own(),
   ];
-
+  DateTime currentBackPressTime;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async=>false,
+      onWillPop: () {
+        DateTime now = DateTime.now();
+        if (currentBackPressTime == null ||
+            now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+          currentBackPressTime = now;
+          Fluttertoast.showToast(msg: "Bam 2 lan de thoat");
+          return Future.value(false);
+        }
+        return Future.value(true);
+      },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           extendBodyBehindAppBar: false,
-          appBar: AppBar(
-            backgroundColor: Colors.yellow,
-            elevation: 0,
-            leading:   InkWell(
-              onTap: () {Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (c) => HomePageOwn()),
-                      (route) => false);},
-              child: Container(
-                child: Image.asset("images/left-arrow2.png"),
-              ),
-            ),
-            actions: [
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  child: Image.asset("images/magnifying-glass 1.png"),
-                ),
-              ),
-            ],
-          ),
+          // appBar: AppBar(
+          //   backgroundColor: Colors.yellow,
+          //   elevation: 0,
+          //   // leading:   InkWell(
+          //   //   onTap: () {Navigator.of(context).pushAndRemoveUntil(
+          //   //       MaterialPageRoute(builder: (c) => HomePageOwn()),
+          //   //           (route) => false);},
+          //   //   child: Container(
+          //   //     child: Image.asset("images/left-arrow2.png"),
+          //   //   ),
+          //   // ),
+          //   // actions: [
+          //   //   InkWell(
+          //   //     onTap: () {},
+          //   //     child: Container(
+          //   //       child: Image.asset("images/magnifying-glass 1.png"),
+          //   //     ),
+          //   //   ),
+          //   // ],
+          // ),
           body: _childrenf[_currentIndex],
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,
@@ -81,7 +92,7 @@ class _State extends State<HomePageOwn> {
               ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.mail,color: Colors.black,),
-                  label: "Mail",
+                  label: "Message",
                   backgroundColor: Colors.blue
               ),
               BottomNavigationBarItem(

@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Customer/choose_user_page.dart';
-import 'package:flutter_app/scr/resources/Owner/login_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/updateinfo_own_page.dart';
 class Account_Own extends StatefulWidget {
   @override
@@ -30,8 +29,6 @@ class _Account_OwnState extends State<Account_Own> {
     });
   }
   @override
-  FirebaseAuth firebaseAuth;
-
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -71,7 +68,7 @@ class _Account_OwnState extends State<Account_Own> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(ten??"",style: TextStyle(fontSize: 20,color: Colors.black),),
-                                  Text("(+84)"+sdt??"",style: TextStyle(fontSize: 16,color: Colors.black),),
+                                  Text("(+84) ${sdt}"??"",style: TextStyle(fontSize: 16,color: Colors.black),),
                                   Text(email??"",style: TextStyle(fontSize: 16,color: Colors.black),),
                                 ],
                               ),
@@ -166,7 +163,15 @@ class _Account_OwnState extends State<Account_Own> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(
                                   Radius.circular(15))),
-                          onPressed: _signOut,
+                          onPressed: (){
+                            _signOut;
+                        // FirebaseAuth.instance.signOut();
+                        // int count = 0;
+                        //     Navigator.of(context).popUntil(ModalRoute.withName("/ChooseUser"));
+                        //     Navigator.of(context).popUntil((route) => route.isFirst);
+
+
+                        },
                           child: Text("Log out",
                             style: TextStyle(color: Colors.white,fontSize: 20),),
                         ),
@@ -181,8 +186,10 @@ class _Account_OwnState extends State<Account_Own> {
   }
 
 }
-void _signOut() {
-  FirebaseAuth.instance.signOut();
+void _signOut()  {
+   FirebaseAuth.instance.signOut();
+   var user = FirebaseAuth.instance.currentUser;
+   // Navigator.of(context).popUntil(ModalRoute.withName("/ChooseUser"));
   runApp(
       new MaterialApp(
         home: new ChooseUser(),
