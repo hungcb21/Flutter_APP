@@ -112,7 +112,7 @@ class _WaitingState extends State<Waiting> {
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.all(
                                                         Radius.circular(8))),
-                                                onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>ChooseTime(snapshot.key,snapshot.value["NameStore"],snapshot.value["Address"],snapshot.value["District"],snapshot.value["City"])));},
+                                                onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>ChooseTime(snapshot.key,snapshot.value["NameStore"],snapshot.value["Address"],snapshot.value["District"],snapshot.value["City"],snapshot.value["token"]),));},
                                                 child: Text("Change schedule",
                                                   style: TextStyle(
                                                       color: Colors.white),),

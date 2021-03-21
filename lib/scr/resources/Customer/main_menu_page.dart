@@ -1,18 +1,17 @@
+import 'dart:convert';
+import 'dart:io' show Platform;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/scr/resources/Class/StoreClass.dart';
 import 'package:flutter_app/scr/resources/Customer/list_chat_page.dart';
 import 'package:flutter_app/scr/resources/Customer/options_page.dart';
-import 'package:flutter_app/scr/resources/Owner/history_own_page.dart';
-import 'package:flutter_app/scr/resources/Owner/status_page.dart';
+
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/account_page.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/choose_time_page.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/demo2.dart';
 
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/hitory_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/list_store_page.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/login_page.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/sign_up_page.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,6 +19,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _State extends State<HomePage> {
+  String uid;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   int _currentIndex = 0;
   final List<Widget> _childrenf = [
     ListStore(),
@@ -28,6 +32,39 @@ class _State extends State<HomePage> {
     History(),
     ChatListCus(),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //lay token
+    uid= auth.currentUser.uid;
+    _firebaseMessaging.getToken().then((val) {
+      DatabaseReference reference = FirebaseDatabase.instance.reference();
+      reference.child("Users").child(uid).update({
+        'token': val
+      });
+    });
+    //nhan thong bao
+    if (Platform.isIOS) {
+      _firebaseMessaging
+          .requestNotificationPermissions(IosNotificationSettings());
+    }
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        Platform.isAndroid
+            ? showNotification(message['notification'])
+            : showNotification(message['aps']['alert']);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,5 +128,34 @@ class _State extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void showNotification(message) async {
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+      Platform.isAndroid
+          ? 'com.domain.myapplication'
+          : 'com.domain.myapplication',
+      'Flutter chat demo',
+      'your channel description',
+      playSound: true,
+      enableVibration: true,
+      importance: Importance.Max,
+      priority: Priority.High,
+    );
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var platformChannelSpecifics = new NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+
+    print(message);
+//    print(message['body'].toString());
+//    print(json.encode(message));
+
+    await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
+        message['body'].toString(), platformChannelSpecifics,
+        payload: json.encode(message));
+
+//    await flutterLocalNotificationsPlugin.show(
+//        0, 'plain title', 'plain body', platformChannelSpecifics,
+//        payload: 'item x');
   }
 }

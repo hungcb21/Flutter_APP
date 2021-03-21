@@ -234,4 +234,3 @@ class _PushMessagingExampleState extends State<PushMessagingExample> {
     });
   }
 }
-

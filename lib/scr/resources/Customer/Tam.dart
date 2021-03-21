@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show Platform;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -14,8 +15,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final TextEditingController _textController = TextEditingController();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  String iOSDevice = 'e0rt5GJxQXCIyJWzZL4qnq:APA91bG3SvJVbD3trWq-qNWzhlJnTh0tKkAXpa2ugReNzCvnfpr-cFr7hbJ-rl1yGh9yUKyuX1iqu26H-bp2VCq-eUlZnp1A-oGdMpbGAT89ymFIXMzVainLi0ELIPjX9EGEpkIqY48U';
+  String iOSDevice = 'f4k6FjnTSNy2C3s5FobWPr:APA91bHg5P9VKAlISOSUcfOsFTkafX5CnsmZFE1dPYUjT_ZmQCf3RgDzfdyieBhVSR0Sb2Uot_jHDpckJrKuBz0abO5LHWbCUmbPOkQIpBsXhTViLJDkpRDAnkkMn5rnV6buW-MRoZ13';
   String androidSimul = 'fNb83UmUTK-uRlQhw2O_tC:APA91bEma451mR4zbYQM4sIx_K-MXVfw1VsLffLBLCOETEuuBZPgoaxqP63z3c-LvUQW4xCw4JvgVTUQjGKLZOWpMTXaKnZqOX2RZffIMH7j6pHdFiEsDDlGjJzTKumFzuztCwni7dYh';
 
   @override
@@ -27,8 +29,43 @@ class _MyHomePageState extends State<MyHomePage> {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
+        Platform.isAndroid ? showNotification(message['notification']) : showNotification(message['aps']['alert']);
+      },
+
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
       },
     );
+  }
+  void showNotification(message) async {
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+      Platform.isAndroid ? 'com.domain.myapplication' : 'com.domain.myapplication',
+      'Flutter chat demo',
+      'your channel description',
+      playSound: true,
+      enableVibration: true,
+      importance: Importance.Max,
+      priority: Priority.High,
+    );
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var platformChannelSpecifics =
+    new NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+
+    print(message);
+//    print(message['body'].toString());
+//    print(json.encode(message));
+
+    await flutterLocalNotificationsPlugin.show(
+        0, message['title'].toString(), message['body'].toString(), platformChannelSpecifics,
+        payload: json.encode(message));
+
+//    await flutterLocalNotificationsPlugin.show(
+//        0, 'plain title', 'plain body', platformChannelSpecifics,
+//        payload: 'item x');
   }
 
   @override
@@ -67,10 +104,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             SizedBox(height: 20),
             RaisedButton(
-              child: Text('Send a message to Androidsadsda',
+              child: Text('Send a message to Android',
                   style: TextStyle(fontSize: 20)),
               onPressed: () {
-                sendAndRetrieveMessage(androidSimul);
+                sendAndRetrieveMessage();
               },
             ),
             SizedBox(height: 20),
@@ -78,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Send a message to iOS',
                   style: TextStyle(fontSize: 20)),
               onPressed: () {
-                sendAndRetrieveMessage(iOSDevice);
+                sendAndRetrieveMessage();
               },
             )
           ],
@@ -87,9 +124,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  final String serverToken = 'AAAAE20gnpk: APA91bFXei1SgxBwx7roKJBTlQ8VI2WoDv3nng1SOT3CdRmAmhJwkzExUYL7aHSkJkuK1nTKOa1tyUe7QRZ4NDyx-WW52woDv3nng1SOT3CdRmAmhJwkzExUYL7aHSkJkuK1nTKOa1tyUe7QRZ4NDyx-WW52w324ChnoThLoT843EUZTM4NDyx-WW52w324ChnoThLoZ5tm';
+  final String serverToken = '	AAAAE20gnpk:APA91bFWWMS8ocapsunPLjwB4i7xAfJ-VTW9Nq0YROTIudvwnGofqc5K8LWmRoy0YKQEaCTri3Ezrr65duFXx4feUKnqylt6X6M1892mAXcFeMZFYlCcUqV1kvsXolg6vobI_6HiJdVB';
 
-  Future<Map<String, dynamic>> sendAndRetrieveMessage(String token) async {
+  Future<Map<String, dynamic>> sendAndRetrieveMessage() async {
+    await _firebaseMessaging.requestNotificationPermissions(
+      const IosNotificationSettings(sound: true, badge: true, alert: true, provisional: false),
+    );
+
     await http.post(
       'https://fcm.googleapis.com/fcm/send',
       headers: <String, String>{
@@ -99,21 +140,20 @@ class _MyHomePageState extends State<MyHomePage> {
       body: jsonEncode(
         <String, dynamic>{
           'notification': <String, dynamic>{
-            'body': "sad",
-            'title': 'FlutterCloudMessage'
+            'body': 'Hung day',
+            'title': 'Da gui dc'
           },
           'priority': 'high',
           'data': <String, dynamic>{
             'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-            'id': '10',
+            'id': '1',
             'status': 'done'
           },
-          'to': token,
+          'to': await '$androidSimul',
         },
       ),
     );
 
-    _textController.text = '';
     final Completer<Map<String, dynamic>> completer =
     Completer<Map<String, dynamic>>();
 

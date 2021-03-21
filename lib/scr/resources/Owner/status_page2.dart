@@ -1,9 +1,11 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_app/scr/resources/Class/UserClass.dart';
-import 'package:flutter_app/scr/resources/Owner/home_page_own.dart';
 
 import '../Customer/login_page.dart';
 class Status2 extends StatefulWidget {
@@ -15,13 +17,14 @@ class Status2 extends StatefulWidget {
 }
 
 class _Status2State extends State<Status2> {
+  final String serverToken = '	AAAAE20gnpk:APA91bFWWMS8ocapsunPLjwB4i7xAfJ-VTW9Nq0YROTIudvwnGofqc5K8LWmRoy0YKQEaCTri3Ezrr65duFXx4feUKnqylt6X6M1892mAXcFeMZFYlCcUqV1kvsXolg6vobI_6HiJdVB';
   FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
   List<UserProfile> datalist = [];
   FirebaseAuth firebaseUser = FirebaseAuth.instance;
   DatabaseReference ref = FirebaseDatabase.instance.reference();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-
-  String time,name,date,phone,email,address,nameStore;
+  String time,name,date,phone,email,address,nameStore,tokenCus;
   @override
   void initState() {
     // TODO: implement initState
@@ -49,6 +52,7 @@ class _Status2State extends State<Status2> {
             phone= values["PhoneCustomer"];
             email = values["EmailCustomer"];
             address = values["Address"];
+            tokenCus = values["tokenCus"];
           });
         });
       });
@@ -285,9 +289,49 @@ class _Status2State extends State<Status2> {
       'Address':address,
     };
     ref.child("Stores").child(userUID).child("Success").push().set(success);
+    sendAndRetrieveMessage();
     ref.child("Users").child(widget.uid).child("Success").push().set(waitingCustomer);
     ref.child("Stores").child(userUID).child("Waiting").child(widget.uid).remove();
     ref.child("Users").child(widget.uid).child("Waiting").child(userUID).remove();
-  }
 
+  }
+  Future<Map<String, dynamic>> sendAndRetrieveMessage() async {
+    await _firebaseMessaging.requestNotificationPermissions(
+      const IosNotificationSettings(sound: true, badge: true, alert: true, provisional: false),
+    );
+
+    await http.post(
+      'https://fcm.googleapis.com/fcm/send',
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'key=$serverToken',
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          'notification': <String, dynamic>{
+            'body': 'Thời gian: ${time}, ngày: ${date}',
+            'title': 'Bạn đã đặt chỗ thành công từ ${nameStore}'
+          },
+          'priority': 'high',
+          'data': <String, dynamic>{
+            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+            'id': '1',
+            'status': 'done'
+          },
+          'to': await tokenCus,
+        },
+      ),
+    );
+
+    final Completer<Map<String, dynamic>> completer =
+    Completer<Map<String, dynamic>>();
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        completer.complete(message);
+      },
+    );
+
+    return completer.future;
+  }
 }

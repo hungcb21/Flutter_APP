@@ -18,10 +18,11 @@ class DetailStore extends StatefulWidget {
       description,
       start,
       end,
+      token,
       uid;
 
   DetailStore(this.name, this.image, this.city, this.district, this.address,
-      this.description, this.start, this.end, this.uid);
+      this.description, this.start, this.end,this.token, this.uid);
 
   @override
   _DetailStoreState createState() => _DetailStoreState();
@@ -491,7 +492,7 @@ class _DetailStoreState extends State<DetailStore> {
               context,
               MaterialPageRoute(
                   builder: (context) => ChooseTime(widget.uid, widget.name,
-                      widget.address, widget.district, widget.city)));
+                      widget.address, widget.district, widget.city,widget.token)));
         },
         icon: icon,
         label: Text(

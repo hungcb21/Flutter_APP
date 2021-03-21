@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Class/TimeClass.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/comfirm_page.dart';
 class ChooseTime extends StatefulWidget {
-  final String uid,name,address,district,city;
-  ChooseTime(this.uid,this.name,this.address,this.district,this.city);
+  final String uid,name,address,district,city,token;
+  ChooseTime(this.uid,this.name,this.address,this.district,this.city,this.token);
   @override
   _ChooseTimeState createState() => _ChooseTimeState();
 }
@@ -133,7 +133,7 @@ class _ChooseTimeState extends State<ChooseTime> {
     );
   }
   _onNextClicked(){
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>Comfirm(time,widget.name,widget.address,widget.district,widget.city,"${pickedDate.day}/${pickedDate.month}/${pickedDate.year}",widget.uid)));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>Comfirm(time,widget.name,widget.address,widget.district,widget.city,"${pickedDate.day}/${pickedDate.month}/${pickedDate.year}",widget.uid,widget.token)));
   }
   _pickDate()
   async{

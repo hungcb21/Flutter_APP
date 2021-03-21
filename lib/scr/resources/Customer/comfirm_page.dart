@@ -1,20 +1,25 @@
+import 'dart:async';
+import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/dialog/confirm_dialog.dart';
 class Comfirm extends StatefulWidget {
-  final String time,ten,address,district,city,day,storeUid;
-  Comfirm(this.time,this.ten,this.address,this.district,this.city,this.day,this.storeUid);
+  final String time,ten,address,district,city,day,storeUid,token;
+  Comfirm(this.time,this.ten,this.address,this.district,this.city,this.day,this.storeUid,this.token);
   @override
   _ComfirmState createState() => _ComfirmState();
 }
 
 class _ComfirmState extends State<Comfirm> {
-
+  final String serverToken = '	AAAAE20gnpk:APA91bFWWMS8ocapsunPLjwB4i7xAfJ-VTW9Nq0YROTIudvwnGofqc5K8LWmRoy0YKQEaCTri3Ezrr65duFXx4feUKnqylt6X6M1892mAXcFeMZFYlCcUqV1kvsXolg6vobI_6HiJdVB';
   FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
   DatabaseReference ref = FirebaseDatabase.instance.reference();
-  String name,email,sdt;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  String name,email,sdt,tokenCus;
   @override
   void initState() {
     // TODO: implement initState
@@ -28,6 +33,7 @@ class _ComfirmState extends State<Comfirm> {
           name=values["name"];
           email=values["email"];
           sdt=values["phone"];
+          tokenCus=values["token"];
         });
 
       });
@@ -178,7 +184,8 @@ class _ComfirmState extends State<Comfirm> {
       'PhoneCustomer':sdt,
       'Day':widget.day,
       'Address':widget.address+","+widget.district+","+widget.city,
-      'Time':widget.time
+      'Time':widget.time,
+      'tokenCus':tokenCus
     };
     Map<String,String> waitingCustomer ={
       'Time':widget.time,
@@ -186,10 +193,51 @@ class _ComfirmState extends State<Comfirm> {
       'NameStore':widget.ten,
       'Address':widget.address,
       'District':widget.district,
-      'City':widget.city
+      'City':widget.city,
+      'token':widget.token,
     };
     ref.child("Stores").child(widget.storeUid).child("Waiting").child(userUID).set(waiting);
     ref.child("Users").child(userUID).child("Waiting").child(widget.storeUid).set(waitingCustomer);
+    sendAndRetrieveMessage();
     ConfirmDialog.showConfirmDialog(context, "", "");
+  }
+  Future<Map<String, dynamic>> sendAndRetrieveMessage() async {
+    await _firebaseMessaging.requestNotificationPermissions(
+      const IosNotificationSettings(sound: true, badge: true, alert: true, provisional: false),
+    );
+
+    await http.post(
+      'https://fcm.googleapis.com/fcm/send',
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'key=$serverToken',
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          'notification': <String, dynamic>{
+            'body': 'Thời gian: ${widget.time}, ngày: ${widget.day}',
+            'title': 'Bạn nhận được một đề nghị đặt chỗ từ $name'
+          },
+          'priority': 'high',
+          'data': <String, dynamic>{
+            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+            'id': '1',
+            'status': 'done'
+          },
+          'to': await widget.token,
+        },
+      ),
+    );
+
+    final Completer<Map<String, dynamic>> completer =
+    Completer<Map<String, dynamic>>();
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        completer.complete(message);
+      },
+    );
+
+    return completer.future;
   }
 }
