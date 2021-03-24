@@ -6,12 +6,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Customer/list_chat_page.dart';
 import 'package:flutter_app/scr/resources/Customer/options_page.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/account_page.dart';
 
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/hitory_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/list_store_page.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,6 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _State extends State<HomePage> {
   String uid;
+  DateTime currentBackPressTime;
   FirebaseAuth auth = FirebaseAuth.instance;
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -56,12 +60,19 @@ class _State extends State<HomePage> {
         Platform.isAndroid
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
+        FlutterAppBadger.updateBadgeCount(1);
+
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
+        Platform.isAndroid
+            ? showNotification(message['notification'])
+            : showNotification(message['aps']['alert']);
+        FlutterAppBadger.removeBadge();
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
+
       },
     );
   }
@@ -69,7 +80,16 @@ class _State extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () {
+        DateTime now = DateTime.now();
+        if (currentBackPressTime == null ||
+            now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+          currentBackPressTime = now;
+          Fluttertoast.showToast(msg: "Bấm 2 lần để thoát");
+          return Future.value(false);
+        }
+        return Future.value(true);
+      },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(

@@ -44,6 +44,7 @@ class Status extends StatelessWidget {
       }
     });
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.yellow,
@@ -63,17 +64,6 @@ class Status extends StatelessWidget {
                 child: Text("Status", style: TextStyle(fontSize: 30),),
               ),
               preferredSize: Size.fromHeight(kToolbarHeight)),
-          actions: [
-            InkWell(
-              onTap: () {},
-              child: Container(
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.grey,
-                ),
-              ),
-            ),
-          ],
         ),
         body: Container(
             child: FirebaseAnimatedList(

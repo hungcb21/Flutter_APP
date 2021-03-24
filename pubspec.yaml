@@ -24,11 +24,13 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_auth:
+  overlay_support: ^1.0.0
   flutter_typeahead: ^2.0.0
   rating_dialog: ^2.0.0
   bubble: ^1.2.1
   firebase_database:
-  firebase_core: "0.5.2+1"
+  firebase_core: ^0.5.2+1
+  flutter_app_badger: ^1.2.0
   provider: ^4.3.2+2
   firebase_storage: ^5.0.0
   firebase_analytics: ^5.0.6

@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:flutter/material.dart' ;
+import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import '../Class/StoreClass.dart';
 import 'store_infor_page.dart';
@@ -23,7 +23,7 @@ class _ListStoreState extends State<ListStore> {
     super.initState();
     query = FirebaseDatabase.instance.reference().child('Stores');
     DatabaseReference reference =
-    FirebaseDatabase.instance.reference().child("Stores");
+        FirebaseDatabase.instance.reference().child("Stores");
     // reference.once().then((DataSnapshot datasnapshot){
     //   datalist.clear();
     //   var keys = datasnapshot.value.keys;
@@ -44,10 +44,7 @@ class _ListStoreState extends State<ListStore> {
 
   @override
   Widget build(BuildContext context) {
-    double c_width = MediaQuery
-        .of(context)
-        .size
-        .width * 0.8;
+    double c_width = MediaQuery.of(context).size.width * 0.8;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -58,30 +55,25 @@ class _ListStoreState extends State<ListStore> {
             title: !searchState
                 ? Text("")
                 : TypeAheadField(
-                textFieldConfiguration: TextFieldConfiguration(
-                    autofocus: true,
-                    style: DefaultTextStyle
-                        .of(context)
-                        .style
-                        .copyWith(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 18,
-                        color: Colors.white)),
-                suggestionsCallback: (searchString) async {
-                  return await searchComic(searchString);
-                },
-                itemBuilder: (context, comic) {
-                  return ListTile(
-                      leading: Image.network(comic.image),
-                      title: Text("${comic.nameStore}")
-                     );
-                },
-                onSuggestionSelected: (comic) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              DetailStore(
+                    textFieldConfiguration: TextFieldConfiguration(
+                        autofocus: true,
+                        style: DefaultTextStyle.of(context).style.copyWith(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 18,
+                            color: Colors.white)),
+                    suggestionsCallback: (searchString) async {
+                      return await searchComic(searchString);
+                    },
+                    itemBuilder: (context, comic) {
+                      return ListTile(
+                          leading: Image.network(comic.image),
+                          title: Text("${comic.nameStore}"));
+                    },
+                    onSuggestionSelected: (comic) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailStore(
                                   comic.nameStore,
                                   comic.image,
                                   comic.city,
@@ -90,36 +82,36 @@ class _ListStoreState extends State<ListStore> {
                                   comic.description,
                                   comic.timeStart,
                                   comic.timeEnd,
-                                  comic.token
-                                  ,comic.key)));
-                  setState(() {
-                    datalist.clear();
-                    searchState = !searchState;
-                  });
-                }),
+                                  comic.token,
+                                  comic.key)));
+                      setState(() {
+                        datalist.clear();
+                        searchState = !searchState;
+                      });
+                    }),
             actions: [
               !searchState
                   ? IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {
-                  setState(() {
-                    datalist.clear();
-                    searchState = !searchState;
-                  });
-                },
-              )
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        setState(() {
+                          datalist.clear();
+                          searchState = !searchState;
+                        });
+                      },
+                    )
                   : Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () {
-                      setState(() {
-                        searchState = !searchState;
-                      });
-                    },
-                  ),
-                ],
-              ),
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.cancel),
+                          onPressed: () {
+                            setState(() {
+                              searchState = !searchState;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
             ]),
         body: Container(
           constraints: BoxConstraints.expand(),
@@ -158,9 +150,11 @@ class _ListStoreState extends State<ListStore> {
                               listStoreFromDatabase = datalist;
                               return InkWell(
                                 onTap: () {
-                                  Navigator.push(context,
+                                  Navigator.push(
+                                      context,
                                       MaterialPageRoute(
-                                          builder: (context) => DetailStore(snapshot.value["NameStore"],
+                                          builder: (context) => DetailStore(
+                                              snapshot.value["NameStore"],
                                               snapshot.value["Image"],
                                               snapshot.value["City"],
                                               snapshot.value["District"],
@@ -185,9 +179,9 @@ class _ListStoreState extends State<ListStore> {
                                       ),
                                       Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Container(
                                               width: 200,
@@ -196,18 +190,15 @@ class _ListStoreState extends State<ListStore> {
                                                 snapshot.value["NameStore"] ??
                                                     "",
                                                 textAlign: TextAlign.left,
-                                                style: Theme
-                                                    .of(context)
+                                                style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle1
                                                     .copyWith(
-                                                    fontSize: 20,
-                                                    color: Colors.blue),
+                                                        fontSize: 20,
+                                                        color: Colors.blue),
                                               )),
-                                          Text(
-                                            snapshot.value["TimeStart"] +
-                                                "-" +
-                                                snapshot.value["TimeEnd"],
+                                          Text("${snapshot.value["TimeStart"]}-${snapshot.value["TimeEnd"]}"??""
+                                                ,
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.white),
@@ -222,9 +213,9 @@ class _ListStoreState extends State<ListStore> {
                                                 color: Colors.deepOrangeAccent,
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius:
-                                                    BorderRadius.all(
-                                                        Radius.circular(
-                                                            8))),
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                8))),
                                                 onPressed: () {},
                                                 child: Text(
                                                   "Booking",
@@ -252,10 +243,11 @@ class _ListStoreState extends State<ListStore> {
       ),
     );
   }
+
   Future<List<Store>> searchComic(String searchString) async {
     return listStoreFromDatabase
         .where((comic) =>
-        comic.nameStore.toLowerCase().contains(searchString.toLowerCase()))
+            comic.nameStore.toLowerCase().contains(searchString.toLowerCase()))
         .toList();
   }
 }

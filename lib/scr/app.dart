@@ -3,7 +3,6 @@ import 'package:flutter_app/scr/resources/Customer/Tam.dart';
 import 'package:flutter_app/scr/resources/Customer/account_page.dart';
 import 'package:flutter_app/scr/resources/Customer/choose_time_page.dart';
 import 'package:flutter_app/scr/resources/Customer/choose_user_page.dart';
-import 'package:flutter_app/scr/resources/Customer/demo2.dart';
 import 'package:flutter_app/scr/resources/Customer/hitory_page.dart';
 import 'package:flutter_app/scr/resources/Customer/list_store_page.dart';
 import 'package:flutter_app/scr/resources/Customer/login_page.dart';

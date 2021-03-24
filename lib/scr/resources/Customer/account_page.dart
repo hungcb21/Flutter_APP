@@ -209,7 +209,10 @@ class _AccountState extends State<Account> {
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15))),
-                            onPressed: _signOut,
+                            onPressed: (){
+
+                              showConfirmDialog(context);
+                            },
                             child: Text(
                               "Log out",
                               style:
@@ -224,11 +227,43 @@ class _AccountState extends State<Account> {
           ),
         ));
   }
+   void showConfirmDialog(BuildContext context)
+  {
+    showDialog(context: context,builder: (context){
+      return AlertDialog(
+        actions: <Widget>[
+          Center(
+            child: Column(
+              children: [
+                Text("Bạn có muốn đăng xuất",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                Row(
+                  children: [
+                    FlatButton(
+                      child: Text("Không"),
+                      onPressed: (){
+                        Navigator.of(context).pop(true);
+                      },
+                    ),
+                    FlatButton(
+                      child: Text("Có"),
+                      onPressed: (){
+                        Navigator.of(context).pop(true);
+                        int count = 0;
+                        Navigator.of(context).popUntil((_) => count++ >= 1);
+                        FirebaseAuth.instance.signOut();
+                      },
+                    ),
+                  ],
+                ),
+
+              ],
+            ),
+          ),
+
+        ],
+      );
+    });
+  }
+
 }
 
-void _signOut() {
-  FirebaseAuth.instance.signOut();
-  runApp( MaterialApp(
-    home: new ChooseUser(),
-  ));
-}

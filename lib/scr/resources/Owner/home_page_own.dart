@@ -6,8 +6,10 @@ import 'package:flutter_app/scr/resources/Owner/dashboard_page.dart';
 import 'package:flutter_app/scr/resources/Owner/history_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/list_chat_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/option_own_page.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'account_owner_page.dart';
 import 'dart:convert';
 import 'dart:io' show Platform;
@@ -54,12 +56,15 @@ class _State extends State<HomePageOwn> {
         Platform.isAndroid
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
+        FlutterAppBadger.updateBadgeCount(1);
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
+        FlutterAppBadger.removeBadge();
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
+
       },
     );
   }
@@ -72,7 +77,7 @@ class _State extends State<HomePageOwn> {
         if (currentBackPressTime == null ||
             now.difference(currentBackPressTime) > Duration(seconds: 2)) {
           currentBackPressTime = now;
-          Fluttertoast.showToast(msg: "Bam 2 lan de thoat");
+          Fluttertoast.showToast(msg: "Bấm 2 lần để thoát");
           return Future.value(false);
         }
         return Future.value(true);
@@ -81,26 +86,6 @@ class _State extends State<HomePageOwn> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           extendBodyBehindAppBar: false,
-          // appBar: AppBar(
-          //   backgroundColor: Colors.yellow,
-          //   elevation: 0,
-          //   // leading:   InkWell(
-          //   //   onTap: () {Navigator.of(context).pushAndRemoveUntil(
-          //   //       MaterialPageRoute(builder: (c) => HomePageOwn()),
-          //   //           (route) => false);},
-          //   //   child: Container(
-          //   //     child: Image.asset("images/left-arrow2.png"),
-          //   //   ),
-          //   // ),
-          //   // actions: [
-          //   //   InkWell(
-          //   //     onTap: () {},
-          //   //     child: Container(
-          //   //       child: Image.asset("images/magnifying-glass 1.png"),
-          //   //     ),
-          //   //   ),
-          //   // ],
-          // ),
           body: _childrenf[_currentIndex],
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,

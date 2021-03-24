@@ -197,9 +197,12 @@ class _ComfirmState extends State<Comfirm> {
       'token':widget.token,
     };
     ref.child("Stores").child(widget.storeUid).child("Waiting").child(userUID).set(waiting);
-    ref.child("Users").child(userUID).child("Waiting").child(widget.storeUid).set(waitingCustomer);
+    ref.child("Users").child(userUID).child("Waiting").child(widget.storeUid).set(waitingCustomer).then((value){
     sendAndRetrieveMessage();
     ConfirmDialog.showConfirmDialog(context, "", "");
+    });
+
+
   }
   Future<Map<String, dynamic>> sendAndRetrieveMessage() async {
     await _firebaseMessaging.requestNotificationPermissions(
@@ -237,7 +240,7 @@ class _ComfirmState extends State<Comfirm> {
         completer.complete(message);
       },
     );
-
     return completer.future;
   }
+
 }
