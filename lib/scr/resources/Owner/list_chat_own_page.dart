@@ -47,50 +47,53 @@ class _ChatListOwnState extends State<ChatListOwn> {
                 DataSnapshot snapshot,
                 Animation<double> animation,
                 int index){
-              return InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen(snapshot.value["idRoomChat"],avatar,name)));
-                },
-                child: Container(
-                  height: 100,
-                  width: 400,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      CircleAvatar(
-                        radius: 60,
-                        backgroundImage: new NetworkImage(snapshot.value["cusImage"]),
-                      ),
-
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              snapshot.value["cusName"]??"",
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              snapshot.value["lastMessenger"]??"",
-                              style: TextStyle(color: Colors.black45),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-
-                          ],
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen(snapshot.value["idRoomChat"],avatar,name)));
+                  },
+                  child: Container(
+                    height: 100,
+                    width: 400,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundImage: new NetworkImage(snapshot.value["cusImage"]),
                         ),
-                      ),
-                    ],
+
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                snapshot.value["cusName"]??"",
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                snapshot.value["lastMessenger"]??"",
+                                style: TextStyle(color: Colors.black45),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

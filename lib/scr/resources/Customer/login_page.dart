@@ -74,10 +74,11 @@ class _ExampleState extends State<Login> {
                                     children: [
                                       Container(child: new Image.asset("images/user 1.png")),
                                       Container(
-                                        width: 212,
+                                        width: 300,
                                         child: StreamBuilder(
                                           stream: bloc.userStream ,
                                           builder: (context,snapshots)=>  TextField(
+                                            keyboardType: TextInputType.emailAddress,
                                           style: TextStyle(fontSize: 18,color: Colors.white),
                                           controller: _userController,
                                           decoration: InputDecoration(labelText: "User name or Email",
@@ -94,7 +95,7 @@ class _ExampleState extends State<Login> {
                                   children: [
                                     Container(child: new Image.asset("images/padlock 1.png")),
                                     Container(
-                                      width: 212,
+                                      width: 300,
                                       child: StreamBuilder(
                                               stream: bloc.passStream,
                                               builder: (context, snapshot) => TextField(
@@ -121,10 +122,11 @@ class _ExampleState extends State<Login> {
                                     width: 140,
                                     height: 40,
                                     child: RaisedButton(
-                                      color: Colors.blueAccent,
+                                      color: Colors.indigo
+                                      ,
                                       shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
                                       onPressed:onLoginCliked,
-                                      child: Text("Login",style: TextStyle(color: Colors.white),),
+                                      child: Text("Login",style: TextStyle(color: Colors.white,fontSize: 20),),
                                     ),
                                   ),
                                 ),

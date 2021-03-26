@@ -28,10 +28,7 @@ class _SignUpOwnState extends State<SignUpOwn> {
         elevation: 0,
         leading:    InkWell(
           onTap: ()  {
-            Navigator.push(context,
-                MaterialPageRoute(
-                    builder: (context)=>Login()
-                ));
+         Navigator.pop(context);
           },
           child: Container(
             child: Image.asset("images/left-arrow2.png"),
@@ -90,10 +87,11 @@ class _SignUpOwnState extends State<SignUpOwn> {
                                     children: [
                                       Container(child: new Image.asset("images/user 1.png")),
                                       Container(
-                                          width: 212,
+                                          width: 300,
                                           child: StreamBuilder(
                                             stream: bloc.userStream,
                                             builder: (context,snapshot)=>TextField(
+                                              keyboardType: TextInputType.emailAddress,
                                               style: TextStyle(fontSize: 18,color: Colors.white),
                                               controller: _userController,
                                               decoration: InputDecoration(labelText: "User name or Email",
@@ -110,7 +108,7 @@ class _SignUpOwnState extends State<SignUpOwn> {
                                   children: [
                                     Container(child: new Image.asset("images/padlock 1.png")),
                                     Container(
-                                        width: 212,
+                                        width: 300,
                                         child:StreamBuilder(
                                           stream: bloc.passStream,
                                           builder: (context,snapshot)=> TextField(
@@ -130,7 +128,7 @@ class _SignUpOwnState extends State<SignUpOwn> {
                                   children: [
                                     Container(child: Icon(Icons.assignment_ind_sharp)),
                                     Container(
-                                        width: 212,
+                                        width: 300,
                                         child: StreamBuilder(
                                           stream: bloc.nameStream,
                                           builder: (context,snapshot)=>TextField(
@@ -148,10 +146,11 @@ class _SignUpOwnState extends State<SignUpOwn> {
                                   children: [
                                     Container(child: new Image.asset("images/call 1.png")),
                                     Container(
-                                        width: 212,
+                                        width: 300,
                                         child: StreamBuilder(
                                           stream: bloc.phoneStream,
                                           builder: (context,snapshot)=>TextField(
+                                            keyboardType: TextInputType.phone,
                                             style: TextStyle(fontSize: 18,color: Colors.white),
                                             controller: _phoneController,
                                             decoration: InputDecoration(labelText: "Your phone numbers",
@@ -168,10 +167,10 @@ class _SignUpOwnState extends State<SignUpOwn> {
                                     width: 140,
                                     height: 40,
                                     child: RaisedButton(
-                                      color: Colors.blueAccent,
+                                      color: Colors.indigo,
                                       shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
                                       onPressed: _onSignUpClicked,
-                                      child: Text("Sign Up",style: TextStyle(color: Colors.white),),
+                                      child: Text("Sign Up",style: TextStyle(color: Colors.white,fontSize: 20),),
                                     ),
                                   ),
                                 ),

@@ -62,6 +62,7 @@ class ChatScreenState extends State<ChatScreen> {
       debugShowCheckedModeBanner: false,
       home:  Scaffold(
           appBar: new AppBar(
+            backgroundColor: Color(0xFF383443),
             leading: IconButton(icon: Icon(Icons.arrow_back),
             onPressed: (){
               Navigator.pop(context);

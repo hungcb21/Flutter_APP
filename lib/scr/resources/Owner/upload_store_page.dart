@@ -112,7 +112,7 @@ class _UploadStoreState extends State<UploadStore> {
                   children: [
                     Icon(Icons.account_circle_sharp),
                     Container(
-                        width: 212,
+                        width: 300,
                         child: StreamBuilder(
                           stream: bloc.nameStoreStream,
                           builder: (context, snapshot) => TextField(
@@ -133,7 +133,7 @@ class _UploadStoreState extends State<UploadStore> {
                   children: [
                     Icon(Icons.location_on_rounded),
                     Container(
-                        width: 212,
+                        width: 300,
                         child: StreamBuilder(
                           stream: bloc.addressStream,
                           builder: (context, snapshot) => TextField(
@@ -154,7 +154,7 @@ class _UploadStoreState extends State<UploadStore> {
                   children: [
                     Icon(Icons.location_city),
                     Container(
-                        width: 212,
+                        width: 300,
                         child: StreamBuilder(
                           stream: bloc.cityStream,
                           builder: (context, snapshot) => TextField(
@@ -175,7 +175,7 @@ class _UploadStoreState extends State<UploadStore> {
                   children: [
                     Icon(Icons.location_city),
                     Container(
-                        width: 212,
+                        width: 300,
                         child: StreamBuilder(
                           stream: bloc.districtStream,
                           builder: (context, snapshot) => TextField(
@@ -196,7 +196,7 @@ class _UploadStoreState extends State<UploadStore> {
                   children: [
                     Icon(Icons.timer),
                     Container(
-                        width: 212,
+                        width: 300,
                         child: StreamBuilder(
                           stream: bloc.timeStartStream,
                           builder: (context, snapshot) => TextField(
@@ -215,7 +215,7 @@ class _UploadStoreState extends State<UploadStore> {
                   children: [
                     Icon(Icons.timer),
                     Container(
-                        width: 212,
+                        width: 300,
                         child: StreamBuilder(
                           stream: bloc.timeEndStream,
                           builder: (context, snapshot) => TextField(
@@ -232,7 +232,7 @@ class _UploadStoreState extends State<UploadStore> {
                 ),
                 Container(
                   height: 152,
-                  width: 295,
+                  width: 300,
                   color: Colors.white,
                   child: Column(
                     children: [

@@ -16,6 +16,7 @@ class _ForgotPassState extends State<ForgotPass> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -23,10 +24,7 @@ class _ForgotPassState extends State<ForgotPass> {
           elevation: 0,
           leading:    InkWell(
             onTap: ()  {
-              Navigator.push(context,
-                  MaterialPageRoute(
-                      builder: (context)=>Login()
-                  ));
+            Navigator.pop(context);
             },
             child: Container(
               child: Image.asset("images/left-arrow2.png"),
@@ -46,10 +44,11 @@ class _ForgotPassState extends State<ForgotPass> {
                   child: Text("Forgot Password?",style: TextStyle(fontSize: 30,color: Colors.white),),
                 ),
                 Container(
-                    width: 212,
+                    width: 300,
                     child: StreamBuilder(
                       stream: bloc.userStream,
                       builder: (context,snapshot)=>TextField(
+                        keyboardType: TextInputType.emailAddress,
                         style: TextStyle(fontSize: 18,color: Colors.white),
                         controller: _emailController,
                         decoration: InputDecoration(labelText: "Email",
@@ -64,10 +63,10 @@ class _ForgotPassState extends State<ForgotPass> {
                     width: 300,
                     height: 40,
                     child: RaisedButton(
-                      color: Colors.blueAccent,
+                      color: Colors.indigo,
                       shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
                       onPressed: _onResetPassClicked,
-                      child: Text("Reset Password",style: TextStyle(color: Colors.white),),
+                      child: Text("Reset Password",style: TextStyle(color: Colors.white,fontSize: 20),),
                     ),
                   ),
                 ),

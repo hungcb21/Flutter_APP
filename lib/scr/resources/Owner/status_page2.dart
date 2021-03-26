@@ -24,7 +24,7 @@ class _Status2State extends State<Status2> {
   DatabaseReference ref = FirebaseDatabase.instance.reference();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-  String time,name,date,phone,email,address,nameStore,tokenCus;
+  String time,name,date,phone,email,address,nameStore,tokenCus,imageCus;
   @override
   void initState() {
     // TODO: implement initState
@@ -53,6 +53,7 @@ class _Status2State extends State<Status2> {
             email = values["EmailCustomer"];
             address = values["Address"];
             tokenCus = values["tokenCus"];
+            imageCus=values["ImageCus"];
           });
         });
       });
@@ -281,6 +282,7 @@ class _Status2State extends State<Status2> {
       'PhoneCustomer':phone,
       'Day':date,
       'Address':address,
+      'ImageCus':imageCus,
       'Time':time
     };
     Map<String,String> waitingCustomer ={

@@ -347,7 +347,7 @@ class _DetailStoreState extends State<DetailStore> {
                                       Icons.book,
                                       color: Colors.white,
                                     ),
-                                    color: Colors.blue,
+                                    color: Colors.indigo,
                                     text: "BOOK NOW"),
                               ],
                             )
@@ -474,7 +474,8 @@ class _DetailStoreState extends State<DetailStore> {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.message),
+            backgroundColor: Colors.indigo,
+            child: Icon(Icons.message,color: Colors.white,),
             onPressed: () {
               onChatClicked();
             },

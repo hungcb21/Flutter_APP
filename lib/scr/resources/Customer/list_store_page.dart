@@ -195,7 +195,7 @@ class _ListStoreState extends State<ListStore> {
                                                     .subtitle1
                                                     .copyWith(
                                                         fontSize: 20,
-                                                        color: Colors.blue),
+                                                        color: Colors.white),
                                               )),
                                           Text("${snapshot.value["TimeStart"]}-${snapshot.value["TimeEnd"]}"??""
                                                 ,

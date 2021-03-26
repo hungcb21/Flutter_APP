@@ -71,63 +71,123 @@ class Status extends StatelessWidget {
                 query: query, itemBuilder: (BuildContext context,
                 DataSnapshot snapshot, Animation<double> animation, int index) {
               return InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => Status2(index, snapshot.key)));
-                },
-                child: Card(
-                    elevation: 10,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.account_circle_sharp),
-                                  Column(
-                                    children: [
-                                      Text(snapshot.value["NameCustomer"] ?? "",
-                                        style: TextStyle(fontSize: 15),),
-                                      Text("(+84)" +
-                                          snapshot.value["PhoneCustomer"] ?? "",
-                                        style: TextStyle(fontSize: 15),),
-                                    ],
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => Status2(index, snapshot.key)));
+                  },
+                  child: Card(
+                    shape: BeveledRectangleBorder(),
+                    margin: EdgeInsets.only(left: 30.0, right: 30.0, top: 10.0),
+                    shadowColor: Colors.black87,
+                    elevation: 8.0,
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Container(
+                            width: 90.0,
+                            height: 85.0,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(snapshot.value["ImageCus"]??"https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/50396385_2259091907660313_3015233235551518720_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=xGJfZO9JJ6YAX_qkB1F&_nc_oc=AQnBnelsr-cjza5f0d_d0-kR6F66v5NHIYfiVpVFoE-wXsc84fzXFroMNWMF-75cXUzJnojd_DMcl-OwTM9CoA7i&_nc_ht=scontent.fsgn2-1.fna&oh=5dca84a0d4035c8502dc22563aee3694&oe=60835979"))),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          // width: 220.0,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(height: 5.0),
+                              Row(children: <Widget>[
+                                Icon(
+                                  Icons.person,
+                                  color: Theme.of(context)
+                                      .bottomAppBarTheme
+                                      .color,
+                                  size: 15.0,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10.0),
+                                  child: Text(
+                                    snapshot.value["NameCustomer"] ?? '',
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 13.5),
                                   ),
-
-                                ],
-
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(80, 0, 0, 0),
-                                child: Text(snapshot.value["Day"] + " " +
-                                    snapshot.value["Time"] ?? "",
-                                    style: TextStyle(fontSize: 15)),
-                              ),
+                                )
+                              ]),
+                              SizedBox(height: 5.0),
+                              Row(children: <Widget>[
+                                Icon(
+                                  Icons.phone,
+                                  color: Theme.of(context)
+                                      .bottomAppBarTheme
+                                      .color,
+                                  size: 15.0,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10.0),
+                                  child: Text(
+                                    "(+84)" +
+                                        snapshot.value["PhoneCustomer"] ??
+                                        "",
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 13.5),
+                                  ),
+                                )
+                              ]),
+                              SizedBox(height: 5.0),
+                              Row(children: <Widget>[
+                                Icon(
+                                  Icons.access_time,
+                                  color: Theme.of(context)
+                                      .bottomAppBarTheme
+                                      .color,
+                                  size: 15.0,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10.0),
+                                  child: Text(
+                                    snapshot.value["Day"] +
+                                        " " +
+                                        snapshot.value["Time"],
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 13.5),
+                                  ),
+                                )
+                              ]),
+                              SizedBox(height: 5.0),
+                              Row(children: <Widget>[
+                                Icon(
+                                  Icons.location_on,
+                                  color: Theme.of(context)
+                                      .bottomAppBarTheme
+                                      .color,
+                                  size: 15.0,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10.0),
+                                  child: Container(
+                                      width: 190,
+                                      child: Text(
+                                        snapshot.value["Address"] ?? "",
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 13.5),
+                                        textAlign: TextAlign.left,
+                                      )),
+                                )
+                              ]),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.add_location),
-                                  Text(snapshot.value["Address"] ?? "",
-                                      style: TextStyle(fontSize: 15)),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: Icon(Icons.arrow_forward_ios_outlined),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                ),
+                        ),
+                      ],
+                    ),
+                  ),
               );
             }
             )

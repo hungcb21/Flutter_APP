@@ -19,7 +19,7 @@ class _ComfirmState extends State<Comfirm> {
   FirebaseAuth _firebaseAuth =FirebaseAuth.instance;
   DatabaseReference ref = FirebaseDatabase.instance.reference();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  String name,email,sdt,tokenCus;
+  String name,email,sdt,tokenCus,imageCus;
   @override
   void initState() {
     // TODO: implement initState
@@ -33,6 +33,7 @@ class _ComfirmState extends State<Comfirm> {
           name=values["name"];
           email=values["email"];
           sdt=values["phone"];
+          imageCus=values["Image"];
           tokenCus=values["token"];
         });
 
@@ -143,7 +144,7 @@ class _ComfirmState extends State<Comfirm> {
                         width: 140,
                         height: 40,
                         child: RaisedButton(
-                          color: Colors.blueAccent,
+                          color: Colors.indigo,
                           shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
                           onPressed:(){
                             Navigator.pop(context);
@@ -158,7 +159,7 @@ class _ComfirmState extends State<Comfirm> {
                         width: 140,
                         height: 40,
                         child: RaisedButton(
-                          color: Colors.blueAccent,
+                          color: Colors.indigo,
                           shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
                           onPressed:(){
                             _onConfirmClick();
@@ -182,6 +183,7 @@ class _ComfirmState extends State<Comfirm> {
       'NameCustomer':name,
       'EmailCustomer':email,
       'PhoneCustomer':sdt,
+      'ImageCus':imageCus,
       'Day':widget.day,
       'Address':widget.address+","+widget.district+","+widget.city,
       'Time':widget.time,

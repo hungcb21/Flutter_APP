@@ -87,7 +87,7 @@ class _AccountState extends State<Account> {
                                           fontSize: 20, color: Colors.black),
                                     ),
                                     Text(
-                                      "(+84${sdt}" ?? "",
+                                      "(+84)${sdt}" ?? "",
                                       style: TextStyle(
                                           fontSize: 16, color: Colors.black),
                                     ),
@@ -231,35 +231,28 @@ class _AccountState extends State<Account> {
   {
     showDialog(context: context,builder: (context){
       return AlertDialog(
+      content:  Text("Bạn có muốn đăng xuất",style: TextStyle(fontSize: 20)),
+        title:  Text("Đăng xuất",style: TextStyle(fontSize: 20)),
         actions: <Widget>[
-          Center(
-            child: Column(
-              children: [
-                Text("Bạn có muốn đăng xuất",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                Row(
-                  children: [
-                    FlatButton(
-                      child: Text("Không"),
-                      onPressed: (){
-                        Navigator.of(context).pop(true);
-                      },
-                    ),
-                    FlatButton(
-                      child: Text("Có"),
-                      onPressed: (){
-                        Navigator.of(context).pop(true);
-                        int count = 0;
-                        Navigator.of(context).popUntil((_) => count++ >= 1);
-                        FirebaseAuth.instance.signOut();
-                      },
-                    ),
-                  ],
-                ),
-
-              ],
-            ),
+          Row(
+            children: [
+              FlatButton(
+                child: Text("Không",style: TextStyle(fontSize: 15)),
+                onPressed: (){
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              FlatButton(
+                child: Text("Có",style: TextStyle(fontSize: 15),),
+                onPressed: (){
+                  Navigator.of(context).pop(true);
+                  int count = 0;
+                  Navigator.of(context).popUntil((_) => count++ >= 1);
+                  FirebaseAuth.instance.signOut();
+                },
+              ),
+            ],
           ),
-
         ],
       );
     });

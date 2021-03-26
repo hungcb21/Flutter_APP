@@ -29,7 +29,6 @@ class _State extends State<HomePageOwn> {
   final List<Widget> _childrenf = [
     Dashboard(),
     OptionsOwn(),
-    Dashboard(),
     ChatListOwn(),
     Account_Own(),
   ];
@@ -60,6 +59,9 @@ class _State extends State<HomePageOwn> {
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
+        Platform.isAndroid
+            ? showNotification(message['notification'])
+            : showNotification(message['aps']['alert']);
         FlutterAppBadger.removeBadge();
       },
       onResume: (Map<String, dynamic> message) async {
@@ -89,7 +91,8 @@ class _State extends State<HomePageOwn> {
           body: _childrenf[_currentIndex],
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,
-            selectedItemColor: Colors.white,
+            backgroundColor: Colors.white,
+            selectedItemColor: Colors.black,
             onTap: (int index) {
               setState(() {
                 _currentIndex = index;
@@ -102,29 +105,25 @@ class _State extends State<HomePageOwn> {
                     color: Colors.black,
                   ),
                   label: "Home",
-                  backgroundColor: Colors.blue),
+                  backgroundColor: Colors.white),
               BottomNavigationBarItem(
                   icon: Icon(Icons.assistant_outlined, color: Colors.black),
                   label: "Options",
-                  backgroundColor: Colors.blue),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.notification_important, color: Colors.black),
-                  label: "Notification",
-                  backgroundColor: Colors.blue),
+                  backgroundColor: Colors.white),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.mail,
                     color: Colors.black,
                   ),
                   label: "Message",
-                  backgroundColor: Colors.blue),
+                  backgroundColor: Colors.white),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.account_circle_sharp,
                     color: Colors.black,
                   ),
                   label: "Account",
-                  backgroundColor: Colors.blue),
+                  backgroundColor: Colors.white),
             ],
           ),
         ),
@@ -149,8 +148,7 @@ class _State extends State<HomePageOwn> {
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
     print(message);
-//    print(message['body'].toString());
-//    print(json.encode(message));
+
 
     await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
         message['body'].toString(), platformChannelSpecifics,

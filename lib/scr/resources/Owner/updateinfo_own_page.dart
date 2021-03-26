@@ -122,8 +122,7 @@ class _Update_Info_OwnState extends State<Update_Info_Own> {
                               Icon(Icons.lock,size: 30,),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                child: Text(
-                                    '${pass.replaceAll(RegExp(r"."), "*")}'??""),
+                                child: Text("*********"),
                               ),
                             ],
                           ),

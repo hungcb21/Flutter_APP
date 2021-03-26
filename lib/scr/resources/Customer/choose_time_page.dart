@@ -105,7 +105,7 @@ class _ChooseTimeState extends State<ChooseTime> {
                           width: 140,
                           height: 40,
                           child: RaisedButton(
-                            color: Colors.blueAccent,
+                            color: Colors.indigo,
                             shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
                             onPressed:(){Navigator.pop(context);},
                             child: Text("Back",style: TextStyle(color: Colors.white),),
@@ -116,7 +116,7 @@ class _ChooseTimeState extends State<ChooseTime> {
                         width: 140,
                         height: 40,
                         child: RaisedButton(
-                          color: Colors.blueAccent,
+                          color: Colors.indigo,
                           shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
                           onPressed:isEnabled?()=>_onNextClicked():null,
                           child: Text("Next",style: TextStyle(color: Colors.white),),

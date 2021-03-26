@@ -188,34 +188,28 @@ class _Account_OwnState extends State<Account_Own> {
   {
     showDialog(context: context,builder: (context){
       return AlertDialog(
+        content:  Text("Bạn có muốn đăng xuất",style: TextStyle(fontSize: 20)),
+        title:  Text("Đăng xuất",style: TextStyle(fontSize: 20)),
         actions: <Widget>[
-          Center(
-            child: Column(
-              children: [
-                Text("Bạn có muốn đăng xuất",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold)),
-                Row(
-                  children: [
-                    FlatButton(
-                      child: Text("Không"),
-                      onPressed: (){
-                      },
-                    ),
-                    FlatButton(
-                      child: Text("Có"),
-                      onPressed: (){
-                        Navigator.of(context).pop(true);
-                        int count = 0;
-                        Navigator.of(context).popUntil((_) => count++ >= 1);
-                        FirebaseAuth.instance.signOut();
-                      },
-                    ),
-                  ],
-                ),
-
-              ],
-            ),
+          Row(
+            children: [
+              FlatButton(
+                child: Text("Không",style: TextStyle(fontSize: 15)),
+                onPressed: (){
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              FlatButton(
+                child: Text("Có",style: TextStyle(fontSize: 15),),
+                onPressed: (){
+                  Navigator.of(context).pop(true);
+                  int count = 0;
+                  Navigator.of(context).popUntil((_) => count++ >= 1);
+                  FirebaseAuth.instance.signOut();
+                },
+              ),
+            ],
           ),
-
         ],
       );
     });
