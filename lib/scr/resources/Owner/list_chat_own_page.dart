@@ -10,7 +10,7 @@ class ChatListOwn extends StatefulWidget {
 
 class _ChatListOwnState extends State<ChatListOwn> {
   Query query;
-  String uid,name,avatar;
+  String uid,name,avatar,tokenCus;
   FirebaseAuth auth = FirebaseAuth.instance;
   @override
   void initState() {
@@ -51,7 +51,16 @@ class _ChatListOwnState extends State<ChatListOwn> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen(snapshot.value["idRoomChat"],avatar,name)));
+                    DatabaseReference reference = FirebaseDatabase.instance.reference();
+                    reference.child("Users").child(snapshot.value["uidCus"]).once().then((value) {
+                      Map<dynamic, dynamic> values = value.value;
+                      setState(() {
+                          tokenCus=values["token"];
+                          print("token ne:"+tokenCus);
+                      });
+
+                    });
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen(snapshot.value["idRoomChat"],avatar,name,tokenCus)));
                   },
                   child: Container(
                     height: 100,

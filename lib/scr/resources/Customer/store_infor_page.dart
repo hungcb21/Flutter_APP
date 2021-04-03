@@ -578,6 +578,7 @@ class _DetailStoreState extends State<DetailStore> {
       refCreateRoomCus.child("Users").child(uid).child("Chat").child(uids).set({
         'idRoomChat': uids,
         'lastMessenger': "",
+        'storeUid':widget.uid,
         'storeImage': widget.image,
         'storeName': widget.name
       });
@@ -587,6 +588,7 @@ class _DetailStoreState extends State<DetailStore> {
           .child("Chat")
           .child(uids)
           .set({
+        'uidCus':uid,
         'idRoomChat': uids,
         'lastMessenger': "",
         'cusImage': avatar,
@@ -594,6 +596,6 @@ class _DetailStoreState extends State<DetailStore> {
       });
     });
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ChatScreen(uids,avatar,name)));
+        context, MaterialPageRoute(builder: (context) => ChatScreen(uids,avatar,name,widget.token)));
   }
 }

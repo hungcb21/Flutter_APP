@@ -11,13 +11,14 @@ class ChatListCus extends StatefulWidget {
 
 class _ChatListCusState extends State<ChatListCus> {
   Query query;
-  String uid, name, avatar;
+  String uid, name, avatar,tokenStore;
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     uid = auth.currentUser.uid;
     query = FirebaseDatabase.instance
         .reference()
@@ -56,11 +57,20 @@ class _ChatListCusState extends State<ChatListCus> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
+                    DatabaseReference reference = FirebaseDatabase.instance.reference();
+                    reference.child("Stores").child(snapshot.value["storeUid"]).once().then((value) {
+                      Map<dynamic, dynamic> values = value.value;
+                      setState(() {
+                        tokenStore=values["token"];
+                        print("token ne:"+tokenStore);
+                      });
+
+                    });
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => ChatScreen(
-                                snapshot.value["idRoomChat"], avatar, name)));
+                                snapshot.value["idRoomChat"], avatar, name,tokenStore)));
                   },
                   child: Container(
                     height: 100,

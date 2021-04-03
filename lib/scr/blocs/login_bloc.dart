@@ -11,12 +11,12 @@ class LoginBloc{
 
   bool isValidInfo(String username,String pass){
     if(!Validations.isValidUser(username)){
-      _userController.sink.addError("Tài khoản không hợp lệ");
+      _userController.sink.add("Tài khoản không hợp lệ");
       return false;
     }
     _userController.sink.add("OK");
     if(!Validations.isValidPassword(pass)){
-      _passController.sink.addError("Mật khẩu phải trên 6 ký tự");
+      _passController.sink.add("Mật khẩu phải trên 6 ký tự");
       return false;
     }
     _passController.sink.add("Ok");

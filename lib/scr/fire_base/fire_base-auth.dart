@@ -4,6 +4,8 @@ class FirAuth{
 
     FirebaseAuth _fireBaseAuth = FirebaseAuth.instance;
 
+    // void getUserInfo()
+
     void signUp(String email,String pass,String phone,String name,Function onSuccess,Function(String) onSignUpError)
     {
       _fireBaseAuth.

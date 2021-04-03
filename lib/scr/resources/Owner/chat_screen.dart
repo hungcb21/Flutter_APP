@@ -1,10 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
-
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,8 @@ var currentUserEmail;
 var _scaffoldContext;
 
 class ChatScreen extends StatefulWidget {
-  String uids,avatar,name;
-
-  ChatScreen(this.uids,this.avatar,this.name);
+  String uids,avatar,name,token;
+  ChatScreen(this.uids,this.avatar,this.name,this.token);
 
   @override
   ChatScreenState createState() {
@@ -28,6 +28,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
+  final String serverToken = '	AAAAE20gnpk:APA91bFWWMS8ocapsunPLjwB4i7xAfJ-VTW9Nq0YROTIudvwnGofqc5K8LWmRoy0YKQEaCTri3Ezrr65duFXx4feUKnqylt6X6M1892mAXcFeMZFYlCcUqV1kvsXolg6vobI_6HiJdVB';
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final TextEditingController _textEditingController =
       new TextEditingController();
   bool _isComposingMessage = false;
@@ -122,9 +124,14 @@ class ChatScreenState extends State<ChatScreen> {
   IconButton getDefaultSendButton() {
     return new IconButton(
       icon: new Icon(Icons.send),
-      onPressed: _isComposingMessage
-          ? () => _textMessageSubmitted(_textEditingController.text)
-          : null,
+      onPressed:
+        () {
+        if(_isComposingMessage==true)
+          {
+               _textMessageSubmitted(_textEditingController.text);
+          }
+    }
+
     );
   }
 
@@ -186,14 +193,13 @@ class ChatScreenState extends State<ChatScreen> {
         ));
   }
 
-  Future<Null> _textMessageSubmitted(String text) async {
-    _textEditingController.clear();
-
+  _textMessageSubmitted(String text)  {
     setState(() {
       _isComposingMessage = false;
     });
-
+    sendAndRetrieveMessage(text);
     _sendMessage(messageText: text, imageUrl: null);
+
   }
 
   void _sendMessage({String messageText, String imageUrl}) {
@@ -205,6 +211,7 @@ class ChatScreenState extends State<ChatScreen> {
       'imageUrl': imageUrl,
       'senderName': widget.name,
       'senderPhotoUrl':widget.avatar,
+
     });
     DatabaseReference ref = FirebaseDatabase.instance.reference();
     ref.child("Users").child(uidCus).child("Chat").child(widget.uids).update(
@@ -216,8 +223,47 @@ class ChatScreenState extends State<ChatScreen> {
         {
           'lastMessenger': messageText
         }
+
     );
 
+    _textEditingController.clear();
     // analytics.logEvent(name: 'send_message');
+  }
+  Future<Map<String, dynamic>> sendAndRetrieveMessage(message) async {
+    await _firebaseMessaging.requestNotificationPermissions(
+      const IosNotificationSettings(sound: true, badge: true, alert: true, provisional: false),
+    );
+    await http.post(
+      'https://fcm.googleapis.com/fcm/send',
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'key=$serverToken',
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          'notification': <String, dynamic>{
+            'body': '${_textEditingController.text}',
+            'title': '${widget.name}'
+          },
+          'priority': 'high',
+          'data': <String, dynamic>{
+            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+            'id': '1',
+            'status': 'done'
+          },
+          'to': await widget.token,
+        },
+      ),
+    );
+
+    final Completer<Map<String, dynamic>> completer =
+    Completer<Map<String, dynamic>>();
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        completer.complete(message);
+      },
+    );
+    return completer.future;
   }
 }

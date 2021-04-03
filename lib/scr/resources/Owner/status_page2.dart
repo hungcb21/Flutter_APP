@@ -45,6 +45,12 @@ class _Status2State extends State<Status2> {
           DataSnapshot snapshot) {
         Map<dynamic, dynamic> values = snapshot.value;
         values.forEach((key, values) {
+          var keys= snapshot.value.keys;
+          var uida= widget.uid;
+          for(uida in keys)
+            {
+              
+            }
           setState(() {
             time= values["Time"];
             date = values["Day"];
@@ -81,17 +87,7 @@ class _Status2State extends State<Status2> {
                 child: Text("Status",style: TextStyle(fontSize: 30),),
               ),
               preferredSize: Size.fromHeight(kToolbarHeight)),
-          actions: [
-            InkWell(
-              onTap: () {},
-              child: Container(
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.grey,
-                ),
-              ),
-            ),
-          ],
+        
         ),
         body: Container(
             color: Color(0xFF383443),
@@ -141,6 +137,7 @@ class _Status2State extends State<Status2> {
                                     child: CircleAvatar(
                                       radius: 30,
                                       backgroundColor: Colors.grey,
+                                      backgroundImage: NetworkImage(imageCus),
                                     ),
                                   ),
                                   Padding(

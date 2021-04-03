@@ -26,6 +26,7 @@ class _State extends State<HomePageOwn> {
       FlutterLocalNotificationsPlugin();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   int _currentIndex = 0;
+  int _counter=0;
   final List<Widget> _childrenf = [
     Dashboard(),
     OptionsOwn(),
@@ -56,6 +57,7 @@ class _State extends State<HomePageOwn> {
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
         FlutterAppBadger.updateBadgeCount(1);
+        _counter++;
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
@@ -63,10 +65,14 @@ class _State extends State<HomePageOwn> {
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
         FlutterAppBadger.removeBadge();
+        _counter++;
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-
+        Platform.isAndroid
+            ? showNotification(message['notification'])
+            : showNotification(message['aps']['alert']);
+        FlutterAppBadger.removeBadge();
       },
     );
   }
@@ -111,9 +117,40 @@ class _State extends State<HomePageOwn> {
                   label: "Options",
                   backgroundColor: Colors.white),
               BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.mail,
-                    color: Colors.black,
+                  icon: InkWell(
+                    onTap: (){setState(() {
+                      _counter==0;
+                    });},
+                    child: Stack(
+                      children:[
+                        Icon(
+                          Icons.mail,
+                          color: Colors.black,
+                        ),
+                        Positioned(
+                            right: 0,
+                            child: new Container(
+                                padding: EdgeInsets.all(1),
+                                decoration: new BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                constraints: BoxConstraints(
+                                  minWidth: 12,
+                                  minHeight: 12,
+                                ),
+                                child: new Text(
+                                  '$_counter',
+                                  style: new TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 8,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                            ),
+                        ),
+                      ]
+                    ),
                   ),
                   label: "Message",
                   backgroundColor: Colors.white),

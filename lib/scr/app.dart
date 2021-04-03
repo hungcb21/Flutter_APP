@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Customer/Tam.dart';
 import 'package:flutter_app/scr/resources/Customer/account_page.dart';
@@ -20,11 +21,21 @@ import 'package:flutter_app/scr/resources/Owner/status_page2.dart';
 import 'package:flutter_app/scr/resources/Owner/waiting_own_page.dart';
 
 class MyApp extends StatelessWidget{
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:ChooseUser(),
+      home:StreamBuilder<User>(
+        stream: _auth.onAuthStateChanged,
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.hasData && (!snapshot.data.isAnonymous)) {
+            return HomePage();
+          }
+          return ChooseUser();
+        },
+      ),
     );
   }
+
 }

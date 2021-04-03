@@ -153,9 +153,6 @@ class _ExampleState extends State<Login> {
     );
   }
   void onLoginCliked(){
-    String email =_userController.text;
-    String pass = _passController.text;
-    var isValid =bloc.isValidInfo(_userController.text, _passController.text);
     if(bloc.isValidInfo(_userController.text, _passController.text))
       {
         LoadingDialog.showLoadingDialog(context, "Loading...");

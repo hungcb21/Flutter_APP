@@ -72,8 +72,10 @@ class _State extends State<HomePage> {
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-
+        showNotification(message['notification']);
+        FlutterAppBadger.removeBadge();
       },
+      // onBackgroundMessage: myBackgroundMessageHandler
     );
   }
 
@@ -177,5 +179,15 @@ class _State extends State<HomePage> {
 //    await flutterLocalNotificationsPlugin.show(
 //        0, 'plain title', 'plain body', platformChannelSpecifics,
 //        payload: 'item x');
+  }
+  Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
+    if (message.containsKey('data')) {
+      final dynamic data = message['data'];
+    }
+
+    if (message.containsKey('notification')) {
+      final dynamic notification = message['notification'];
+    }
+
   }
 }
