@@ -57,7 +57,9 @@ class _State extends State<HomePageOwn> {
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
         FlutterAppBadger.updateBadgeCount(1);
-        _counter++;
+        setState(() {
+          _counter++;
+        });
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
@@ -65,7 +67,9 @@ class _State extends State<HomePageOwn> {
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
         FlutterAppBadger.removeBadge();
-        _counter++;
+        setState(() {
+          _counter++;
+        });
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");

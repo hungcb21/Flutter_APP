@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/scr/resources/Class/BlockClass.dart';
 import 'package:flutter_app/scr/resources/Owner/chat_screen.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -33,10 +34,11 @@ class _DetailStoreState extends State<DetailStore> {
   Query query;
   int like;
   String name, email, pass, address, phone, avatar, uid;
-
+  bool isEnabled = true ;
   bool commentStage = false;
   int commenta;
   String commentb;
+
 
   @override
   void initState() {
@@ -98,7 +100,39 @@ class _DetailStoreState extends State<DetailStore> {
         });
       });
     });
+    //lay du lieu block
+    DatabaseReference referenceBlock = FirebaseDatabase.instance
+        .reference()
+        .child("Stores")
+        .child(widget.uid)
+        .child("Block").child(uid);
+    referenceBlock.once().then((DataSnapshot dataSnapshot) {
+      Map<dynamic, dynamic> values = dataSnapshot.value;
+      values.forEach((key, values) {
+        if(uid == dataSnapshot.value["uid"])
+          {
+            print("block ne");
+            setState(() {
+              isEnabled = false;
+            });
+          }
+        else
+          {
+            print("k  block ne");
+          }
+        // setState(() {
+        //   email = auth.currentUser.email;
+        //   name = values["name"];
+        //   phone = values["phone"];
+        //   pass = values["pass"];
+        //   avatar = values["Image"];
+        // });
+      });
+
+
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -487,14 +521,8 @@ class _DetailStoreState extends State<DetailStore> {
     return ButtonTheme(
       minWidth: 200,
       height: 45,
-      child: FlatButton.icon(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ChooseTime(widget.uid, widget.name,
-                      widget.address, widget.district, widget.city,widget.token)));
-        },
+      child:  FlatButton.icon(
+        onPressed:isEnabled?()=> bookNowClicked():null,
         icon: icon,
         label: Text(
           text,
@@ -504,6 +532,13 @@ class _DetailStoreState extends State<DetailStore> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
     );
+  }
+  void bookNowClicked(){
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ChooseTime(widget.uid, widget.name,
+                widget.address, widget.district, widget.city,widget.token)));
   }
 
   Future<bool> onLikeButtonTapped(bool isLiked) async {

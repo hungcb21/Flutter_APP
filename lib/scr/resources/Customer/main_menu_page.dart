@@ -79,6 +79,7 @@ class _State extends State<HomePage> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -92,65 +93,68 @@ class _State extends State<HomePage> {
         }
         return Future.value(true);
       },
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          extendBodyBehindAppBar: true,
-          body: Container(child: _childrenf[_currentIndex]),
-          bottomNavigationBar: Theme(
-            data: Theme.of(context).copyWith(
-                canvasColor: Colors.white,
-                primaryColor: Colors.black,
-                textTheme: Theme.of(context)
-                    .textTheme
-                    .copyWith(caption: TextStyle(color: Colors.black))),
-            child: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              currentIndex: _currentIndex,
-              // selectedItemColor: Colors.white,
-              onTap: (int index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              items: [
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.home,
-                      color: Colors.black,
-                    ),
-                    label: "Home",
-                    backgroundColor: Colors.white),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.account_circle, color: Colors.black),
-                    label: "Account",
-                    backgroundColor: Colors.white),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.assistant_outlined, color: Colors.black),
-                  label: "Options",
-                  backgroundColor: Colors.white,
-                ),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.history,
-                      color: Colors.black,
-                    ),
-                    label: "History",
-                    backgroundColor: Colors.white),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.message,
-                      color: Colors.black,
-                    ),
-                    label: "Chat",
-                    backgroundColor: Colors.white),
-              ],
+      child: OverlaySupport(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            extendBodyBehindAppBar: true,
+            body: Container(child: _childrenf[_currentIndex]),
+            bottomNavigationBar: Theme(
+              data: Theme.of(context).copyWith(
+                  canvasColor: Colors.white,
+                  primaryColor: Colors.black,
+                  textTheme: Theme.of(context)
+                      .textTheme
+                      .copyWith(caption: TextStyle(color: Colors.black))),
+              child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                currentIndex: _currentIndex,
+                // selectedItemColor: Colors.white,
+                onTap: (int index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                items: [
+                  BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.home,
+                        color: Colors.black,
+                      ),
+                      label: "Home",
+                      backgroundColor: Colors.white),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.account_circle, color: Colors.black),
+                      label: "Account",
+                      backgroundColor: Colors.white),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.assistant_outlined, color: Colors.black),
+                    label: "Options",
+                    backgroundColor: Colors.white,
+                  ),
+                  BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.history,
+                        color: Colors.black,
+                      ),
+                      label: "History",
+                      backgroundColor: Colors.white),
+                  BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.message,
+                        color: Colors.black,
+                      ),
+                      label: "Chat",
+                      backgroundColor: Colors.white),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+
 
   void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(

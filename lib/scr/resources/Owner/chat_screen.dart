@@ -197,12 +197,13 @@ class ChatScreenState extends State<ChatScreen> {
     setState(() {
       _isComposingMessage = false;
     });
-    sendAndRetrieveMessage(text);
+
     _sendMessage(messageText: text, imageUrl: null);
 
   }
 
   void _sendMessage({String messageText, String imageUrl}) {
+    sendAndRetrieveMessage(messageText);
     DatabaseReference reference =
         FirebaseDatabase.instance.reference().child("Chat").child(widget.uids).child("Content");
     reference.push().set({
@@ -242,7 +243,7 @@ class ChatScreenState extends State<ChatScreen> {
       body: jsonEncode(
         <String, dynamic>{
           'notification': <String, dynamic>{
-            'body': '${_textEditingController.text}',
+            'body': '${message}',
             'title': '${widget.name}'
           },
           'priority': 'high',

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Class/UserClass.dart';
 
@@ -13,12 +14,13 @@ class _SuccessState extends State<Success> {
   List<UserProfile> datalist = [];
   FirebaseAuth firebaseUser = FirebaseAuth.instance;
   Query query;
+  var uid;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    var uid = firebaseUser.currentUser.uid;
+    uid = firebaseUser.currentUser.uid;
     DatabaseReference reference = FirebaseDatabase.instance
         .reference()
         .child("Stores")
@@ -70,6 +72,66 @@ class _SuccessState extends State<Success> {
               itemBuilder: (BuildContext context, DataSnapshot snapshot,
                   Animation<double> animation, int index) {
                 return InkWell(
+                  onLongPress: (){
+                    final action = CupertinoActionSheet(
+                      actions: <Widget>[
+                        CupertinoActionSheetAction(
+                          child: Text("Chặn"),
+                          isDestructiveAction: true,
+                          onPressed: () {
+                            var uidCus = {"uid": snapshot.value["uid"]};
+                            DatabaseReference refx =
+                            FirebaseDatabase.instance.reference();
+                            refx
+                                .child("Stores")
+                                .child(uid)
+                                .child("Block")
+                                .child(snapshot.value["uid"]).update(uidCus);
+                            ;
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                        ),
+                        CupertinoActionSheetAction(
+                          child: Text("Xóa khỏi lịch sử"),
+                          isDefaultAction: true,
+                          onPressed: () {
+                            DatabaseReference refx =
+                            FirebaseDatabase.instance.reference();
+                            refx
+                                .child("Stores")
+                                .child(uid)
+                                .child("Success")
+                                .child(snapshot.key)
+                                .remove();
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                        ),
+                        CupertinoActionSheetAction(
+                          child: Text("Xóa tất cả khỏi lịch sử"),
+                          isDestructiveAction: true,
+                          onPressed: () {
+                            DatabaseReference refx =
+                            FirebaseDatabase.instance.reference();
+                            refx
+                                .child("Stores")
+                                .child(uid)
+                                .child("Success")
+                                .remove();
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                        ),
+
+                      ],
+                      cancelButton: CupertinoActionSheetAction(
+                        child: Text("Cancel"),
+                        onPressed: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                      ),
+                    );
+                    showCupertinoModalPopup(
+                        context: context, builder: (context) => action);
+                  },
                   onTap: () {},
                   child: Card(
                     shape: BeveledRectangleBorder(),

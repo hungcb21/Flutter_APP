@@ -280,7 +280,8 @@ class _Status2State extends State<Status2> {
       'Day':date,
       'Address':address,
       'ImageCus':imageCus,
-      'Time':time
+      'Time':time,
+      "uid":widget.uid
     };
     Map<String,String> waitingCustomer ={
       'Time':time,
