@@ -18,4 +18,12 @@ class Validations{
   {
     return time != null&&time.length>2&&time.contains("AM")||time.contains("PM");
   }
+  static bool isValidNameServices(String nameServices)
+  {
+    return nameServices!= null && nameServices.length>2;
+  }
+  static bool isValidPriceServices(double price)
+  {
+    return price !=null&&price>0;
+  }
 }

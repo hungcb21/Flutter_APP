@@ -66,33 +66,48 @@ class _ChooseTimeState extends State<ChooseTime> {
                   ),
                 ),
                 Expanded(
-                    child: new GridView.builder(
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 5),
-                      itemCount: datalist.length,itemBuilder:
-                        (_,index){
-                     return InkWell(
-                       child: Container(
-                         color: _selectedIndex != null && _selectedIndex == index
-                             ? Colors.blue
-                             : Colors.white,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children:<Widget>[
-                                Text(datalist[index].time),
-                              ],
-                            ),
-                          )
-                      ),
-                       onTap: ()=>setState(() {
-                         _onSelected(index);
-                         time=datalist[index].time;
-                         isEnabled=true;
-                       }),);
-                    },
-                    )
+                    child: StreamBuilder(
+                      stream: FirebaseDatabase.instance.reference().child("Stores").child(widget.uid).child("Time").onValue,
+                      builder: (BuildContext context,AsyncSnapshot<Event> snapshot) {
+                        if (snapshot.hasData) {
+                          Map<dynamic, dynamic> map = snapshot.data.snapshot
+                              .value;
+                          map.forEach((dynamic, v) => print(v["time"]));
+                          List<dynamic> list = map.values.toList()..sort(
+                                    (a, b) => a['time'].compareTo(b['time']));
+                          return GridView.builder(
+                            shrinkWrap: false,
+
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 5),
+                            itemCount: map.values
+                                .toList()
+                                .length,
+                            itemBuilder:
+                              (BuildContext context,int index){
+                            return InkWell(
+                              child: Container(
+                                  color: _selectedIndex != null && _selectedIndex == index
+                                      ? Colors.blue
+                                      : Colors.white,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children:<Widget>[
+                                        Text(list[index]["time"]),
+                                      ],
+                                    ),
+                                  )
+                              ),
+                              onTap: ()=>setState(() {
+                                _onSelected(index);
+                                time=list[index]["time"];
+                                isEnabled=true;
+                              }),);
+                          },
+                          );
+                        }
+                      })
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
