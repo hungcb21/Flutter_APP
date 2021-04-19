@@ -4,6 +4,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Class/TimeClass.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/comfirm_page.dart';
+import 'package:flutter_app/scr/resources/Customer/list_services_page.dart';
 class ChooseTime extends StatefulWidget {
   final String uid,name,address,district,city,token;
   ChooseTime(this.uid,this.name,this.address,this.district,this.city,this.token);
@@ -42,6 +43,7 @@ class _ChooseTimeState extends State<ChooseTime> {
         datalist.sort((a,b)=>a.time.compareTo(b.time));
       }
       setState(() {
+
       });
     });
   }
@@ -72,7 +74,7 @@ class _ChooseTimeState extends State<ChooseTime> {
                         if (snapshot.hasData) {
                           Map<dynamic, dynamic> map = snapshot.data.snapshot
                               .value;
-                          map.forEach((dynamic, v) => print(v["time"]));
+                          map.forEach((dynamic, v) => print(""));
                           List<dynamic> list = map.values.toList()..sort(
                                     (a, b) => a['time'].compareTo(b['time']));
                           return GridView.builder(
@@ -148,7 +150,7 @@ class _ChooseTimeState extends State<ChooseTime> {
     );
   }
   _onNextClicked(){
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>Comfirm(time,widget.name,widget.address,widget.district,widget.city,"${pickedDate.day}/${pickedDate.month}/${pickedDate.year}",widget.uid,widget.token)));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>ListServices(time,widget.name,widget.address,widget.district,widget.city,"${pickedDate.day}/${pickedDate.month}/${pickedDate.year}",widget.uid,widget.token)));
   }
   _pickDate()
   async{

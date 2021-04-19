@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/dialog/confirm_dialog.dart';
 class Comfirm extends StatefulWidget {
   final String time,ten,address,district,city,day,storeUid,token;
-  Comfirm(this.time,this.ten,this.address,this.district,this.city,this.day,this.storeUid,this.token);
+  int price;
+  Comfirm(this.time,this.ten,this.address,this.district,this.city,this.day,this.storeUid,this.token,this.price);
   @override
   _ComfirmState createState() => _ComfirmState();
 }
@@ -58,31 +59,34 @@ class _ComfirmState extends State<Comfirm> {
                 ),
                 Container(
                   color: Colors.white,
-                  height: 300,
-                  width: 295,
+                  height: 350,
+                  width: 300,
                   child: Column(
                     children: [
-                      Text("Info your booking the barbershop",style: TextStyle(fontSize: 16),),
+                      Text("Info your booking the barbershop",style: TextStyle(fontSize: 20),),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                             child: Icon(Icons.calendar_today_outlined,size: 30,),
                           ),
-                          Text(widget.time+"-"+widget.day,style: TextStyle(fontSize: 16)),
+                          Text(widget.time+"-"+widget.day,style: TextStyle(fontSize: 20)),
                         ],
                       ),
                       Row(
-
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                             child: Icon(Icons.store,size: 30,),
                           ),
-                          Text(widget.ten,style: TextStyle(fontSize: 16),),
+                          Text(widget.ten,style: TextStyle(fontSize: 20),),
                         ],
                       ),
+
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
@@ -90,26 +94,37 @@ class _ComfirmState extends State<Comfirm> {
                           ),
                           Container(
                             width: 150,
-                              child: Text(widget.address??"",style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 16))),
+                              child: Text(widget.address??"",style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 20))),
                         ],
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                             child: Icon(Icons.phone,size: 30,),
                           ),
-                          Text("0904-2070-62",style: TextStyle(fontSize: 16)),
+                          Text("0904-2070-62",style: TextStyle(fontSize: 20)),
                         ],
                       ),
-
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                             child: Icon(Icons.where_to_vote_sharp,size: 30,),
                           ),
-                          Text(widget.district+","+widget.city,style: TextStyle(fontSize: 16)),
+                          Text(widget.district+","+widget.city,style: TextStyle(fontSize: 20)),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                            child: Icon(Icons.money_off,size: 30,),
+                          ),
+                          Text("Tổng tiền: ${widget.price.toString()}",style: TextStyle(fontSize: 20),),
                         ],
                       ),
                     ],
@@ -123,7 +138,7 @@ class _ComfirmState extends State<Comfirm> {
                     color: Colors.white,
                     child: Column(
                       children: [
-                          Text("Note for barbershop",style: TextStyle(fontSize: 16)),
+                          Text("Note for barbershop",style: TextStyle(fontSize: 20)),
                         Expanded(
                           child: TextField(
                             maxLines: null,

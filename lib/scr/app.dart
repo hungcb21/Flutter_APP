@@ -5,6 +5,7 @@ import 'package:flutter_app/scr/resources/Customer/account_page.dart';
 import 'package:flutter_app/scr/resources/Customer/choose_time_page.dart';
 import 'package:flutter_app/scr/resources/Customer/choose_user_page.dart';
 import 'package:flutter_app/scr/resources/Customer/hitory_page.dart';
+import 'package:flutter_app/scr/resources/Customer/list_services_page.dart';
 import 'package:flutter_app/scr/resources/Customer/list_store_page.dart';
 import 'package:flutter_app/scr/resources/Customer/login_page.dart';
 import 'package:flutter_app/scr/resources/Customer/main_menu_page.dart';
@@ -28,16 +29,17 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:AddServices()
-      // StreamBuilder<User>(
-      //   stream: _auth.onAuthStateChanged,
-      //   builder: (BuildContext context, snapshot) {
-      //     if (snapshot.hasData && (!snapshot.data.isAnonymous)) {
-      //       return HomePage();
-      //     }
-      //     return ChooseUser();
-      //   },
-      // ),
+      home:
+      // HomePage()
+      StreamBuilder<User>(
+        stream: _auth.onAuthStateChanged,
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.hasData && (!snapshot.data.isAnonymous)) {
+            return HomePage();
+          }
+          return ChooseUser();
+        },
+      ),
     );
   }
 
