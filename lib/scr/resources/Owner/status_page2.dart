@@ -216,49 +216,49 @@ class _Status2State extends State<Status2> {
                                 _onAcceptClick();
                                 Navigator.pop(context);
                               },
-                              child: Text("Accept",style: TextStyle(color: Colors.white),),
+                              child: Text("Done",style: TextStyle(color: Colors.white),),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                            child: SizedBox(
-                              width: 400,
-                              height: 50,
-                              child: RaisedButton(
-                                color: Colors.black,
-                                shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
-                                onPressed:(){
-                                  AlertDialog alert = AlertDialog(
-                                    title: Text("Từ chối"),
-                                    content: Text("Bạn có muốn từ chối tiếp nhận đặt chỗ?"),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                          child: Text("Thoát"),
-                                          onPressed: (){Navigator.of(context, rootNavigator: true).pop();}
-                                      ),
-                                      FlatButton(
-                                        child: Text("Tiếp tục"),
-                                        onPressed:  () {
-                                          String userUID = _firebaseAuth.currentUser.uid;
-                                          ref.child("Stores").child(userUID).child("Waiting").child(widget.uid).remove();
-                                          ref.child("Users").child(widget.uid).child("Waiting").child(userUID).remove();
-                                          Navigator.of(context, rootNavigator: true).pop();
-                                         Navigator.pop(context);},
-                                      ),
-                                    ],
-                                  );
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return alert;
-                                    },
-                                  );
-
-                                },
-                                child: Text("Refuse",style: TextStyle(color: Colors.white),),
-                              ),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          //   child: SizedBox(
+                          //     width: 400,
+                          //     height: 50,
+                          //     child: RaisedButton(
+                          //       color: Colors.black,
+                          //       shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
+                          //       onPressed:(){
+                          //         AlertDialog alert = AlertDialog(
+                          //           title: Text("Từ chối"),
+                          //           content: Text("Bạn có muốn từ chối tiếp nhận đặt chỗ?"),
+                          //           actions: <Widget>[
+                          //             FlatButton(
+                          //                 child: Text("Thoát"),
+                          //                 onPressed: (){Navigator.of(context, rootNavigator: true).pop();}
+                          //             ),
+                          //             FlatButton(
+                          //               child: Text("Tiếp tục"),
+                          //               onPressed:  () {
+                          //                 String userUID = _firebaseAuth.currentUser.uid;
+                          //                 ref.child("Stores").child(userUID).child("Waiting").child(widget.uid).remove();
+                          //                 ref.child("Users").child(widget.uid).child("Waiting").child(userUID).remove();
+                          //                 Navigator.of(context, rootNavigator: true).pop();
+                          //                Navigator.pop(context);},
+                          //             ),
+                          //           ],
+                          //         );
+                          //         showDialog(
+                          //           context: context,
+                          //           builder: (BuildContext context) {
+                          //             return alert;
+                          //           },
+                          //         );
+                          //
+                          //       },
+                          //       child: Text("Refuse",style: TextStyle(color: Colors.white),),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Class/ServicesClass.dart';
-import 'package:flutter_app/scr/resources/Customer/choose_time_page.dart';
-
 import 'comfirm_page.dart';
 
 class ListServices extends StatefulWidget {
@@ -29,7 +26,6 @@ class _ListServicesState extends State<ListServices> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     // uid = auth.currentUser.uid;
     DatabaseReference reference;
     reference = FirebaseDatabase.instance
@@ -37,7 +33,6 @@ class _ListServicesState extends State<ListServices> {
         .child("Stores")
         .child(widget.storeUid)
         .child("Services");
-
     reference.once().then((DataSnapshot dataSnapshot) {
       datalist.clear();
       var keys = dataSnapshot.value.keys;
@@ -104,7 +99,6 @@ class _ListServicesState extends State<ListServices> {
                                         .child("Customer").child("QKeOdvekxvPzxWVxbnK1UecTKdD2").child(datalist[index].name).remove();
                                     tong = tong -datalist[index].price;
                                   }
-
                                 if(tong !=0){
                                   setState(() {
                                     isEnabled=true;
@@ -164,5 +158,4 @@ class _ListServicesState extends State<ListServices> {
   _onNextClicked(){
     Navigator.push(context, MaterialPageRoute(builder: (context)=>Comfirm(widget.time,widget.ten,widget.address,widget.district,widget.city,widget.day,widget.storeUid,widget.token,tong)));
   }
-
 }

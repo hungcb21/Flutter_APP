@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/dialog/confirm_dialog.dart';
+import 'package:momo_vn/momo_vn.dart';
 class Comfirm extends StatefulWidget {
   final String time,ten,address,district,city,day,storeUid,token;
   int price;
@@ -21,6 +23,9 @@ class _ComfirmState extends State<Comfirm> {
   DatabaseReference ref = FirebaseDatabase.instance.reference();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   String name,email,sdt,tokenCus,imageCus;
+  MomoVn _momoPay;
+  PaymentResponse _momoPaymentResult;
+  String _payment_status;
   @override
   void initState() {
     // TODO: implement initState
@@ -39,6 +44,15 @@ class _ComfirmState extends State<Comfirm> {
         });
 
       });
+    });
+    _momoPay = MomoVn();
+    _momoPay.on(MomoVn.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _momoPay.on(MomoVn.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    initPlatformState();
+  }
+  Future<void> initPlatformState() async {
+    if (!mounted) return;
+    setState(() {
     });
   }
   @override
@@ -59,11 +73,11 @@ class _ComfirmState extends State<Comfirm> {
                 ),
                 Container(
                   color: Colors.white,
-                  height: 350,
+                  height: 400,
                   width: 300,
                   child: Column(
                     children: [
-                      Text("Info your booking the barbershop",style: TextStyle(fontSize: 20),),
+                      Text("Info your booking the barbershop",style: TextStyle(fontSize: 18),),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -177,7 +191,7 @@ class _ComfirmState extends State<Comfirm> {
                           color: Colors.indigo,
                           shape: RoundedRectangleBorder(borderRadius:BorderRadius.all(Radius.circular(8))),
                           onPressed:(){
-                            _onConfirmClick();
+                            _onCheckoutClick();
                           },
                           child: Text("Booking",style: TextStyle(color: Colors.white),),
                         ),
@@ -191,6 +205,31 @@ class _ComfirmState extends State<Comfirm> {
         ),
       ),
     );
+  }
+
+  _onCheckoutClick() async{
+    MomoPaymentInfo options = MomoPaymentInfo(
+      merchantname: widget.ten,
+      appScheme: "momoiqa420180417",
+      merchantcode: 'MOMOIQA420180417',
+      amount: double.parse(widget.price.toString()),
+      orderId: '12321312',
+      orderLabel: 'Gói dịch vụ ABCD',
+      merchantnamelabel: "TRUNG TÂM XYZ",
+      fee: 0,
+      description: 'Thanh toán đặt chỗ',
+      username: '0919100010',
+      partner: 'MOMOIQA420180417',
+      extra: "{\"key1\":\"value1\",\"key2\":\"value2\"}",
+      isTestMode: true,
+
+    );
+    try {
+      _momoPay.open(options);
+    } catch (e) {
+      debugPrint(e);
+    }
+
   }
   _onConfirmClick(){
     String userUID = _firebaseAuth.currentUser.uid;
@@ -258,6 +297,43 @@ class _ComfirmState extends State<Comfirm> {
       },
     );
     return completer.future;
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    _momoPay.clear();
+  }
+
+  void _setState() {
+
+    _payment_status = 'Đã chuyển thanh toán';
+    if (_momoPaymentResult.isSuccess) {
+      _payment_status += "\nTình trạng: Thành công.";
+      _payment_status += "\nSố điện thoại: " + _momoPaymentResult.phonenumber;
+      _payment_status += "\nExtra: " + _momoPaymentResult.extra;
+      _payment_status += "\nToken: " + _momoPaymentResult.token;
+      _onConfirmClick();
+    }
+    else {
+      _payment_status += "\nTình trạng: Thất bại.";
+      _payment_status += "\nExtra: " + _momoPaymentResult.extra;
+      _payment_status += "\nMã lỗi: " + _momoPaymentResult.status.toString();
+    }
+  }
+  void _handlePaymentSuccess(PaymentResponse response) {
+    setState(() {
+      _momoPaymentResult = response;
+      _setState();
+    });
+    Fluttertoast.showToast(msg: "THÀNH CÔNG: " + response.phonenumber);
+  }
+
+  void _handlePaymentError(PaymentResponse response) {
+    setState(() {
+      _momoPaymentResult = response;
+      _setState();
+    });
+    Fluttertoast.showToast(msg: "THẤT BẠI: " + response.message.toString());
   }
 
 }

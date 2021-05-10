@@ -72,14 +72,12 @@ class _ChooseTimeState extends State<ChooseTime> {
                       stream: FirebaseDatabase.instance.reference().child("Stores").child(widget.uid).child("Time").onValue,
                       builder: (BuildContext context,AsyncSnapshot<Event> snapshot) {
                         if (snapshot.hasData) {
-                          Map<dynamic, dynamic> map = snapshot.data.snapshot
-                              .value;
+                          Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
                           map.forEach((dynamic, v) => print(""));
                           List<dynamic> list = map.values.toList()..sort(
                                     (a, b) => a['time'].compareTo(b['time']));
                           return GridView.builder(
                             shrinkWrap: false,
-
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 5),
                             itemCount: map.values
@@ -107,6 +105,16 @@ class _ChooseTimeState extends State<ChooseTime> {
                                 isEnabled=true;
                               }),);
                           },
+                          );
+                        }
+                        else if(snapshot.hasError){
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        else{
+                          return Center(
+                            child: Text("No data",style: TextStyle(fontSize: 20),),
                           );
                         }
                       })

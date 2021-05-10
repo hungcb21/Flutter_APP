@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/main_menu_page.dart';
 class ConfirmDialog{
   static void showConfirmDialog(BuildContext context,String title,String msg)
   {
