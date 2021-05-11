@@ -305,7 +305,6 @@ class _ComfirmState extends State<Comfirm> {
   }
 
   void _setState() {
-
     _payment_status = 'Đã chuyển thanh toán';
     if (_momoPaymentResult.isSuccess) {
       _payment_status += "\nTình trạng: Thành công.";

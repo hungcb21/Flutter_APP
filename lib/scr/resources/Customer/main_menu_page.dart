@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Customer/list_chat_page.dart';
 import 'package:flutter_app/scr/resources/Customer/options_page.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
-
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/account_page.dart';
-
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/hitory_page.dart';
 import 'file:///F:/DemoFlut/flutter_app/lib/scr/resources/Customer/list_store_page.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -38,16 +36,26 @@ class _State extends State<HomePage> {
   ];
 
   @override
+  void didUpdateWidget(covariant HomePage oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     //lay token
-    uid= auth.currentUser.uid;
+    uid = auth.currentUser.uid;
     _firebaseMessaging.getToken().then((val) {
       DatabaseReference reference = FirebaseDatabase.instance.reference();
-      reference.child("Users").child(uid).update({
-        'token': val
-      });
+      reference.child("Users").child(uid).update({'token': val});
     });
     //nhan thong bao
     if (Platform.isIOS) {
@@ -57,15 +65,36 @@ class _State extends State<HomePage> {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
+        showSimpleNotification(
+          Text(
+            "${message['notification']['body']}",
+            style: TextStyle(color: Colors.black),
+          ),
+          background: Colors.white,
+          duration: Duration(seconds: 3),
+          leading: Text(
+            "${message['notification']['title']}",
+            style: TextStyle(color: Colors.black),
+          ),
+        );
         Platform.isAndroid
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
         FlutterAppBadger.updateBadgeCount(1);
-
-
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
+        showSimpleNotification(
+            Text(
+              "${message['notification']['body']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            leading: Text(
+              "${message['notification']['title']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            background: Colors.white,
+            duration: Duration(seconds: 3));
         Platform.isAndroid
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
@@ -73,6 +102,17 @@ class _State extends State<HomePage> {
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
+        showSimpleNotification(
+            Text(
+              "${message['notification']['body']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            leading: Text(
+              "${message['notification']['title']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            background: Colors.white,
+            duration: Duration(seconds: 3));
         Platform.isAndroid
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
@@ -82,6 +122,55 @@ class _State extends State<HomePage> {
     );
   }
 
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        showSimpleNotification(
+          Text(
+            "${message['notification']['body']}",
+            style: TextStyle(color: Colors.black),
+          ),
+          background: Colors.white,
+          duration: Duration(seconds: 3),
+          leading: Text(
+            "${message['notification']['title']}",
+            style: TextStyle(color: Colors.black),
+          ),
+        );
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        showSimpleNotification(
+            Text(
+              "${message['notification']['body']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            leading: Text(
+              "${message['notification']['title']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            background: Colors.white,
+            duration: Duration(seconds: 3));
+      },
+      onResume: (Map<String, dynamic> message) async {
+        showSimpleNotification(
+            Text(
+              "${message['notification']['body']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            leading: Text(
+              "${message['notification']['title']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            background: Colors.white,
+            duration: Duration(seconds: 3));
+      },
+      // onBackgroundMessage: myBackgroundMessageHandler
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,66 +185,67 @@ class _State extends State<HomePage> {
         }
         return Future.value(true);
       },
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          extendBodyBehindAppBar: true,
-          body: Container(child: _childrenf[_currentIndex]),
-          bottomNavigationBar: Theme(
-            data: Theme.of(context).copyWith(
-                canvasColor: Colors.white,
-                primaryColor: Colors.black,
-                textTheme: Theme.of(context)
-                    .textTheme
-                    .copyWith(caption: TextStyle(color: Colors.black))),
-            child: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              currentIndex: _currentIndex,
-              // selectedItemColor: Colors.white,
-              onTap: (int index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              items: [
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.home,
-                      color: Colors.black,
-                    ),
-                    label: "Home",
-                    backgroundColor: Colors.white),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.account_circle, color: Colors.black),
-                    label: "Account",
-                    backgroundColor: Colors.white),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.assistant_outlined, color: Colors.black),
-                  label: "Options",
-                  backgroundColor: Colors.white,
-                ),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.history,
-                      color: Colors.black,
-                    ),
-                    label: "History",
-                    backgroundColor: Colors.white),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.message,
-                      color: Colors.black,
-                    ),
-                    label: "Chat",
-                    backgroundColor: Colors.white),
-              ],
+      child: OverlaySupport.global(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            extendBodyBehindAppBar: true,
+            body: Container(child: _childrenf[_currentIndex]),
+            bottomNavigationBar: Theme(
+              data: Theme.of(context).copyWith(
+                  canvasColor: Colors.white,
+                  primaryColor: Colors.black,
+                  textTheme: Theme.of(context)
+                      .textTheme
+                      .copyWith(caption: TextStyle(color: Colors.black))),
+              child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                currentIndex: _currentIndex,
+                // selectedItemColor: Colors.white,
+                onTap: (int index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                items: [
+                  BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.home,
+                        color: Colors.black,
+                      ),
+                      label: "Home",
+                      backgroundColor: Colors.white),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.account_circle, color: Colors.black),
+                      label: "Account",
+                      backgroundColor: Colors.white),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.assistant_outlined, color: Colors.black),
+                    label: "Options",
+                    backgroundColor: Colors.white,
+                  ),
+                  BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.history,
+                        color: Colors.black,
+                      ),
+                      label: "History",
+                      backgroundColor: Colors.white),
+                  BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.message,
+                        color: Colors.black,
+                      ),
+                      label: "Chat",
+                      backgroundColor: Colors.white),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
-
 
   void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
@@ -185,6 +275,7 @@ class _State extends State<HomePage> {
 //        0, 'plain title', 'plain body', platformChannelSpecifics,
 //        payload: 'item x');
   }
+
   Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
     if (message.containsKey('data')) {
       final dynamic data = message['data'];
@@ -193,6 +284,5 @@ class _State extends State<HomePage> {
     if (message.containsKey('notification')) {
       final dynamic notification = message['notification'];
     }
-
   }
 }
