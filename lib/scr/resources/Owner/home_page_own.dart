@@ -3,7 +3,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Owner/dashboard_page.dart';
-import 'package:flutter_app/scr/resources/Owner/history_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/list_chat_own_page.dart';
 import 'package:flutter_app/scr/resources/Owner/option_own_page.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
@@ -26,7 +25,7 @@ class _State extends State<HomePageOwn> {
       FlutterLocalNotificationsPlugin();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   int _currentIndex = 0;
-  int _counter=0;
+  int _counter = 0;
   final List<Widget> _childrenf = [
     Dashboard(),
     OptionsOwn(),
@@ -53,26 +52,66 @@ class _State extends State<HomePageOwn> {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
+        showSimpleNotification(
+          ListTile(
+            leading: FlutterLogo(
+              size: 50,
+            ),
+            dense: true,
+            trailing: Icon(
+              Icons.notifications,
+              color: Colors.black,
+            ),
+            subtitle: Text(
+              "${message['notification']['body']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            title: Text(
+              "${message['notification']['title']}",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          background: Colors.white,
+          duration: Duration(seconds: 3),
+        );
         Platform.isAndroid
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
         FlutterAppBadger.updateBadgeCount(1);
-        setState(() {
-          _counter++;
-        });
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
+        showSimpleNotification(
+            Text(
+              "${message['notification']['body']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            leading: Text(
+              "${message['notification']['title']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            background: Colors.white,
+            duration: Duration(seconds: 3));
         Platform.isAndroid
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
         FlutterAppBadger.removeBadge();
-        setState(() {
-          _counter++;
-        });
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
+        showSimpleNotification(
+            ListTile(
+              subtitle: Text(
+                "${message['notification']['body']}",
+                style: TextStyle(color: Colors.black),
+              ),
+              title: Text(
+                "${message['notification']['title']}",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+            background: Colors.white,
+            duration: Duration(seconds: 3));
         Platform.isAndroid
             ? showNotification(message['notification'])
             : showNotification(message['aps']['alert']);
@@ -122,39 +161,39 @@ class _State extends State<HomePageOwn> {
                   backgroundColor: Colors.white),
               BottomNavigationBarItem(
                   icon: InkWell(
-                    onTap: (){setState(() {
-                      _counter==0;
-                    });},
-                    child: Stack(
-                      children:[
-                        Icon(
-                          Icons.mail,
-                          color: Colors.black,
-                        ),
-                        Positioned(
-                            right: 0,
-                            child: new Container(
-                                padding: EdgeInsets.all(1),
-                                decoration: new BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                constraints: BoxConstraints(
-                                  minWidth: 12,
-                                  minHeight: 12,
-                                ),
-                                child: new Text(
-                                  '$_counter',
-                                  style: new TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 8,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
+                    onTap: () {
+                      setState(() {
+                        _counter == 0;
+                      });
+                    },
+                    child: Stack(children: [
+                      Icon(
+                        Icons.mail,
+                        color: Colors.black,
+                      ),
+                      Positioned(
+                        right: 0,
+                        child: new Container(
+                          padding: EdgeInsets.all(1),
+                          decoration: new BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 12,
+                            minHeight: 12,
+                          ),
+                          child: new Text(
+                            '$_counter',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 8,
                             ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ]
-                    ),
+                      ),
+                    ]),
                   ),
                   label: "Message",
                   backgroundColor: Colors.white),
@@ -187,9 +226,6 @@ class _State extends State<HomePageOwn> {
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-
-    print(message);
-
 
     await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
         message['body'].toString(), platformChannelSpecifics,

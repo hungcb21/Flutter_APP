@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/scr/resources/Customer/choose_time_page.dart';
+import 'package:flutter_app/scr/resources/Customer/update_time.dart';
 
 class Waiting extends StatefulWidget {
   @override
@@ -169,17 +170,8 @@ class _WaitingState extends State<Waiting> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  ChooseTime(
-                                                      snapshot.key,
-                                                      snapshot
-                                                          .value["NameStore"],
-                                                      snapshot
-                                                          .value["Address"],
-                                                      snapshot
-                                                          .value["District"],
-                                                      snapshot.value["City"],
-                                                      snapshot
-                                                          .value["token"]),
+                                                  UpdateTime(
+                                                      snapshot.key,),
                                             ));
                                       },
                                       child: Text(

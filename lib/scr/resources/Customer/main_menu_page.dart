@@ -66,16 +66,21 @@ class _State extends State<HomePage> {
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
         showSimpleNotification(
-          Text(
-            "${message['notification']['body']}",
-            style: TextStyle(color: Colors.black),
+          ListTile(
+            leading: FlutterLogo(size: 50,),
+            dense: true,
+            trailing: Icon(Icons.notifications,color: Colors.black,),
+            subtitle:Text(
+              "${message['notification']['body']}",
+              style: TextStyle(color: Colors.black),
+            ),
+            title: Text(
+              "${message['notification']['title']}",
+              style: TextStyle(color: Colors.black),
+            ),
           ),
           background: Colors.white,
           duration: Duration(seconds: 3),
-          leading: Text(
-            "${message['notification']['title']}",
-            style: TextStyle(color: Colors.black),
-          ),
         );
         Platform.isAndroid
             ? showNotification(message['notification'])
@@ -103,13 +108,15 @@ class _State extends State<HomePage> {
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
         showSimpleNotification(
-            Text(
-              "${message['notification']['body']}",
-              style: TextStyle(color: Colors.black),
-            ),
-            leading: Text(
-              "${message['notification']['title']}",
-              style: TextStyle(color: Colors.black),
+            ListTile(
+              subtitle:Text(
+                "${message['notification']['body']}",
+                style: TextStyle(color: Colors.black),
+              ),
+              title: Text(
+                "${message['notification']['title']}",
+                style: TextStyle(color: Colors.black),
+              ),
             ),
             background: Colors.white,
             duration: Duration(seconds: 3));
